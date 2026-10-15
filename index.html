@@ -53,6 +53,10 @@ p{margin:0}
 .logo{width:64px;height:64px;border-radius:50%;background:#fff;border:3px solid var(--ink);object-fit:cover;flex:none}
 .avatar{width:56px;height:56px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none;box-shadow:3px 3px 0 var(--shadow)}
 .herologo{width:clamp(140px,22vw,200px);height:auto;border-radius:50%;background:#fff;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--shadow)}
+/* Reset progress */
+.reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
+.reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
+.reset-ask b{font-family:var(--f-title)}
 /* About-you pop-up */
 dialog.about{border:3px solid var(--ink);border-radius:24px;padding:0;background:var(--sticker);color:var(--ink);box-shadow:8px 8px 0 var(--shadow);width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;animation:dlgpop .45s cubic-bezier(.2,.8,.3,1.25) both}
 dialog.about::backdrop{background:rgba(6,13,27,.62);backdrop-filter:blur(3px)}
@@ -967,6 +971,7 @@ function renderMap(){
     <h2>${n === 0 ? "Ready when you are" : n === STOPS.length ? "You finished every open stop!" : "Welcome back, keep going"}</h2>
     <div class="row"><span>Level: <b class="score">${rank(n)}</b></span><span><b class="score">${n}</b> of ${TOTAL_STOPS} stops · <b class="score">${S.points}</b> points (just for you)</span></div>
     <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${TOTAL_STOPS}" aria-valuenow="${n}"><i style="width:${pct}%"></i></div>
+    <div id="resetSlot" class="reset-slot"><button type="button" class="linkbtn" id="resetBtn">↺ Reset my progress</button></div>
   </section>
   <div id="recallSlot"></div>
   <div class="stops">${STOPS.map(s => { const r = stopRec(s.id); const p = prog(s.id);
@@ -979,6 +984,20 @@ function renderMap(){
     <div class="soon">${LATER.map(([a,b,c]) => `<div><span class="eyebrow">${a}</span><b>${esc(b)}</b>${esc(c)}</div>`).join("")}</div>
   </section>`;
   document.querySelectorAll(".stop").forEach(b => b.onclick = () => go("stop", b.dataset.id));
+  const rs = document.getElementById("resetSlot");
+  document.getElementById("resetBtn").onclick = () => {
+    rs.innerHTML = `<div class="reset-ask" role="alertdialog" aria-labelledby="resetQ"><b id="resetQ">Start the journey again?</b>
+      <span>This clears your stops, badges and points on this device. Your feedback already sent to Dr. NAM stays.</span>
+      <div class="actions"><button type="button" class="btn small lime" id="resetYes">Yes, start again</button><button type="button" class="btn small ghost" id="resetNo">Keep my progress</button></div></div>`;
+    document.getElementById("resetNo").onclick = () => renderMap();
+    document.getElementById("resetYes").onclick = () => {
+      S.prog = {}; S.points = 0; S.recallShownFor = null;
+      Object.values(S.rec.stops).forEach(r => { r.completed = false; });
+      S.rec.resets = (S.rec.resets || 0) + 1;
+      commit(); pushRemote(true); renderMap(); toast("Progress reset. Fresh start!");
+    };
+    document.getElementById("resetNo").focus();
+  };
   if (!S.profileDone) askProfile(); else renderRecall();
 }
 
