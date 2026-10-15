@@ -1,0 +1,14 @@
+{
+  "name": "Chemistry Around You with Dr. NAM",
+  "short_name": "Chem Around You",
+  "description": "From Zero to Chemistry Hero: friendly chemistry for learners with no science background.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#060d1b",
+  "theme_color": "#060d1b",
+  "icons": [
+    { "src": "assets/logo-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

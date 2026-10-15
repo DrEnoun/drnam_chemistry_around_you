@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chemistry Around You</title>
+<meta name="description" content="From Zero to Chemistry Hero: a free, friendly chemistry hub for learners with no science background, by Dr. NAM.">
+<meta name="theme-color" content="#060d1b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/logo-192.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/logo-192.png">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)} img{max-width:100%} [hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700;800&family=Questrial&display=swap">
+<style>
+/* Layout: one centred learning column; a journey map of sticker cards, and each stop as tabbed layers (Core, Activity, Go deeper, Side trip, Self-check).
+   Brand: Dr. NAM "Playful" style, Night teal & navy (default) with a Day sky-blue theme. */
+:root{
+  --ground:#060d1b; --text:#e3eef8; --muted:#a9bed3; --panel:#0c1a30; --line:#1d3352;
+  --teal:#0d7f74; --aqua:#5eead4; --glow:#2dd4bf; --coral:#fc7a7a;
+  --lime:#d4ff3a; --on-lime:#0a1628; --sticker:#ffffff; --ink:#231f20; --shadow:#d4ff3a;
+  --title:#5eead4; --sticker-sub:#4a4560; --pop:#d4ff3a;
+  --f-title:"League Spartan","Arial Black",system-ui,sans-serif;
+  --f-body:"Questrial","Trebuchet MS",system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --ground:#f0f6ff; --text:#3b365f; --muted:#5d5880; --panel:#ffffff; --line:#cfdcef;
+  --teal:#0d7f74; --aqua:#0d7f74; --glow:#14b8a6; --coral:#d9534f;
+  --lime:#c8f53d; --on-lime:#0a1628; --shadow:#231f20; --title:#0d7f74; --pop:#0d7f74; color-scheme:light } }
+:root[data-theme="light"]{
+  --ground:#f0f6ff; --text:#3b365f; --muted:#5d5880; --panel:#ffffff; --line:#cfdcef;
+  --teal:#0d7f74; --aqua:#0d7f74; --glow:#14b8a6; --coral:#d9534f;
+  --lime:#c8f53d; --on-lime:#0a1628; --shadow:#231f20; --title:#0d7f74; --pop:#0d7f74; color-scheme:light }
+
+*{box-sizing:border-box}
+html{background:var(--ground)}
+body{background:var(--ground);color:var(--text);font-family:var(--f-body);font-size:clamp(18px,1.2vw + 12px,22px);line-height:1.55;margin:0;overflow-x:hidden}
+#doodles{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.16}
+#doodles svg{position:absolute;width:64px;height:64px;stroke:var(--aqua);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding-inline:16px;padding-block:12px 48px}
+h1,h2,h3{font-family:var(--f-title);font-weight:800;letter-spacing:-.02em;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(40px,6vw,72px)}
+h2{font-size:clamp(30px,4vw,46px);color:var(--title)}
+h3{font-size:clamp(22px,2.4vw,28px)}
+p{margin:0}
+.muted{color:var(--muted)}
+.eyebrow{font-family:var(--f-title);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.72em;color:var(--pop)}
+.rule{width:84px;height:6px;background:var(--lime);border-radius:3px}
+
+.logo{width:64px;height:64px;border-radius:50%;background:#fff;border:3px solid var(--ink);object-fit:cover;flex:none}
+.avatar{width:56px;height:56px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none;box-shadow:3px 3px 0 var(--shadow)}
+.herologo{width:clamp(140px,22vw,200px);height:auto;border-radius:50%;background:#fff;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--shadow)}
+/* Header */
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:8px}
+.badge{width:58px;height:58px;border-radius:50%;background:#fff;border:3px solid var(--ink);display:grid;place-items:center;flex:none;text-align:center;font-family:var(--f-title);font-weight:800;font-size:12px;line-height:1;color:var(--ink);position:relative}
+.badge small{display:block;font-size:8px;font-weight:400;font-family:var(--f-body);color:#666;margin-top:2px}
+.brand{display:flex;flex-direction:column;min-width:0;flex:1}
+.brand b{font-family:var(--f-title);font-weight:800;font-size:clamp(20px,2.4vw,26px);letter-spacing:-.01em;line-height:1}
+.brand span{font-size:.7em;color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Sticker buttons */
+.btn{font:inherit;font-family:var(--f-title);font-weight:700;font-size:.9em;background:var(--sticker);color:var(--ink);border:3px solid var(--ink);border-radius:14px;padding:.5em 1em;box-shadow:5px 5px 0 var(--shadow);cursor:pointer;transform:rotate(-1.5deg);transition:transform .15s,box-shadow .15s;min-height:48px}
+.btn:nth-of-type(even){transform:rotate(1.5deg)}
+.btn:hover{transform:rotate(0) translateY(-3px)}
+.btn:active{transform:translate(4px,4px) rotate(0);box-shadow:1px 1px 0 var(--shadow)}
+.btn:focus-visible,.chip:focus-visible,.opt:focus-visible,.flip:focus-visible,.mcard:focus-visible,.bin:focus-visible,.face:focus-visible{outline:4px solid var(--lime);outline-offset:3px}
+.btn.lime{background:var(--lime);color:var(--on-lime)}
+.btn.small{font-size:.75em;min-height:40px;padding:.35em .8em;box-shadow:3px 3px 0 var(--shadow)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line);box-shadow:none;transform:none}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+/* Dr NAM says */
+.says{display:flex;gap:12px;align-items:flex-start;margin-block:18px}
+.says .bubble{background:var(--sticker);color:var(--ink);border:3px solid var(--ink);border-radius:18px;padding:.7em 1em;position:relative;box-shadow:4px 4px 0 var(--shadow);flex:1;min-width:0}
+.says .bubble b{font-family:var(--f-title);display:block;font-size:.8em;color:var(--teal);letter-spacing:.04em}
+.says .badge{width:52px;height:52px}
+
+/* Welcome */
+.hero{display:grid;gap:22px;padding-block:28px 12px}
+.hero h1 span{color:var(--pop)}
+.hero p.lead{font-size:1.1em;max-width:34em}
+.pick{display:grid;gap:10px;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:.8em;background:var(--panel);color:var(--text);border:2px solid var(--line);border-radius:999px;padding:.35em .9em;cursor:pointer;min-height:44px}
+.chip[aria-pressed="true"]{background:var(--lime);color:var(--on-lime);border-color:var(--ink);font-weight:700}
+.notice{border:2px dashed var(--line);border-radius:16px;padding:.8em 1em;font-size:.8em;display:grid;gap:8px}
+
+/* Journey */
+.journey{display:grid;gap:8px;margin-block:18px}
+.bar{height:16px;border-radius:999px;background:var(--panel);border:2px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--lime);border-radius:999px;transition:width .5s}
+.journey .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.82em}
+.stops{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;margin-top:14px}
+.stop{background:var(--sticker);color:var(--ink);border:3px solid var(--ink);border-radius:20px;padding:16px 18px;box-shadow:6px 6px 0 var(--shadow);cursor:pointer;text-align:left;font:inherit;display:grid;gap:6px;transition:transform .15s;min-width:0}
+.stop:nth-child(odd){transform:rotate(-1.4deg)} .stop:nth-child(even){transform:rotate(1.2deg)}
+.stop:hover{transform:rotate(0) translateY(-4px)}
+.stop .num{font-family:var(--f-title);font-weight:800;font-size:15px;background:var(--lime);color:var(--on-lime);border:2px solid var(--ink);border-radius:999px;padding:2px 10px;justify-self:start}
+.stop h3{color:var(--ink)}
+.stop p{font-size:.8em;color:var(--sticker-sub)}
+.stop .state{font-size:.72em;font-weight:700;font-family:var(--f-title);color:var(--teal)}
+.stop.glow{box-shadow:6px 6px 0 var(--shadow),0 0 0 4px var(--ground),0 0 28px 6px var(--glow)}
+.soon{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:12px}
+.soon div{border:2px dashed var(--line);border-radius:16px;padding:12px 14px;font-size:.8em;color:var(--muted)}
+.soon b{color:var(--text);font-family:var(--f-title);display:block;font-size:1.1em}
+section.block{margin-top:34px;display:grid;gap:6px}
+
+/* Stop view */
+.stophead{display:grid;gap:10px;padding-block:20px 6px}
+.hook{font-size:1.15em;border-left:6px solid var(--lime);padding-left:14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-block:16px 6px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--ground);padding-block:8px;z-index:3}
+.tab{font:inherit;font-family:var(--f-title);font-weight:700;font-size:.78em;border:2px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:.4em .85em;cursor:pointer;min-height:44px}
+.tab[aria-selected="true"]{background:var(--lime);color:var(--on-lime);border-color:var(--ink)}
+.tab .tick{color:var(--teal)}
+.tab[aria-selected="true"] .tick{color:var(--on-lime)}
+.layer{display:grid;gap:18px;margin-top:10px}
+.layer > p.intro{color:var(--muted);max-width:40em}
+
+/* Flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.flip{font:inherit;text-align:left;background:none;border:0;padding:0;cursor:pointer;perspective:1200px;min-height:300px;color:inherit;width:100%}
+.flip .in{position:relative;width:100%;height:100%;min-height:300px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face2{position:absolute;inset:0;backface-visibility:hidden;border:3px solid var(--ink);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.front{background:var(--sticker);color:var(--ink);box-shadow:6px 6px 0 var(--shadow)}
+.back{background:var(--teal);color:#f2fffc;transform:rotateY(180deg);box-shadow:6px 6px 0 var(--shadow)}
+.face2 .k{font-family:var(--f-title);font-weight:700;font-size:.7em;letter-spacing:.1em;text-transform:uppercase}
+.front .k{color:var(--teal)} .back .k{color:var(--lime)}
+.face2 h3{font-size:1.25em}
+.face2 p{font-size:.88em}
+.face2 .limit{font-size:.78em;border-top:2px dashed rgba(255,255,255,.4);padding-top:8px;margin-top:auto}
+.face2 .tap{font-size:.7em;margin-top:auto;color:var(--sticker-sub)}
+
+/* Activities */
+.act{background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:18px;display:grid;gap:14px;min-width:0}
+.act h3{color:var(--title)}
+.pool{display:flex;flex-wrap:wrap;gap:10px}
+.item{font:inherit;font-size:.85em;background:var(--sticker);color:var(--ink);border:3px solid var(--ink);border-radius:12px;padding:.35em .8em;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);min-height:46px}
+.item[aria-pressed="true"]{background:var(--lime);color:var(--on-lime);transform:translateY(-3px)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.bin{font:inherit;color:var(--text);background:transparent;border:3px dashed var(--line);border-radius:18px;padding:12px;min-height:130px;display:flex;flex-direction:column;gap:8px;cursor:pointer;text-align:left}
+.bin b{font-family:var(--f-title);font-size:1.05em}
+.bin .got{display:flex;flex-wrap:wrap;gap:6px}
+.bin .got span{font-size:.72em;background:var(--lime);color:var(--on-lime);border-radius:8px;padding:2px 8px}
+.bin.ready{border-color:var(--lime)}
+.fb{border-radius:14px;padding:.6em .9em;font-size:.85em;border:3px solid transparent}
+.fb.ok{border-color:var(--lime);background:color-mix(in srgb,var(--lime) 14%,transparent)}
+.fb.no{border-color:var(--coral);background:color-mix(in srgb,var(--coral) 14%,transparent)}
+.fb.info{border-color:var(--line)}
+.fb strong{font-family:var(--f-title)}
+
+/* Memory match */
+.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mcard{font:inherit;aspect-ratio:1/1;max-width:100%;border:3px solid var(--ink);border-radius:14px;background:var(--teal);color:#fff;font-family:var(--f-title);font-weight:800;font-size:clamp(14px,2.6vw,24px);cursor:pointer;display:grid;place-items:center;padding:4px;box-shadow:3px 3px 0 var(--shadow);overflow:hidden;word-break:break-word}
+.mcard.up{background:var(--sticker);color:var(--ink)}
+.mcard.done{background:var(--lime);color:var(--on-lime);cursor:default}
+
+/* Atom builder */
+.atomwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center}
+.atomwrap svg{width:100%;max-width:340px;justify-self:center}
+.ctr{display:grid;gap:10px}
+.ctr .r{display:flex;align-items:center;gap:10px;justify-content:space-between;background:var(--ground);border:2px solid var(--line);border-radius:14px;padding:6px 10px}
+.ctr .r b{font-family:var(--f-title)}
+.ctr .r .n{font-family:var(--f-title);font-weight:800;font-size:1.4em;min-width:2ch;text-align:center;font-variant-numeric:tabular-nums}
+.pm{display:flex;gap:6px}
+
+/* Self-check */
+.q{display:grid;gap:12px}
+.opts{display:grid;gap:10px}
+.opt{font:inherit;text-align:left;background:var(--panel);color:var(--text);border:3px solid var(--line);border-radius:14px;padding:.55em .9em;cursor:pointer;min-height:50px}
+.opt[aria-pressed="true"]{border-color:var(--lime)}
+.opt.ok{border-color:var(--lime);background:color-mix(in srgb,var(--lime) 16%,transparent)}
+.opt.no{border-color:var(--coral);text-decoration:line-through;opacity:.7}
+.qmeta{display:flex;justify-content:space-between;gap:10px;font-size:.78em;flex-wrap:wrap}
+.score{font-family:var(--f-title);font-weight:800;color:var(--pop)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* Feedback */
+.faces{display:flex;gap:8px;flex-wrap:wrap}
+.face{font:inherit;font-size:1.6em;width:60px;height:60px;border-radius:50%;border:3px solid var(--line);background:var(--panel);cursor:pointer;display:grid;place-items:center}
+.face[aria-pressed="true"]{border-color:var(--lime);background:var(--lime)}
+.nums{display:flex;gap:6px;flex-wrap:wrap}
+.nums .chip{min-width:46px;text-align:center}
+textarea{font:inherit;font-size:.85em;width:100%;min-height:80px;border-radius:14px;border:2px solid var(--line);background:var(--panel);color:var(--text);padding:.6em .8em}
+label.q2{font-family:var(--f-title);font-weight:700;font-size:.9em}
+.form{display:grid;gap:20px}
+
+/* Lecturer */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:12px 14px}
+.kpi b{font-family:var(--f-title);font-size:1.8em;display:block;color:var(--pop);font-variant-numeric:tabular-nums}
+.kpi span{font-size:.75em;color:var(--muted)}
+.tscroll{overflow-x:auto;border:2px solid var(--line);border-radius:16px}
+table{border-collapse:collapse;width:100%;font-size:.78em;min-width:560px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;font-variant-numeric:tabular-nums}
+th{font-family:var(--f-title);color:var(--title)}
+.comments{display:grid;gap:8px}
+.comments div{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-size:.8em}
+footer{margin-top:40px;font-size:.72em;color:var(--muted);display:grid;gap:8px;border-top:2px solid var(--line);padding-top:14px}
+.linkbtn{font:inherit;background:none;border:0;color:var(--aqua);text-decoration:underline;cursor:pointer;padding:0}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--lime);color:var(--on-lime);border:3px solid var(--ink);border-radius:14px;padding:.5em 1em;font-family:var(--f-title);font-weight:700;z-index:20;max-width:calc(100% - 32px)}
+
+/* Background video: clear behind the welcome screen, heavily veiled behind lessons */
+#bgv{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:#000}
+#bgv video{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05)}
+#bgv .veil{position:absolute;inset:0;background:var(--ground);opacity:.86;transition:opacity .8s ease}
+body.v-hero #bgv .veil{opacity:.66}
+body.v-hero .hero{text-shadow:0 2px 16px var(--ground),0 0 4px var(--ground)}
+body.v-hero .hero .says,body.v-hero .hero .chip,body.v-hero .hero .btn{text-shadow:none}
+.hero h1{font-size:clamp(52px,10vw,104px);line-height:.98}
+.hero p.lead{font-size:clamp(20px,2.4vw,28px)}
+/* Soft pop-up entrance, one piece after another */
+@keyframes softpop{0%{opacity:0;transform:translateY(18px) scale(.94)}60%{opacity:1;transform:translateY(-3px) scale(1.015)}100%{opacity:1;transform:none}}
+.hero > *{animation:softpop .7s cubic-bezier(.2,.8,.3,1.2) both}
+.hero > *:nth-child(1){animation-delay:.05s}.hero > *:nth-child(2){animation-delay:.18s}.hero > *:nth-child(3){animation-delay:.34s}
+.hero > *:nth-child(4){animation-delay:.5s}.hero > *:nth-child(5){animation-delay:.64s}.hero > *:nth-child(6){animation-delay:.78s}.hero > *:nth-child(7){animation-delay:.9s}
+body.v-hero #doodles{display:none}
+html{background:var(--ground)} body{background:transparent}
+body::before{content:"";position:fixed;inset:0;background:var(--ground);z-index:-1}
+
+/* Illustrations and visual cards */
+svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
+.flip,.flip .in{min-height:470px}
+.front svg.ill{margin-bottom:4px}
+.vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.vcard{margin:0;background:var(--sticker);color:var(--ink);border:3px solid var(--ink);border-radius:20px;padding:14px;box-shadow:6px 6px 0 var(--shadow);display:grid;gap:12px;align-content:start;min-width:0}
+.vcard .k{font-family:var(--f-title);font-weight:700;font-size:.7em;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.vcard h3{font-size:1.2em;margin-top:2px}
+.vcard figcaption{display:grid;gap:6px;font-size:.86em}
+.vcard .lead2{font-weight:700;color:var(--teal)}
+.vcard .limit2{font-size:.85em;color:var(--sticker-sub);border-top:2px dashed #cfd8e3;padding-top:6px}
+@keyframes jig{0%,100%{transform:translate(0,0)}25%{transform:translate(.8px,-.6px)}75%{transform:translate(-.8px,.6px)}}
+@keyframes jig2{0%,100%{transform:translate(0,0)}50%{transform:translate(2.5px,-1.5px)}}
+@keyframes jig3{0%,100%{transform:translate(0,0)}50%{transform:translate(5px,-4px)}}
+.ill .jig{animation:jig .35s linear infinite}
+.ill .jig2{animation:jig2 1.4s ease-in-out infinite}
+.ill .jig3{animation:jig3 1.1s ease-in-out infinite}
+.ill circle.jig2:nth-of-type(odd),.ill circle.jig3:nth-of-type(odd){animation-delay:-.6s}
+/* Drag and drop */
+.item{touch-action:none;user-select:none;-webkit-user-select:none}
+.item.dragging{opacity:.35}
+.ghost{position:fixed;z-index:50;pointer-events:none;margin:0;transform:rotate(-4deg) scale(1.08);box-shadow:8px 10px 0 var(--shadow)}
+.bin.over{border-style:solid;border-color:var(--lime);background:color-mix(in srgb,var(--lime) 14%,transparent);transform:scale(1.02)}
+.bin.pop{animation:pop .45s ease}
+.bin.shake{animation:shake .4s ease;border-color:var(--coral)}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+@media (max-width:640px){ .brand span{display:none} .tools{width:100%} .atomwrap{grid-template-columns:1fr} .mgrid{gap:6px} .flip,.flip .in{min-height:500px} }
+@media (prefers-reduced-motion: reduce){
+  .ill .jig,.ill .jig2,.ill .jig3,.bin.pop,.bin.shake,.hero > *{animation:none}
+  #doodles svg{animation:none}
+  .btn,.stop,.btn:nth-of-type(even),.stop:nth-child(odd),.stop:nth-child(even){transform:none!important;transition:none}
+  .flip .in{transition:none}
+}
+</style>
+<script src="config.js"></script>
+</head>
+<body>
+<div id="bgv" aria-hidden="true"><video id="bgVideo" muted loop playsinline preload="auto" poster="assets/bg-dna.jpg"><source src="assets/bg-dna.mp4" type="video/mp4"></video><div class="veil"></div></div>
+<div id="doodles" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <img class="logo" src="assets/logo.png" alt="Chemistry with Dr. NAM logo" width="64" height="64">
+    <div class="brand"><b>Chemistry Around You</b><span>with Dr. NAM · Bringing everyday life into simple science, explained.</span></div>
+    <div class="tools">
+      <button class="btn small" id="homeBtn" type="button">Journey map</button>
+      <button class="btn small" id="themeBtn" type="button">Day / Night</button>
+      <button class="btn small" id="motionBtn" type="button" aria-pressed="false">Pause background</button>
+    </div>
+  </header>
+  <main id="app"></main>
+  <footer>
+    <p>Chemistry Around You is for learning only. For your health, always ask a pharmacist or doctor.</p>
+    <p id="privacyLine"></p>
+  </footer>
+</div>
+<div id="toast" class="toast" hidden role="status"></div>
+
+<script>
+/* ---------------- Content ---------------- */
+const STOPS = [
+{ id:"s0", num:"Stop 0", title:"What is everything made of?", topic:"Matter and its states",
+  hook:"Why can you smell durian from the next room?",
+  tip:"Picture a class of students. How they sit, walk or run is exactly how particles behave in solids, liquids and gases.",
+  core:[
+    {t:"Matter", a:"Anything you can touch, hold or fill a space with is matter: your phone, your teh tarik, even the air inside a balloon.", s:"Matter is anything that has mass and takes up space.", l:"Light and sound are not matter, even though you can see and hear them."},
+    {t:"Particles", a:"Zoom into a grain of sugar far enough and you would see tiny beads, far too small for a normal microscope.", s:"All matter is made of tiny particles (atoms, molecules or ions) that are always moving.", l:"A particle of sugar is not a tiny sweet crystal. Single particles have no colour or taste of their own."},
+    {t:"Solid, liquid, gas", a:"Solid: students seated in exam rows. Liquid: students walking in a busy corridor. Gas: students running freely on the field at recess.", s:"Solid particles are packed in fixed places and only vibrate. Liquid particles are close but slide past each other. Gas particles are far apart and move fast in all directions.", l:"Between gas particles there is empty space, not air. And real particles are far smaller and faster than any student."},
+    {t:"Changing state", a:"Give the students energy and they leave their seats. Take the energy away and they sit down again.", s:"Heating gives particles energy to break free: melting (solid to liquid) and boiling (liquid to gas). Cooling reverses it: condensing and freezing.", l:"Not everything melts. Paper and wood burn or break down before they can melt."},
+    {t:"Why you smell durian", a:"Smell particles escape from the durian and spread out, like a crowd slowly filling an empty hall.", s:"Diffusion is the spreading of particles from where there are many to where there are few. Gas particles move fast, so a smell travels across a room quickly.", l:"In a still room, smells also ride on moving air, so diffusion is not the only reason."}
+  ],
+  acts:[{type:"sort", title:"Sort It: solid, liquid or gas?", bins:["Solid","Liquid","Gas"],
+    items:[["Ice cube","Solid","Particles locked in place, like students seated in exam rows."],["Cooking oil","Liquid","It flows and takes the shape of the bottle, like students in a corridor."],["Steam from a kettle","Gas","Water particles spread far apart and move fast."],["Grain of rice","Solid","It keeps its own shape."],["Soy sauce","Liquid","It pours and flows."],["Oxygen we breathe","Gas","You cannot see it, but it fills the room."],["Gold ring","Solid","Metal particles are packed tightly in fixed places."],["Durian smell","Gas","Smell particles travel through the air."],["Honey","Liquid","Thick and slow, but it still flows."]]}],
+  deeper:[
+    {t:"Evaporation vs boiling", a:"Why do wet clothes dry on the line without ever boiling?", s:"Evaporation happens at the surface at any temperature, when the fastest particles escape. Boiling happens all through the liquid, at the boiling point (100 °C for pure water at sea level).", l:"Wind and sunshine speed up evaporation by carrying escaped particles away and adding energy."},
+    {t:"Melting point as an ID", a:"Every pure substance melts at its own temperature, like a fingerprint.", s:"Pure ice always melts at 0 °C. Chemists measure melting points to check that a substance is pure. Pharmacy link: medicine makers use melting points as one quality check for drug ingredients.", l:"Impurities usually lower the melting point and spread it over a range."},
+    {t:"The heating curve", a:"Heat ice steadily and watch the thermometer. Twice, it stops rising.", s:"While ice melts (0 °C) and while water boils (100 °C), the heat goes into pulling particles apart, not into raising the temperature. That is why the line goes flat.", l:"The flat parts are at 0 °C and 100 °C only for pure water at sea level."}
+  ],
+  side:[
+    {t:"Why sweating cools you", a:"On a hot day, sweat is your body's built-in air-conditioner.", s:"When sweat evaporates, the fastest particles leave your skin and take energy with them, so your skin cools down.", l:"In very humid weather, sweat evaporates slowly, so you feel hotter and sticky."},
+    {t:"The puffy chip packet", a:"Why does a sealed packet of chips puff up when you drive to Cameron Highlands?", s:"Higher up, the air pressure outside is lower. The gas sealed inside pushes outward and the packet swells.", l:"Bring it back down and the packet relaxes again."}
+  ],
+  check:[
+    {q:"Which of these is NOT matter?", o:["Air","Water","Light","Sand"], a:2, h:"Matter has mass and takes up space. Which one has no mass?", w:"Light has no mass, so it is not matter. Air, water and sand all are."},
+    {q:"In which state are particles far apart and moving fast?", o:["Solid","Liquid","Gas"], a:2, h:"Think of the students running on the field at recess.", w:"Gas particles are far apart and move quickly in all directions."},
+    {q:"Ice turning into water is called…", o:["Boiling","Melting","Freezing","Condensing"], a:1, h:"Solid to liquid: the students leave their exam seats.", w:"Melting is solid to liquid."},
+    {q:"You smell perfume from across the room because…", o:["The air pushes your nose","Perfume particles spread out by diffusion","Perfume turns into a solid","Light carries the smell"], a:1, h:"Particles move from where there are many to where there are few.", w:"Perfume particles diffuse through the air and reach your nose."},
+    {q:"Wet clothes dry without boiling because…", o:["Water boils at room temperature","Surface particles evaporate at any temperature","Sunlight removes the water","Clothes absorb the water"], a:1, h:"The fastest particles at the surface can escape even when it is not hot.", w:"Evaporation happens at the surface at any temperature."}
+  ]},
+
+{ id:"s1", num:"Stop 1", title:"What are the bricks?", topic:"Atoms, elements and the periodic table",
+  hook:"If everything is made of particles, why are gold, water and air so different?",
+  tip:"Think LEGO. A few kinds of bricks build everything, and how you join them changes what you get.",
+  core:[
+    {t:"Atom", a:"A LEGO brick. Every material in the world is built from a small set of brick types.", s:"An atom is the smallest particle of an element that still keeps that element's identity.", l:"Atoms are not solid little balls, and you cannot snap them apart by hand."},
+    {t:"Element", a:"A box that holds only one kind of LEGO brick.", s:"An element is a pure substance made of only one kind of atom. About 118 elements are known.", l:"Some elements exist as pairs of the same atom, such as oxygen gas (O₂). They are still one element."},
+    {t:"Chemical symbols", a:"Short nicknames: H for hydrogen, O for oxygen. Some come from Latin: Na (natrium) is sodium and Fe (ferrum) is iron.", s:"Every element has a one- or two-letter symbol. The first letter is always a capital.", l:"Capitals matter: Co is cobalt, but CO is carbon monoxide, a compound."},
+    {t:"Compound", a:"Letters make words. The letters H and O make the word H₂O.", s:"A compound is two or more elements chemically joined in a fixed ratio. It behaves differently from its elements: sodium (a reactive metal) and chlorine (a poisonous gas) join to make table salt.", l:"Unlike letters on a page, you cannot pull a compound apart just by picking at it."},
+    {t:"Mixture", a:"Nasi campur: rice, chicken and sambal share a plate, and you can still pick them apart.", s:"A mixture is substances mixed but not chemically joined. They keep their own properties and can be separated by filtering, evaporating or other physical means.", l:"Some mixtures look like one substance, such as air or sugar water."},
+    {t:"The periodic table", a:"A school seating plan where students in the same column share similar habits.", s:"Elements are arranged by atomic number. Elements in the same column (group) behave alike: sodium and potassium both react strongly with water.", l:"The table is a map of patterns, not a list to memorise all at once."}
+  ],
+  acts:[
+    {type:"match", title:"Memory Match: symbol and name", pairs:[["H","Hydrogen"],["O","Oxygen"],["C","Carbon"],["N","Nitrogen"],["Na","Sodium"],["Fe","Iron"],["Ca","Calcium"],["Cl","Chlorine"]]},
+    {type:"sort", title:"Sort It: element, compound or mixture?", bins:["Element","Compound","Mixture"],
+     items:[["Gold","Element","Only one kind of atom, gold atoms."],["Water","Compound","Hydrogen and oxygen chemically joined: H₂O."],["Air","Mixture","Nitrogen, oxygen and other gases just mixed together."],["Table salt","Compound","Sodium and chlorine chemically joined."],["Oxygen gas","Element","Only oxygen atoms, in pairs."],["Teh tarik","Mixture","Tea, milk, sugar and water mixed, not joined."],["Iron nail","Element","Only iron atoms."],["Sugar","Compound","Carbon, hydrogen and oxygen joined in a fixed ratio."],["Seawater","Mixture","Salt dissolved in water. Boil it off and the salt is left."]]}
+  ],
+  deeper:[
+    {t:"The elements in you", a:"Your body is mostly built from four bricks.", s:"By mass, roughly 65% of your body is oxygen, then carbon (about 18%), hydrogen (about 10%) and nitrogen (about 3%). Most of the oxygen and hydrogen are in water.", l:"Small amounts of other elements, like calcium and iron, are still essential."},
+    {t:"Metals and non-metals", a:"The left side of the seating plan is the metal club; the right side is the non-metal club.", s:"Metals are usually shiny, bend without breaking and conduct electricity. Non-metals are usually dull, brittle as solids and do not conduct.", l:"Some elements near the border, such as silicon, behave a bit like both."}
+  ],
+  side:[
+    {t:"Elements in your phone", a:"Your phone is a pocket-sized periodic table.", s:"Lithium powers the battery, silicon runs the chips, and copper and gold carry signals through the wiring.", l:"These are mined from the Earth, which is one reason phone recycling matters."},
+    {t:"Iron in your blood", a:"Iron is the hand that holds oxygen as blood carries it around your body.", s:"Iron sits inside haemoglobin, the protein in red blood cells that carries oxygen. Too little iron can make you feel tired.", l:"This is for learning only. For your health, ask a pharmacist or doctor."}
+  ],
+  check:[
+    {q:"Which of these is an element?", o:["Water","Oxygen gas","Table salt","Air"], a:1, h:"An element is a box with only one kind of brick.", w:"Oxygen gas is made of only oxygen atoms."},
+    {q:"Water (H₂O) is a…", o:["Element","Compound","Mixture"], a:1, h:"Two different letters joined into one word.", w:"Water is hydrogen and oxygen chemically joined, so it is a compound."},
+    {q:"Teh tarik is a mixture because…", o:["It is hot","Its parts are mixed, not chemically joined","It contains water","It has only one kind of atom"], a:1, h:"Think nasi campur: things sharing a plate.", w:"Tea, milk, sugar and water are mixed but not chemically joined."},
+    {q:"The symbol Na stands for…", o:["Nitrogen","Neon","Sodium","Nickel"], a:2, h:"It comes from the Latin name natrium.", w:"Na is sodium, from the Latin natrium."},
+    {q:"Elements in the same column of the periodic table…", o:["Have the same mass","Behave in similar ways","Are all gases","Are always metals"], a:1, h:"Remember the seating plan: same column, similar habits.", w:"Elements in the same group behave alike."}
+  ]},
+
+{ id:"s2", num:"Stop 2", title:"Why do atoms behave differently?", topic:"Inside the atom: protons, neutrons, electrons and shells",
+  hook:"Why do fireworks come in different colours?",
+  tip:"The outer electrons are the ones who reach out to hold hands. Keep your eye on them; they explain almost everything in bonding.",
+  core:[
+    {t:"Inside an atom", a:"A stadium with a tiny marble on the centre spot (the nucleus) and a few flies buzzing around the stands (the electrons).", s:"The nucleus holds protons (positive) and neutrons (no charge). Electrons (negative) move around the nucleus. An atom is mostly empty space.", l:"Electrons do not fly in neat paths; they are found in regions around the nucleus."},
+    {t:"Atomic number", a:"An atom's MyKad number: it tells you exactly which element it is.", s:"The atomic number is the number of protons. Six protons is always carbon; eight is always oxygen.", l:"Unlike MyKad, every atom of the same element shares the same number."},
+    {t:"A neutral atom", a:"A balanced scale: the positives and negatives cancel out.", s:"In a neutral atom, the number of electrons equals the number of protons.", l:"Atoms can gain or lose electrons to become ions. You will meet them at Stop 3."},
+    {t:"Electron shells", a:"Rows of seats in a cinema. The front row fills first. Row 1 holds 2, and rows 2 and 3 hold 8 each (for the first 20 elements).", s:"Electrons sit in shells around the nucleus. Sodium has 11 electrons, arranged 2.8.1.", l:"After calcium, the filling order gets more complicated. PHD115 will show you why."},
+    {t:"Valence electrons", a:"The people in the back row. They are the ones who reach out to hold hands with neighbours.", s:"Electrons in the outermost shell are valence electrons. They decide how an atom reacts and bonds.", l:"Atoms do not want things; we say it that way only to make the idea easier."},
+    {t:"Fireworks colours", a:"Heat lifts electrons to a higher row. When they drop back, they give out light. Each element's rows are spaced differently, so each one shines its own colour.", s:"Sodium gives yellow, strontium gives red and copper gives blue-green. Chemists use this in flame tests to identify metals.", l:"A firework's final colour also depends on the other chemicals mixed in."}
+  ],
+  acts:[{type:"atom", title:"Atom Builder", targets:[["H","Hydrogen",1,0,1],["C","Carbon",6,6,6],["O","Oxygen",8,8,8],["Na","Sodium",11,12,11]]}],
+  deeper:[
+    {t:"Isotopes", a:"Same MyKad number, different weight.", s:"Isotopes are atoms of the same element with different numbers of neutrons. Carbon-12 and carbon-14 are both carbon; carbon-14 is used to date ancient objects.", l:"Isotopes of an element react the same way chemically."},
+    {t:"Mass number", a:"Count everything in the nucleus.", s:"Mass number = protons + neutrons. Sodium-23 has 11 protons and 12 neutrons. Electrons are so light that we leave them out.", l:"The mass shown on a periodic table is an average over the natural isotopes, so it is often not a whole number."},
+    {t:"The repeating pattern", a:"Line up the first 20 elements and look at their back rows.", s:"Each time a shell fills, a new shell starts with 1 electron again: H, Li, Na and K all have 1 valence electron. That repeat is why the periodic table has columns.", l:"From element 21 onward the pattern gets more complex, but the idea of repeating columns stays."}
+  ],
+  side:[
+    {t:"Orange street lights", a:"Some older street lights glow orange-yellow. That is sodium's colour.", s:"Inside these lamps, electricity lifts sodium's electrons; as they drop back, they give out yellow-orange light.", l:"Many towns now use LED lights, which work differently."},
+    {t:"Isotopes in medicine", a:"Pharmacy link: some medicines carry special isotopes, like a tracking tag.", s:"Radioactive iodine is used to diagnose and treat some thyroid conditions, because the thyroid gland collects iodine.", l:"This is for learning only. For your health, ask a pharmacist or doctor."}
+  ],
+  check:[
+    {q:"Which particle has a negative charge?", o:["Proton","Neutron","Electron"], a:2, h:"The flies buzzing around the stadium.", w:"Electrons carry a negative charge."},
+    {q:"The atomic number tells you the number of…", o:["Neutrons","Protons","Shells","Atoms"], a:1, h:"It is the atom's MyKad number, the thing that never changes.", w:"Atomic number = number of protons."},
+    {q:"Oxygen has 8 electrons. How are they arranged?", o:["8","2.6","2.8","4.4"], a:1, h:"The front row holds only 2.", w:"2 in the first shell and 6 in the second: 2.6."},
+    {q:"Valence electrons are found in…", o:["The nucleus","The first shell","The outermost shell"], a:2, h:"The back row of the cinema.", w:"Valence electrons are in the outermost shell."},
+    {q:"Fireworks have different colours because…", o:["Of different paper wrappers","Electrons drop back and give out light of each element's colour","Protons burn","The sky reflects the light"], a:1, h:"Heat lifts electrons up; what happens when they come back down?", w:"Electrons falling back give out light, and each element has its own colour."}
+  ]}
+];
+
+const LATER = [
+  ["Stop 3","Ions and the octet rule","Why do atoms gain or lose electrons?"],
+  ["Stop 4","Bonding","How do atoms hold hands?"],
+  ["Stop 4B","Carbon, the LEGO master","Why is carbon in almost everything?"],
+  ["Stop 5","Formulas and equations","How do we write a chemical recipe?"],
+  ["Stop 6","The mole and concentration","How do chemists count tiny things?"],
+  ["Stop 7","Chemistry in daily life","Why does this matter to me?"],
+  ["Theme","Chemistry and human health","Blood, medicines, natural products"],
+  ["Theme","Chemistry and the environment","Air, water, plastic"],
+  ["Special","Chemistry Beyond the Atmosphere","Star stuff and rocket fuel"]
+];
+const TOTAL_STOPS = 9;
+const TABS = [["core","Core"],["act","Activity"],["deeper","Go deeper"],["side","Side trip"],["check","Self-check"]];
+const CHEERS = ["Nice work!","You've got it!","That's how chemists think!","Brilliant, keep going!","You just learned what many first-year students find tricky!","Great thinking!"];
+const TRYS = ["Many people find this tricky at first.","Almost! Have another look.","Good try. Here is a clue."];
+
+/* ---------------- Illustrations (original, drawn in code) ---------------- */
+const K="#231f20", W="#ffffff", T="#2dd4bf", D="#0d7f74", C="#fc7a7a", L="#d4ff3a", A="#5eead4", N="#0c1a30";
+const ST = `stroke="${K}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;
+const TX = (x,y,t,o={}) => `<text x="${x}" y="${y}" text-anchor="${o.a||"middle"}" font-family="League Spartan, Arial, sans-serif" font-weight="${o.w||700}" font-size="${o.s||12}" fill="${o.f||K}">${t}</text>`;
+const sv = (inner, label, h=150) => `<svg class="ill" viewBox="0 0 240 ${h}" role="img" aria-label="${label}"><rect width="240" height="${h}" rx="14" fill="${A}" fill-opacity=".22"/>${inner}</svg>`;
+const ring = (cx,cy,r,n,fn) => Array.from({length:n},(_,i)=>{const g=i/n*Math.PI*2; return fn(cx+r*Math.cos(g), cy+r*Math.sin(g), g);}).join("");
+const brick = (x,y,w,c) => `<rect x="${x}" y="${y}" width="${w}" height="28" rx="3" fill="${c}" ${ST}/>` + Array.from({length:Math.round(w/22)},(_,i)=>`<rect x="${x+6+i*22}" y="${y-8}" width="12" height="8" rx="2" fill="${c}" ${ST}/>`).join("");
+const atomMini = (cx,cy,e,c) => `<circle cx="${cx}" cy="${cy}" r="30" fill="none" stroke="${K}" stroke-width="2" stroke-dasharray="4 4"/><circle cx="${cx}" cy="${cy}" r="11" fill="${c}" ${ST}/>` + ring(cx,cy,30,e,(x,y)=>`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="${C}" stroke="${K}" stroke-width="2"/>`);
+const ILLS = {
+ matter: () => sv(`<ellipse cx="60" cy="56" rx="28" ry="34" fill="${C}" ${ST}/><path d="M60 90l-5 8h10z" fill="${C}" ${ST}/><path d="M60 98q-9 10 3 18q8 6 0 12" fill="none" ${ST}/><ellipse cx="50" cy="44" rx="7" ry="11" fill="${W}" opacity=".7"/>
+   <rect x="102" y="38" width="40" height="72" rx="8" fill="${N}" ${ST}/><rect x="108" y="48" width="28" height="48" rx="3" fill="${T}"/><circle cx="122" cy="103" r="3" fill="${W}"/>
+   <path d="M160 62h46l-6 54h-34z" fill="${W}" ${ST}/><path d="M163 76h40l-5 38h-30z" fill="${C}" fill-opacity=".45"/><path d="M175 54q-6-8 0-16q6-8 0-16M192 54q-6-8 0-16q6-8 0-16" fill="none" stroke="${D}" stroke-width="3" stroke-linecap="round"/>
+   ${TX(120,144,"balloon · phone · teh tarik: all matter",{s:11})}`, "A balloon, a phone and a cup of teh tarik"),
+ particles: () => sv(`<path d="M24 62l38-14l38 14l-38 14z" fill="${W}" ${ST}/><path d="M24 62v40l38 14v-40z" fill="${W}" ${ST}/><path d="M100 62v40l-38 14v-40z" fill="${A}" fill-opacity=".5" ${ST}/>
+   <path d="M104 74L130 70" stroke="${K}" stroke-width="2" stroke-dasharray="4 4"/>
+   <circle cx="172" cy="66" r="44" fill="${W}" ${ST}/><path d="M203 97l22 24" stroke="${K}" stroke-width="9" stroke-linecap="round"/>
+   ${[0,1,2,3,4].map(i=>[0,1,2,3,4].map(j=>{const x=150+i*11+(j%2)*5, y=44+j*11; return Math.hypot(x-172,y-66)<36?`<circle class="jig" cx="${x}" cy="${y}" r="4.6" fill="${T}" stroke="${K}" stroke-width="1.5"/>`:"";}).join("")).join("")}
+   ${TX(62,136,"sugar cube",{s:11})}${TX(172,136,"zoomed in: tiny particles",{s:11})}`, "A sugar cube and a magnifier showing tiny particles"),
+ states: () => { const box=(x,l)=>`<rect x="${x}" y="22" width="66" height="100" rx="8" fill="${W}" ${ST}/>${TX(x+33,142,l,{s:13,w:800})}`;
+   const sol = [0,1,2,3].map(r=>[0,1,2,3].map(c=>`<circle class="jig" cx="${23+c*15}" cy="${66+r*15}" r="6.5" fill="${T}" stroke="${K}" stroke-width="1.5"/>`).join("")).join("");
+   const liq = [[98,112],[112,110],[126,113],[140,109],[104,98],[119,96],[134,99],[147,97],[100,84],[115,82],[130,86],[143,84]].map(([x,y])=>`<circle class="jig2" cx="${x}" cy="${y}" r="6.5" fill="${A}" stroke="${K}" stroke-width="1.5"/>`).join("");
+   const gas = [[176,38],[208,52],[184,78],[214,96],[180,112]].map(([x,y])=>`<circle class="jig3" cx="${x}" cy="${y}" r="6.5" fill="${C}" stroke="${K}" stroke-width="1.5"/><path d="M${x-16} ${y}h-8" stroke="${K}" stroke-width="2"/>`).join("");
+   return sv(box(8,"Solid")+box(87,"Liquid")+box(166,"Gas")+sol+liq+gas, "Particles in a solid, a liquid and a gas"); },
+ changeState: () => sv(`<rect x="22" y="48" width="52" height="52" rx="8" fill="${A}" ${ST}/><path d="M32 58h14" stroke="${W}" stroke-width="4" stroke-linecap="round"/>
+   <path d="M88 74h46" ${ST}/><path d="M134 66l12 8l-12 8z" fill="${K}"/><path d="M110 112c-12-6-8-20 0-28c2 8 10 10 8 20c-1 6-4 8-8 8z" fill="${C}" ${ST}/>
+   <ellipse cx="188" cy="102" rx="40" ry="12" fill="${T}" ${ST}/><path d="M176 70q4-8 8 0q2 6-4 6q-6 0-4-6z" fill="${T}" ${ST}/>
+   ${TX(48,128,"ice",{s:12})}${TX(110,48,"add heat",{s:12})}${TX(188,132,"water",{s:12})}`, "Ice melting into water when heated"),
+ durian: () => { const sp = ring(78,84,44,22,(x,y,g)=>{const x2=78+56*Math.cos(g), y2=84+52*Math.sin(g), a=.14; return `<path d="M${(78+44*Math.cos(g-a)).toFixed(1)} ${(84+42*Math.sin(g-a)).toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}L${(78+44*Math.cos(g+a)).toFixed(1)} ${(84+42*Math.sin(g+a)).toFixed(1)}z" fill="${T}" ${ST}/>`;});
+   const dots = [[138,60],[150,82],[146,104],[166,50],[176,74],[170,98],[160,120],[192,40],[198,66],[204,92],[196,118],[220,56],[224,100]].map(([x,y])=>`<circle class="jig3" cx="${x}" cy="${y}" r="4" fill="${C}" stroke="${K}" stroke-width="1.5"/>`).join("");
+   return sv(sp+`<ellipse cx="78" cy="84" rx="44" ry="42" fill="${T}" ${ST}/><path d="M78 42v-14" stroke="${K}" stroke-width="5" stroke-linecap="round"/>`+dots+TX(168,142,"smell spreading out",{s:11}), "A durian with smell particles spreading out"); },
+ lego: () => sv(brick(60,98,120,C)+brick(78,62,88,T)+brick(98,26,44,L)+TX(120,144,"a few kinds of bricks build everything",{s:11}), "Three stacked toy bricks"),
+ element: () => sv(`${[0,1,2,3].map(i=>brick(52+i*34,36,30,T)).join("")}${[0,1,2].map(i=>brick(68+i*34,8+50,30,T)).join("")}<path d="M40 74h160v50a8 8 0 0 1-8 8H48a8 8 0 0 1-8-8z" fill="${D}" ${ST}/>${TX(120,110,"ONLY ONE KIND",{s:14,w:800,f:W})}`, "A box holding only one kind of brick"),
+ symbols: () => sv([["H","Hydrogen",T,20],["O","Oxygen",C,90],["Na","Sodium",L,160]].map(([sym,name,c,x],i)=>`<g transform="rotate(${[-6,3,-3][i]} ${x+30} 75)"><rect x="${x}" y="30" width="60" height="86" rx="10" fill="${W}" ${ST}/><rect x="${x}" y="30" width="60" height="20" rx="8" fill="${c}" ${ST}/>${TX(x+30,92,sym,{s:34,w:800})}${TX(x+30,110,name,{s:9.5,w:400})}</g>`).join(""), "Name tags with element symbols H, O and Na"),
+ compound: () => sv(`${[["H",18],["H",58],["O",98]].map(([t,x])=>`<rect x="${x}" y="52" width="34" height="40" rx="6" fill="${W}" ${ST}/>${TX(x+17,81,t,{s:24,w:800})}`).join("")}<path d="M140 72h20" ${ST}/><path d="M160 64l10 8l-10 8z" fill="${K}"/><rect x="174" y="48" width="56" height="48" rx="24" fill="${T}" ${ST}/>${TX(202,80,"H₂O",{s:20,w:800})}${TX(120,128,"letters join into a new word",{s:11})}`, "Letters H, H and O joining to make H2O"),
+ mixture: () => sv(`<ellipse cx="120" cy="82" rx="100" ry="54" fill="${W}" ${ST}/><ellipse cx="120" cy="82" rx="82" ry="42" fill="none" stroke="${A}" stroke-width="3"/>
+   <path d="M60 86c-6-22 26-34 44-22c14 10 8 34-14 36c-14 1-26-2-30-14z" fill="${W}" ${ST}/>${[[70,80],[80,72],[90,78],[78,88],[94,90],[86,64]].map(([x,y])=>`<path d="M${x} ${y}l5 2" stroke="${K}" stroke-width="2" stroke-linecap="round"/>`).join("")}
+   <path d="M118 52c18-8 40 0 38 16c-2 14-28 16-40 6c-8-6-6-18 2-22z" fill="${C}" ${ST}/>
+   <circle cx="150" cy="98" r="11" fill="${T}" ${ST}/><circle cx="150" cy="98" r="5" fill="${A}"/><circle cx="172" cy="90" r="11" fill="${T}" ${ST}/><circle cx="172" cy="90" r="5" fill="${A}"/>
+   <path d="M118 102c4-8 18-8 22 0c2 6-4 12-12 12s-12-6-10-12z" fill="${W}" ${ST}/><circle cx="129" cy="104" r="5" fill="${L}" stroke="${K}" stroke-width="2"/>${TX(120,146,"nasi campur: still easy to pick apart",{s:11})}`, "A plate of nasi campur with rice, chicken, egg and cucumber", 152),
+ seating: () => sv([0,1,2,3,4,5].map(c=>[0,1,2,3].map(r=>{const x=30+c*31, y=34+r*24, same=c===0; return `<rect x="${x-11}" y="${y+4}" width="22" height="12" rx="3" fill="${W}" stroke="${K}" stroke-width="2"/><circle cx="${x}" cy="${y}" r="7" fill="${same?C:[T,A,W,L][(c+r)%4]}" stroke="${K}" stroke-width="2"/>`;}).join("")).join("")+`<rect x="12" y="20" width="36" height="104" rx="10" fill="none" stroke="${D}" stroke-width="3" stroke-dasharray="5 4"/>${TX(140,144,"same column, similar habits",{s:11})}`, "A classroom seating plan with one column of similar students"),
+ stadium: () => sv(`<ellipse cx="120" cy="72" rx="106" ry="58" fill="${N}" ${ST}/><ellipse cx="120" cy="72" rx="82" ry="40" fill="${T}" ${ST}/><circle cx="120" cy="72" r="3.5" fill="${C}" stroke="${K}" stroke-width="1.5"/>
+   ${[[36,48],[200,52],[60,110],[186,104],[120,22]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="${L}"/><path d="M${x-5} ${y-5}l3 3M${x+5} ${y-5}l-3 3" stroke="${L}" stroke-width="1.5"/>`).join("")}
+   ${TX(120,144,"marble = nucleus · flies = electrons",{s:11})}`, "A stadium with a tiny marble at the centre spot", 150),
+ idcard: () => sv(`<rect x="34" y="24" width="172" height="104" rx="12" fill="${W}" ${ST}/><rect x="34" y="24" width="172" height="24" rx="10" fill="${T}" ${ST}/>${TX(120,41,"ATOM ID",{s:12,w:800})}
+   <rect x="46" y="58" width="58" height="58" rx="8" fill="${A}" fill-opacity=".4" stroke="${K}" stroke-width="2"/>${atomMini(75,87,0,C).replace('r="30"','r="20"')}${ring(75,87,20,6,(x,y)=>`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="${C}" stroke="${K}" stroke-width="1.5"/>`)}
+   ${TX(156,96,"6",{s:44,w:800})}${TX(156,114,"Carbon · C",{s:12})}${TX(156,66,"atomic no.",{s:10,w:400})}`, "An ID card for carbon showing atomic number 6"),
+ scale: () => sv(`<path d="M120 36v84" ${ST}/><path d="M92 126h56" stroke="${K}" stroke-width="6" stroke-linecap="round"/><path d="M40 44h160" stroke="${K}" stroke-width="5" stroke-linecap="round"/><circle cx="120" cy="36" r="6" fill="${L}" ${ST}/>
+   <path d="M48 44l-14 44M48 44l14 44M192 44l-14 44M192 44l14 44" stroke="${K}" stroke-width="2"/><path d="M22 88h52a26 12 0 0 1-52 0z" fill="${W}" ${ST}/><path d="M166 88h52a26 12 0 0 1-52 0z" fill="${W}" ${ST}/>
+   ${[34,48,62].map(x=>`<circle cx="${x}" cy="80" r="7" fill="${C}" stroke="${K}" stroke-width="2"/>${TX(x,84,"+",{s:12,w:800})}`).join("")}${[178,192,206].map(x=>`<circle cx="${x}" cy="80" r="7" fill="${T}" stroke="${K}" stroke-width="2"/>${TX(x,84,"−",{s:12,w:800})}`).join("")}
+   ${TX(48,124,"protons",{s:11})}${TX(192,124,"electrons",{s:11})}`, "A balanced scale with protons on one side and electrons on the other"),
+ cinema: () => { const row=(n,y,f)=>Array.from({length:n},(_,i)=>{const x=120-(n-1)*11+i*22; return `<rect x="${x-8}" y="${y}" width="16" height="14" rx="4" fill="${i<f?C:W}" stroke="${K}" stroke-width="2"/>`;}).join("");
+   return sv(`<rect x="40" y="12" width="160" height="12" rx="4" fill="${W}" ${ST}/>${TX(120,40,"nucleus side (front)",{s:10,w:400})}${row(2,48,2)}${row(8,76,8)}${row(8,104,1)}${TX(16,60,"2",{s:13,w:800})}${TX(16,88,"8",{s:13,w:800})}${TX(16,116,"8",{s:13,w:800})}${TX(120,142,"sodium: 2.8.1",{s:12})}`, "Cinema rows holding 2, 8 and 8 seats, filled for sodium"); },
+ hands: () => sv(`<circle cx="70" cy="76" r="34" fill="${T}" ${ST}/><circle cx="170" cy="76" r="34" fill="${C}" ${ST}/>${[[60,70],[80,70],[160,70],[180,70]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3.5" fill="${K}"/>`).join("")}<path d="M60 86q10 8 20 0M160 86q10 8 20 0" fill="none" ${ST}/>
+   <path d="M102 82q18 14 36 0" fill="none" stroke="${K}" stroke-width="5" stroke-linecap="round"/><circle cx="120" cy="90" r="8" fill="${L}" ${ST}/>${TX(120,136,"outer electrons reach out and link",{s:11})}`, "Two cartoon atoms holding hands"),
+ fireworks: () => { const burst=(cx,cy,c,l)=>ring(cx,cy,26,12,(x,y)=>`<path d="M${(cx+(x-cx)*.35).toFixed(1)} ${(cy+(y-cy)*.35).toFixed(1)}L${x.toFixed(1)} ${y.toFixed(1)}" stroke="${c}" stroke-width="3" stroke-linecap="round"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="${c}"/>`)+TX(cx,cy+46,l,{s:12,f:W,w:800});
+   return sv(`<rect x="6" y="6" width="228" height="138" rx="10" fill="${N}"/>`+burst(52,56,L,"Na: yellow")+burst(120,46,C,"Sr: red")+burst(188,60,T,"Cu: blue-green"), "Fireworks in yellow, red and blue-green"); },
+ sweat: () => sv(`<circle cx="44" cy="40" r="18" fill="${L}" ${ST}/>${ring(44,40,28,8,(x,y)=>`<path d="M${(44+(x-44)*.78).toFixed(1)} ${(40+(y-40)*.78).toFixed(1)}L${x.toFixed(1)} ${y.toFixed(1)}" stroke="${K}" stroke-width="2.5" stroke-linecap="round"/>`)}
+   <path d="M84 150v-8q0-22 42-22t42 22v8" fill="${C}" ${ST}/><circle cx="126" cy="80" r="34" fill="${W}" ${ST}/><circle cx="114" cy="84" r="3" fill="${K}"/><circle cx="138" cy="84" r="3" fill="${K}"/><path d="M116 98q10 7 20 0" fill="none" stroke="${K}" stroke-width="2.5" stroke-linecap="round"/>${[[106,64],[126,58],[146,66]].map(([x,y])=>`<path d="M${x} ${y-10}q7 9 0 14q-7-5 0-14z" fill="${A}" stroke="${K}" stroke-width="2"/>`).join("")}
+   ${[180,200,220].map((x,i)=>`<path d="M${x} ${110-i*6}q-6-10 0-20q6-10 0-20" fill="none" stroke="${C}" stroke-width="3" stroke-linecap="round"/>`).join("")}${TX(200,140,"heat leaves",{s:11})}`, "Sweat evaporating and carrying heat away"),
+ chips: () => sv(`<path d="M120 130L190 30L238 130z" fill="${D}" ${ST}/><path d="M178 48l12-18l12 18l-6 4l-6-5l-6 5z" fill="${W}" stroke="${K}" stroke-width="2"/>
+   <rect x="20" y="100" width="44" height="34" rx="4" fill="${C}" ${ST}/>${TX(42,122,"sea",{s:10})}<path d="M160 64c-14-2-18 50 0 52h40c18-2 14-54 0-52z" fill="${C}" ${ST}/><rect x="166" y="80" width="28" height="16" rx="3" fill="${L}" stroke="${K}" stroke-width="2"/>
+   <path d="M76 116q40-6 70-40" fill="none" stroke="${K}" stroke-width="2" stroke-dasharray="4 4"/>${TX(110,40,"higher up:",{s:11})}${TX(110,54,"packet puffs up",{s:11})}`, "A flat chip packet at sea level and a puffy one on a mountain"),
+ phoneEl: () => sv(`<rect x="94" y="22" width="52" height="108" rx="10" fill="${N}" ${ST}/><rect x="101" y="34" width="38" height="80" rx="4" fill="${T}"/>
+   ${[["Li",40,40,C],["Si",40,96,A],["Cu",200,40,L],["Au",200,96,L]].map(([t,x,y,c])=>`<path d="M${x<120?x+20:x-20} ${y}L${x<120?101:139} ${y+8}" stroke="${K}" stroke-width="2"/><circle cx="${x}" cy="${y}" r="18" fill="${c}" ${ST}/>${TX(x,y+6,t,{s:15,w:800})}`).join("")}`, "A phone with lithium, silicon, copper and gold labels"),
+ blood: () => sv(`${[[64,62],[140,92],[96,112]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="34" ry="22" fill="${C}" ${ST}/><ellipse cx="${x}" cy="${y}" rx="16" ry="9" fill="${C}" stroke="${K}" stroke-width="2" opacity=".75"/>`).join("")}
+   ${[[150,40],[188,62],[196,110],[110,30]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="15" fill="${W}" ${ST}/>${TX(x,y+4,"O₂",{s:11,w:800})}`).join("")}`, "Red blood cells carrying oxygen"),
+ lamp: () => sv(`<rect x="6" y="6" width="228" height="138" rx="10" fill="${N}"/><circle cx="150" cy="44" r="42" fill="${L}" opacity=".25"/><circle cx="150" cy="44" r="24" fill="${L}" opacity=".45"/>
+   <path d="M70 140V40q0-12 12-12h56" fill="none" stroke="${W}" stroke-width="6" stroke-linecap="round"/><path d="M130 22h36l-6 18h-24z" fill="${L}" stroke="${W}" stroke-width="3"/>${TX(160,132,"sodium glow",{s:12,f:W,w:800})}`, "A street lamp glowing yellow-orange"),
+ capsule: () => sv(`<g transform="rotate(-30 120 75)"><rect x="60" y="54" width="120" height="44" rx="22" fill="${W}" ${ST}/><path d="M120 54h38a22 22 0 0 1 0 44h-38z" fill="${C}" ${ST}/></g><circle cx="190" cy="40" r="20" fill="${T}" ${ST}/>${TX(190,46,"I",{s:18,w:800})}${TX(120,140,"special isotopes as tracking tags",{s:11})}`, "A capsule with an iodine tag"),
+ /* Go deeper visuals */
+ evapBoil: () => { const beaker=(x,l,bub)=>`<path d="M${x} 40v76a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V40" fill="${W}" ${ST}/><path d="M${x+3} 70h74v46a6 6 0 0 1-6 6H${x+9}a6 6 0 0 1-6-6z" fill="${T}" fill-opacity=".55"/>${TX(x+40,142,l,{s:11})}${bub}`;
+   const ev = [[22,88],[40,100],[58,86],[76,104],[30,112],[64,112]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4.5" fill="${T}" stroke="${K}" stroke-width="1.5"/>`).join("")+`<circle class="jig3" cx="46" cy="58" r="4.5" fill="${C}" stroke="${K}" stroke-width="1.5"/><path d="M46 50v-14" stroke="${C}" stroke-width="2.5"/><circle class="jig3" cx="70" cy="50" r="4.5" fill="${C}" stroke="${K}" stroke-width="1.5"/>`;
+   const bo = [[148,112,6],[170,96,8],[188,110,5],[160,84,5],[196,86,7],[178,76,4]].map(([x,y,r])=>`<circle class="jig2" cx="${x}" cy="${y}" r="${r}" fill="${W}" stroke="${K}" stroke-width="1.5"/>`).join("");
+   return sv(beaker(12,"30 °C: top only",ev)+beaker(132,"100 °C: all through",bo)+TX(52,28,"Evaporation",{s:12,w:800})+TX(172,28,"Boiling",{s:12,w:800}), "Evaporation at the surface compared with boiling throughout the liquid"); },
+ meltChart: () => { const rows=[["Ice",0,A],["Butter","~35",A,35],["Aspirin",135,T],["Paracetamol",169,T],["Table salt",801,C]]; const X=v=>84+v/850*130;
+   return sv(rows.map(([n,v,c,vv],i)=>{const y=26+i*22, val=typeof vv==="number"?vv:v; return `${TX(78,y+5,n,{a:"end",s:11})}<rect x="84" y="${y-7}" width="${Math.max(3,X(val)-84).toFixed(1)}" height="14" rx="3" fill="${c}" stroke="${K}" stroke-width="1.5"/>${X(val)>190?TX(X(val)-5,y+5,v+" °C",{a:"end",s:10,w:700}):TX(X(val)+6,y+5,v+" °C",{a:"start",s:10,w:400})}`;}).join("")+`<path d="M84 16v104" stroke="${K}" stroke-width="1.5"/>${TX(120,140,"Melting points (°C) · teal = medicines",{s:11})}`, "Bar chart of melting points: ice 0, butter about 35, aspirin 135, paracetamol 169, table salt 801 degrees Celsius"); },
+ heatingCurve: () => sv(`<path d="M34 20v104h196" fill="none" stroke="${K}" stroke-width="2"/>${TX(26,114,"0",{a:"end",s:10,w:400})}${TX(26,58,"100",{a:"end",s:10,w:400})}
+   <path d="M34 110h196M34 54h196" stroke="${K}" stroke-width="1" stroke-dasharray="3 4" opacity=".4"/>
+   <polyline points="40,124 64,110 112,110 156,54 206,54 226,38" fill="none" stroke="${D}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+   <rect x="64" y="96" width="48" height="10" rx="3" fill="${L}" opacity=".9"/>${TX(88,104,"melting",{s:9.5})}<rect x="156" y="40" width="50" height="10" rx="3" fill="${L}" opacity=".9"/>${TX(181,48,"boiling",{s:9.5})}
+   ${TX(130,140,"heat added →",{s:11})}${TX(14,16,"°C",{a:"start",s:10})}`, "Heating curve of water: temperature rises, stays flat at 0 °C while melting, rises, then stays flat at 100 °C while boiling"),
+ bodyChart: () => { const d=[["O",65],["C",18],["H",10],["N",3],["Ca",1.5],["P",1]]; return sv(d.map(([e,v],i)=>{const x=24+i*36, h=v/65*92; return `<rect x="${x}" y="${(118-h).toFixed(1)}" width="26" height="${h.toFixed(1)}" rx="3" fill="${i===0?T:A}" stroke="${K}" stroke-width="1.5"/>${TX(x+13,(112-h).toFixed(1),"~"+v+"%",{s:10,w:400})}${TX(x+13,134,e,{s:14,w:800})}`;}).join("")+`<path d="M18 118h214" stroke="${K}" stroke-width="1.5"/>${TX(120,148,"Your body by mass (approximate)",{s:11})}`, "Bar chart of body elements by mass: oxygen about 65%, carbon 18%, hydrogen 10%, nitrogen 3%, calcium 1.5%, phosphorus 1%", 154); },
+ miniTable: () => { const M="m", NM="n", MD="d"; const P=[[["H",0,NM],["He",7,NM]],[["Li",0,M],["Be",1,M],["B",2,MD],["C",3,NM],["N",4,NM],["O",5,NM],["F",6,NM],["Ne",7,NM]],[["Na",0,M],["Mg",1,M],["Al",2,M],["Si",3,MD],["P",4,NM],["S",5,NM],["Cl",6,NM],["Ar",7,NM]],[["K",0,M],["Ca",1,M]]];
+   const col={m:C,n:T,d:L}; let z=0;
+   const cells=P.map((row,r)=>row.map(([s,c,k])=>{z++; const x=16+c*26.5, y=10+r*27; return `<rect x="${x}" y="${y}" width="24" height="24" rx="4" fill="${col[k]}" stroke="${K}" stroke-width="1.5"/>${TX(x+12,y+11,z,{s:6.5,w:400})}${TX(x+12,y+20,s,{s:10,w:800})}`;}).join("")).join("");
+   return sv(cells+[[C,"metal"],[T,"non-metal"],[L,"in between"]].map(([c,l],i)=>`<rect x="${22+i*70}" y="128" width="12" height="12" rx="2" fill="${c}" stroke="${K}" stroke-width="1.5"/>${TX(38+i*70,138,l,{a:"start",s:10,w:400})}`).join(""), "The first 20 elements coloured as metals, non-metals and in-between elements", 150); },
+ isotopes: () => { const pos=[[0,0],[9,0],[-9,0],[4.5,8],[-4.5,8],[4.5,-8],[-4.5,-8],[13.5,8],[-13.5,8],[13.5,-8],[-13.5,-8],[0,16],[0,-16],[18,0]];
+   const nucB=(cx,cy,p,n)=>pos.slice(0,p+n).map(([dx,dy],i)=>`<circle cx="${cx+dx}" cy="${cy+dy}" r="6" fill="${i<p*2&&i%2===0?C:W}" stroke="${K}" stroke-width="1.5"/>`).join("");
+   return sv(nucB(64,64,6,6)+nucB(176,64,6,8)+TX(64,104,"Carbon-12",{s:13,w:800})+TX(64,120,"6 p + 6 n",{s:11,w:400})+TX(176,104,"Carbon-14",{s:13,w:800})+TX(176,120,"6 p + 8 n",{s:11,w:400})+`<circle cx="62" cy="140" r="5" fill="${C}" stroke="${K}" stroke-width="1.5"/>${TX(72,144,"proton",{a:"start",s:10,w:400})}<circle cx="132" cy="140" r="5" fill="${W}" stroke="${K}" stroke-width="1.5"/>${TX(142,144,"neutron",{a:"start",s:10,w:400})}`, "Carbon-12 with 6 protons and 6 neutrons beside carbon-14 with 6 protons and 8 neutrons", 152); },
+ massNum: () => sv(Array.from({length:23},(_,i)=>`<rect x="${20+i*8.4}" y="56" width="7.4" height="30" rx="1.5" fill="${i<11?C:W}" stroke="${K}" stroke-width="1.2"/>`).join("")+`<path d="M20 94h92M114 94h100" stroke="${K}" stroke-width="2"/>${TX(66,110,"11 protons",{s:11})}${TX(164,110,"12 neutrons",{s:11})}${TX(120,40,"Sodium-23",{s:14,w:800})}${TX(120,138,"11 + 12 = mass number 23",{s:13,w:800})}`, "Sodium-23: 11 protons plus 12 neutrons gives mass number 23"),
+ shellChart: () => { const S=["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca"]; const cols=[N,T,C,L];
+   const bars=S.map((s,i)=>{const z=i+1; const sh=[Math.min(2,z),Math.min(8,Math.max(0,z-2)),Math.min(8,Math.max(0,z-10)),Math.max(0,z-18)]; let y=116; const x=14+i*11;
+     return sh.map((n,k)=>{ if(!n) return ""; const h=n*4.2; y-=h; return `<rect x="${x}" y="${y.toFixed(1)}" width="9" height="${h.toFixed(1)}" fill="${cols[k]}" stroke="${K}" stroke-width=".8"/>`; }).join("")+TX(x+4.5,126,s,{s:6.5,w:700})+([0,2,10,18].includes(i)?`<path d="M${x+4.5} 130v4" stroke="${D}" stroke-width="2"/>`:"");}).join("");
+   return sv(bars+[["shell 1",N],["2",T],["3",C],["4",L]].map(([l,c],i)=>`<rect x="${16+i*48}" y="138" width="10" height="10" fill="${c}" stroke="${K}" stroke-width="1"/>${TX(30+i*48,147,l,{a:"start",s:9.5,w:400})}`).join("")+TX(150,24,"ticks: a new back row starts",{s:9.5,w:400}), "Stacked bars of electrons per shell for the first 20 elements, showing a new shell starting at H, Li, Na and K", 154); }
+};
+const ILL = { s0:{core:["matter","particles","states","changeState","durian"], deeper:["evapBoil","meltChart","heatingCurve"], side:["sweat","chips"]},
+  s1:{core:["lego","element","symbols","compound","mixture","seating"], deeper:["bodyChart","miniTable"], side:["phoneEl","blood"]},
+  s2:{core:["stadium","idcard","scale","cinema","hands","fireworks"], deeper:["isotopes","massNum","shellChart"], side:["lamp","capsule"]} };
+const art = (sid, key, i) => { const n = ILL[sid] && ILL[sid][key] && ILL[sid][key][i]; return n && ILLS[n] ? ILLS[n]() : ""; };
+
+/* ---------------- State ---------------- */
+const LS = "cay_v1";
+function blank(){ return { welcomed:false, consent:true, profile:{type:null,bg:null}, prog:{}, points:0, rec:{ visits:0, firstVisit:null, lastVisit:null, prevVisit:null, totalSec:0, stops:{}, recommend:null, recall:[], profile:{type:null,bg:null} }, recallShownFor:null }; }
+let S = blank();
+try { const raw = localStorage.getItem(LS); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch(e) {}
+function saveLocal(){ try { localStorage.setItem(LS, JSON.stringify(S)); } catch(e) {} }
+function stopRec(id){ return S.rec.stops[id] ||= { seconds:0, completed:false, firstTry:null, rating:null }; }
+function prog(id){ return S.prog[id] ||= { seen:{}, actsDone:{}, checkDone:false, best:0 }; }
+
+// visits
+(function(){ const now = Date.now(); const last = S.rec.lastVisit ? Date.parse(S.rec.lastVisit) : 0;
+  if (!S.rec.firstVisit) S.rec.firstVisit = new Date(now).toISOString();
+  if (now - last > 30*60*1000){ S.rec.visits++; S.rec.prevVisit = S.rec.lastVisit; }
+  S.rec.lastVisit = new Date(now).toISOString(); saveLocal(); })();
+
+/* time tracking: active (visible) time only */
+let cur = null, segStart = Date.now();
+function flushTime(){
+  const now = Date.now(); if (document.hidden){ segStart = now; return; }
+  const sec = Math.round((now - segStart)/1000); segStart = now;
+  if (sec <= 0 || sec > 1800) return; // ignore idle gaps over 30 min
+  S.rec.totalSec += sec; if (cur) stopRec(cur).seconds += sec;
+}
+document.addEventListener("visibilitychange", () => { if (document.hidden){ flushTime(); saveLocal(); pushRemote(true); } else segStart = Date.now(); });
+
+/* ---------------- Remote feedback (anonymous, to Google Sheet) ---------------- */
+const FEEDBACK_URL = (window.CAY_CONFIG && window.CAY_CONFIG.feedbackUrl) || "";
+let remoteOk = /^https:\/\/script\.google\.com\//.test(FEEDBACK_URL), pushTimer = null;
+function learnerId(){ try { let id = localStorage.getItem("cay_learner"); if (!id){ id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)); localStorage.setItem("cay_learner", id); } return id; } catch(e){ return null; } }
+function initRemote(){ renderPrivacy(); pushRemote(true); }
+function scheduleRemote(){ clearTimeout(pushTimer); pushTimer = setTimeout(() => pushRemote(false), 4000); }
+function pushRemote(){
+  if (!remoteOk || !S.consent) return; const id = learnerId(); if (!id) return;
+  const r = JSON.parse(JSON.stringify(S.rec)); r.profile = S.profile; r.updated = new Date().toISOString();
+  const body = JSON.stringify({ id, rec: r });
+  try {
+    if (document.hidden && navigator.sendBeacon){ navigator.sendBeacon(FEEDBACK_URL, new Blob([body], {type:"text/plain"})); return; }
+    fetch(FEEDBACK_URL, { method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body, keepalive:true }).catch(() => {});
+  } catch(e) {}
+}
+function commit(){ flushTime(); saveLocal(); scheduleRemote(); }
+
+/* ---------------- Helpers ---------------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pick = a => a[Math.floor(Math.random()*a.length)];
+function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(t._h); t._h = setTimeout(()=>t.hidden = true, 2600); }
+function says(text, label="Dr. NAM Says"){ return `<div class="says"><img class="avatar" src="assets/avatar.png" alt="" width="56" height="56"><div class="bubble"><b>${esc(label)}</b>${esc(text)}</div></div>`; }
+function doneCount(){ return STOPS.filter(s => stopRec(s.id).completed).length; }
+function rank(n){ return n >= TOTAL_STOPS ? "Chemistry Hero" : n >= 6 ? "Class-ready" : n >= 3 ? "Confident" : "Curious"; }
+
+/* ---------------- Doodles ---------------- */
+(function(){ const D = [
+ '<path d="M24 8h16M28 8v16L14 52a4 4 0 0 0 4 6h28a4 4 0 0 0 4-6L36 24V8"/><path d="M20 42h24"/>',
+ '<circle cx="32" cy="32" r="4"/><ellipse cx="32" cy="32" rx="26" ry="10"/><ellipse cx="32" cy="32" rx="26" ry="10" transform="rotate(60 32 32)"/><ellipse cx="32" cy="32" rx="26" ry="10" transform="rotate(120 32 32)"/>',
+ '<circle cx="16" cy="40" r="8"/><circle cx="46" cy="18" r="8"/><circle cx="48" cy="48" r="6"/><path d="M22 35l18-12M24 42l18 4"/>',
+ '<rect x="10" y="24" width="44" height="16" rx="8" transform="rotate(-35 32 32)"/><path d="M32 18v28" transform="rotate(-35 32 32)"/>',
+ '<path d="M24 6h16M28 6v42a4 4 0 0 0 8 0V6"/><path d="M28 30h8"/>',
+ '<path d="M32 6v16M32 42v16M6 32h16M42 32h16M14 14l10 10M40 40l10 10M50 14L40 24M24 40L14 50"/>'];
+ const host = document.getElementById("doodles"); const spots = [[4,12],[86,8],[10,62],[90,55],[48,88],[70,30],[20,90],[60,70]];
+ host.innerHTML = spots.map(([x,y],i)=>`<svg viewBox="0 0 64 64" style="left:${x}%;top:${y}%;animation-delay:${-i*1.3}s">${D[i%D.length]}</svg>`).join(""); })();
+
+/* ---------------- Theme ---------------- */
+(function(){ let t = null; try { t = localStorage.getItem("cay_theme"); } catch(e) {}
+  if (t) document.documentElement.setAttribute("data-theme", t); })();
+document.getElementById("themeBtn").onclick = () => {
+  const root = document.documentElement; const curT = root.getAttribute("data-theme") ||
+    (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  const next = curT === "light" ? "dark" : "light"; root.setAttribute("data-theme", next);
+  try { localStorage.setItem("cay_theme", next); } catch(e) {}
+};
+document.getElementById("homeBtn").onclick = () => go("map");
+
+/* Background video: respects reduced motion and the viewer's pause choice */
+const BGV = document.getElementById("bgVideo"), MB = document.getElementById("motionBtn");
+let bgPaused = matchMedia("(prefers-reduced-motion: reduce)").matches;
+try { const v = localStorage.getItem("cay_bgpause"); if (v !== null) bgPaused = v === "1"; } catch(e) {}
+function applyBg(){ MB.textContent = bgPaused ? "Play background" : "Pause background"; MB.setAttribute("aria-pressed", bgPaused);
+  if (bgPaused) BGV.pause(); else { const p = BGV.play(); if (p && p.catch) p.catch(() => {}); } }
+MB.onclick = () => { bgPaused = !bgPaused; try { localStorage.setItem("cay_bgpause", bgPaused ? "1" : "0"); } catch(e) {} applyBg(); };
+document.addEventListener("visibilitychange", () => { if (!document.hidden) applyBg(); });
+applyBg();
+
+/* ---------------- Router ---------------- */
+function go(view, id, tab){ flushTime(); cur = view === "stop" ? id : null; segStart = Date.now(); saveLocal();
+  document.body.classList.toggle("v-hero", view === "welcome" || view === undefined);
+  if (view === "map") renderMap(); else if (view === "stop") renderStop(id, tab || "core"); else if (view === "fb") renderFeedback(id); else renderWelcome();
+  window.scrollTo({top:0, behavior:"instant"}); }
+
+/* ---------------- Welcome ---------------- */
+function renderWelcome(){
+  app.innerHTML = `
+  <section class="hero">
+    <img class="herologo" src="assets/logo.png" alt="Chemistry with Dr. NAM" width="200" height="200">
+    <h1>From Zero to <span>Chemistry Hero!</span></h1>
+    <p class="lead">No science background needed, just bring your curiosity. Every expert was once a beginner, so let's start together.</p>
+    ${says("Every idea here starts with something you have already seen: your kitchen, your phone, your own body. The science is just the answer to a question you already have.")}
+    <div class="pick"><b>Tell us a little about you (optional)</b>
+      <div class="chips" id="ptype">${["PHD115 student","Other student","Just curious"].map(x=>`<button type="button" class="chip" aria-pressed="${S.profile.type===x}" data-v="${x}">${x}</button>`).join("")}</div>
+      <div class="chips" id="pbg">${["I studied chemistry at school","I never studied chemistry"].map(x=>`<button type="button" class="chip" aria-pressed="${S.profile.bg===x}" data-v="${x}">${x}</button>`).join("")}</div>
+    </div>
+    <div class="notice"><b>About your feedback</b>
+      <span>This hub does not grade you. It asks how much you liked each stop and how helpful it was, and it notes the time you spend. Feedback is anonymous: no names, emails or student IDs.</span>
+      <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="consent" ${S.consent?"checked":""} style="width:22px;height:22px"> Share anonymous feedback with Dr. NAM</label>
+    </div>
+    <div class="actions"><button class="btn lime" type="button" id="startBtn">Start my journey</button></div>
+  </section>`;
+  const bind = (id, key) => document.querySelectorAll(`#${id} .chip`).forEach(b => b.onclick = () => {
+    const v = b.dataset.v; S.profile[key] = S.profile[key] === v ? null : v;
+    document.querySelectorAll(`#${id} .chip`).forEach(c => c.setAttribute("aria-pressed", c.dataset.v === S.profile[key])); commit(); });
+  bind("ptype","type"); bind("pbg","bg");
+  document.getElementById("consent").onchange = e => { S.consent = e.target.checked; commit(); renderPrivacy(); };
+  document.getElementById("startBtn").onclick = () => { S.welcomed = true; commit(); go("map"); };
+}
+
+/* ---------------- Map ---------------- */
+function renderMap(){
+  const n = doneCount(); const pct = Math.round(n / TOTAL_STOPS * 100);
+  const nextStop = STOPS.find(s => !stopRec(s.id).completed);
+  app.innerHTML = `
+  <section class="journey" aria-label="Your journey">
+    <div class="eyebrow">Your journey · Zero to Chemistry Hero</div>
+    <h2>${n === 0 ? "Ready when you are" : n === STOPS.length ? "You finished every open stop!" : "Welcome back, keep going"}</h2>
+    <div class="row"><span>Level: <b class="score">${rank(n)}</b></span><span><b class="score">${n}</b> of ${TOTAL_STOPS} stops · <b class="score">${S.points}</b> points (just for you)</span></div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${TOTAL_STOPS}" aria-valuenow="${n}"><i style="width:${pct}%"></i></div>
+  </section>
+  <div id="recallSlot"></div>
+  <div class="stops">${STOPS.map(s => { const r = stopRec(s.id); const p = prog(s.id);
+    const started = Object.keys(p.seen).length || Object.keys(p.actsDone).length;
+    const st = r.completed ? "✓ Completed · badge earned" : started ? "In progress" : "Start here";
+    return `<button type="button" class="stop ${nextStop && nextStop.id === s.id ? "glow" : ""}" data-id="${s.id}">
+      <span class="num">${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.topic)}</p><span class="state">${st}</span></button>`; }).join("")}
+  </div>
+  <section class="block"><div class="eyebrow">Coming next</div><h3>More stops, themes and a trip to space</h3>
+    <div class="soon">${LATER.map(([a,b,c]) => `<div><span class="eyebrow">${a}</span><b>${esc(b)}</b>${esc(c)}</div>`).join("")}</div>
+  </section>`;
+  document.querySelectorAll(".stop").forEach(b => b.onclick = () => go("stop", b.dataset.id));
+  renderRecall();
+}
+
+/* "Do you still remember?" after 7+ days away */
+function renderRecall(){
+  const slot = document.getElementById("recallSlot"); if (!slot) return;
+  const prev = S.rec.prevVisit ? Date.parse(S.rec.prevVisit) : 0; const days = prev ? (Date.now() - prev) / 864e5 : 0;
+  const done = STOPS.filter(s => stopRec(s.id).completed);
+  if (days < 7 || !done.length || S.recallShownFor === S.rec.lastVisit) return;
+  const st = pick(done); const qi = Math.floor(Math.random()*st.check.length); const q = st.check[qi];
+  let conf = null, chosen = null;
+  slot.innerHTML = `<div class="act" style="margin-top:12px"><span class="eyebrow">Welcome back · Do you still remember?</span>
+    <h3>${esc(q.q)}</h3><p class="muted" style="font-size:.8em">From ${esc(st.num)}, ${Math.round(days)} days ago. No pressure, it just helps us see what sticks.</p>
+    <div class="opts">${q.o.map((o,i)=>`<button type="button" class="opt" data-i="${i}">${esc(o)}</button>`).join("")}</div>
+    <div class="chips" id="rconf">${["I'm guessing","Fairly sure","Sure"].map(c=>`<button type="button" class="chip" data-c="${c}" aria-pressed="false">${c}</button>`).join("")}</div>
+    <div class="actions"><button class="btn small lime" type="button" id="rgo">Check</button><button class="btn small ghost" type="button" id="rskip">Skip</button></div><div id="rfb"></div></div>`;
+  slot.querySelectorAll(".opt").forEach(b => b.onclick = () => { chosen = +b.dataset.i; slot.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-pressed", x === b)); });
+  slot.querySelectorAll("#rconf .chip").forEach(b => b.onclick = () => { conf = b.dataset.c; slot.querySelectorAll("#rconf .chip").forEach(x => x.setAttribute("aria-pressed", x === b)); });
+  const close = () => { S.recallShownFor = S.rec.lastVisit; commit(); };
+  document.getElementById("rskip").onclick = () => { close(); slot.innerHTML = ""; };
+  document.getElementById("rgo").onclick = () => {
+    if (chosen === null){ document.getElementById("rfb").innerHTML = `<div class="fb info">Pick an answer first.</div>`; return; }
+    const ok = chosen === q.a;
+    S.rec.recall.push({ stop: st.id, q: qi, correct: ok, confidence: conf, daysSince: Math.round(days), at: new Date().toISOString() });
+    if (S.rec.recall.length > 50) S.rec.recall.shift();
+    close();
+    document.getElementById("rfb").innerHTML = `<div class="fb ${ok?"ok":"no"}"><strong>${ok ? "✓ You remembered!" : "✗ Not quite."}</strong> ${esc(q.w)}</div>`;
+    document.getElementById("rgo").disabled = true;
+  };
+}
+
+/* ---------------- Stop ---------------- */
+function renderStop(id, tab){
+  const s = STOPS.find(x => x.id === id); const p = prog(id);
+  const done = { core: Object.keys(p.seen).filter(k=>k.startsWith("core")).length >= s.core.length, act: s.acts.every((_,i)=>p.actsDone[i]), deeper: Object.keys(p.seen).some(k=>k.startsWith("deeper")), side: Object.keys(p.seen).some(k=>k.startsWith("side")), check: p.checkDone };
+  app.innerHTML = `
+  <section class="stophead"><span class="eyebrow">${esc(s.num)} · ${esc(s.topic)}</span><h2>${esc(s.title)}</h2>
+    <p class="hook"><b>Everyday question:</b> ${esc(s.hook)}</p></section>
+  <div class="tabs" role="tablist">${TABS.map(([k,l]) => `<button type="button" class="tab" role="tab" aria-selected="${k===tab}" data-t="${k}">${l}${done[k] ? ' <span class="tick">✓</span>' : ""}</button>`).join("")}</div>
+  <div id="layer" class="layer"></div>`;
+  document.querySelectorAll(".tab").forEach(b => b.onclick = () => renderStop(id, b.dataset.t));
+  const L = document.getElementById("layer");
+  if (tab === "core") cardsLayer(L, s, "core", "Tap a card to flip it. The front gives the picture; the back gives the science and where the picture stops working.", s.tip);
+  if (tab === "deeper") cardsLayer(L, s, "deeper", "Look at the picture or graph first, then read what it shows.", "Ready for more? These are the ideas your PHD115 lecturer will build on.");
+  if (tab === "side") cardsLayer(L, s, "side", "Chemistry beyond the syllabus. Just for curiosity.", "Did you know? Chemistry is hiding in places you visit every day.");
+  if (tab === "act") actsLayer(L, s);
+  if (tab === "check") checkLayer(L, s);
+}
+function nextBtn(id, tab, label){ return `<div class="actions"><button type="button" class="btn lime" onclick="renderStop('${id}','${tab}');scrollTo({top:0})">${label}</button></div>`; }
+function cardsLayer(L, s, key, intro, tip){
+  const p = prog(s.id); const list = s[key];
+  const nxt = {core:["act","Next: Activity"], deeper:["side","Next: Side trip"], side:["check","Next: Self-check"]}[key];
+  if (key === "deeper"){
+    L.innerHTML = `<p class="intro">${esc(intro)}</p>${says(tip)}
+      <div class="vcards">${list.map((c,i) => `<figure class="vcard"><div class="vfig">${art(s.id, key, i)}</div>
+        <figcaption><span class="k">Go deeper</span><h3>${esc(c.t)}</h3><p class="lead2">${esc(c.a)}</p><p>${esc(c.s)}</p><p class="limit2"><b>Where the picture stops:</b> ${esc(c.l)}</p></figcaption></figure>`).join("")}</div>
+      ${nextBtn(s.id, nxt[0], nxt[1])}`;
+    list.forEach((_,i) => p.seen["deeper"+i] = 1); commit(); return;
+  }
+  L.innerHTML = `<p class="intro">${esc(intro)}</p>${says(tip)}
+    <div class="cards">${list.map((c,i) => `
+      <button type="button" class="flip" data-i="${i}" aria-label="${esc(c.t)}: flip card">
+        <div class="in">
+          <div class="face2 front">${art(s.id, key, i)}<span class="k">${key==="core"?"Picture it":"Side trip"}</span><h3>${esc(c.t)}</h3><p>${esc(c.a)}</p><span class="tap">Tap to flip ↻</span></div>
+          <div class="face2 back"><span class="k">The science</span><p>${esc(c.s)}</p><p class="limit"><b>Where the picture stops:</b> ${esc(c.l)}</p></div>
+        </div></button>`).join("")}</div>
+    ${nextBtn(s.id, nxt[0], nxt[1])}`;
+  L.querySelectorAll(".flip").forEach(b => b.onclick = () => { b.classList.toggle("on"); p.seen[key + b.dataset.i] = 1; commit(); });
+}
+
+/* ---------------- Activities ---------------- */
+function actsLayer(L, s){
+  L.innerHTML = s.acts.map((a,i) => `<div class="act" id="act${i}"></div>`).join("") + nextBtn(s.id, "deeper", "Next: Go deeper");
+  s.acts.forEach((a,i) => { const el = document.getElementById("act"+i);
+    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); });
+}
+function award(n){ S.points += n; }
+function actDone(s, i){ prog(s.id).actsDone[i] = 1; commit(); }
+
+function sortAct(el, s, a, idx){
+  let left = shuffle(a.items), placed = {}, sel = null, missed = {}, msg = "", lastBin = null, shake = null;
+  a.bins.forEach(b => placed[b] = []);
+  const drop = (k, bin) => {
+    const it = left[k]; if (!it) return;
+    if (bin === it[1]){ if (!missed[it[0]]) award(10); placed[bin].push(it[0]); left.splice(k,1); sel = null; lastBin = bin;
+      const fin = !left.length; if (fin) actDone(s, idx);
+      msg = `<div class="fb ok"><strong>✓ Correct.</strong> ${esc(it[2])}${fin ? " " + esc(pick(CHEERS)) : ""}</div>`; }
+    else { missed[it[0]] = 1; sel = null; shake = bin; msg = `<div class="fb no"><strong>✗ Try again.</strong> ${esc(it[0])} is not a ${esc(bin.toLowerCase())}. ${esc(pick(TRYS))}</div>`; }
+    draw();
+  };
+  const draw = () => {
+    el.innerHTML = `<span class="eyebrow">Activity</span><h3>${esc(a.title)}</h3>
+      <p class="muted" style="font-size:.8em">Drag each item into its box. (You can also tap an item, then tap a box.)</p>
+      <div class="pool">${left.map((it,k) => `<button type="button" class="item" aria-pressed="${sel===k}" data-k="${k}">${esc(it[0])}</button>`).join("") || `<b class="score">All sorted!</b>`}</div>
+      <div class="bins">${a.bins.map(b => `<button type="button" class="bin ${sel!==null?"ready":""} ${lastBin===b?"pop":""} ${shake===b?"shake":""}" data-b="${b}"><b>${b}</b><div class="got">${placed[b].map(x=>`<span>✓ ${esc(x)}</span>`).join("")}</div></button>`).join("")}</div>
+      <div aria-live="polite">${msg}</div>`;
+    lastBin = null; shake = null;
+    const bins = [...el.querySelectorAll(".bin")];
+    const binAt = (x,y) => { const t = document.elementFromPoint(x,y); return t && t.closest ? t.closest(".bin") : null; };
+    el.querySelectorAll(".item").forEach(b => {
+      let viaPointer = false;
+      b.addEventListener("pointerdown", e => {
+        if (e.button > 0) return;
+        const k = +b.dataset.k, sx = e.clientX, sy = e.clientY, r = b.getBoundingClientRect();
+        let ghost = null; b.setPointerCapture(e.pointerId);
+        const move = ev => {
+          if (!ghost && Math.hypot(ev.clientX - sx, ev.clientY - sy) < 6) return;
+          if (!ghost){ ghost = b.cloneNode(true); ghost.classList.add("ghost"); ghost.style.width = r.width + "px"; document.body.appendChild(ghost); b.classList.add("dragging"); }
+          ghost.style.left = (ev.clientX - r.width/2) + "px"; ghost.style.top = (ev.clientY - r.height/2) + "px";
+          const over = binAt(ev.clientX, ev.clientY); bins.forEach(x => x.classList.toggle("over", x === over));
+        };
+        const up = ev => {
+          b.removeEventListener("pointermove", move); b.removeEventListener("pointerup", up); b.removeEventListener("pointercancel", up);
+          viaPointer = true;
+          if (ghost){ ghost.remove(); b.classList.remove("dragging"); bins.forEach(x => x.classList.remove("over"));
+            const over = ev.type === "pointerup" ? binAt(ev.clientX, ev.clientY) : null;
+            if (over) drop(k, over.dataset.b); }
+          else { sel = k; draw(); }
+        };
+        b.addEventListener("pointermove", move); b.addEventListener("pointerup", up); b.addEventListener("pointercancel", up);
+      });
+      b.addEventListener("click", () => { if (viaPointer){ viaPointer = false; return; } sel = +b.dataset.k; draw(); });
+    });
+    bins.forEach(b => b.onclick = () => { if (sel === null){ msg = `<div class="fb info">Drag an item here, or tap an item first.</div>`; draw(); return; } drop(sel, b.dataset.b); });
+  };
+  draw();
+}
+
+function matchAct(el, s, a, idx){
+  const deck = shuffle(a.pairs.flatMap((p,k) => [{k, t:p[0]},{k, t:p[1]}]));
+  let open = [], done = new Set(), lock = false, tries = 0;
+  const draw = (msg) => {
+    el.innerHTML = `<span class="eyebrow">Activity</span><h3>${esc(a.title)}</h3>
+      <p class="muted" style="font-size:.8em">Find each symbol and its name. Tries: <b class="score">${tries}</b></p>
+      <div class="mgrid">${deck.map((c,i) => { const up = open.includes(i) || done.has(c.k);
+        return `<button type="button" class="mcard ${done.has(c.k)?"done":up?"up":""}" data-i="${i}" aria-label="${up?esc(c.t):"Hidden card"}">${up?esc(c.t):"?"}</button>`; }).join("")}</div>
+      <div aria-live="polite">${msg||""}</div>`;
+    el.querySelectorAll(".mcard").forEach(b => b.onclick = () => {
+      const i = +b.dataset.i; if (lock || open.includes(i) || done.has(deck[i].k)) return;
+      open.push(i);
+      if (open.length === 2){ tries++; const [x,y] = open;
+        if (deck[x].k === deck[y].k){ done.add(deck[x].k); open = []; award(5);
+          const fin = done.size === a.pairs.length; if (fin) actDone(s, idx);
+          draw(fin ? `<div class="fb ok"><strong>✓ All matched in ${tries} tries.</strong> ${esc(pick(CHEERS))}</div>` : `<div class="fb ok"><strong>✓ A pair!</strong> ${esc(a.pairs[deck[x].k][0])} is ${esc(a.pairs[deck[x].k][1])}.</div>`); }
+        else { lock = true; draw(); setTimeout(() => { open = []; lock = false; draw(); }, 900); }
+      } else draw();
+    });
+  };
+  draw();
+}
+
+function atomAct(el, s, a, idx){
+  let ti = 0, P = 0, N = 0, E = 0, missed = false;
+  const shells = e => { const cap=[2,8,8]; const out=[]; let r=e; for (const c of cap){ out.push(Math.min(c, Math.max(0,r))); r -= c; } return out; };
+  const svg = () => { const sh = shells(E); const R=[42,72,102];
+    let dots = ""; sh.forEach((n,si) => { for (let k=0;k<n;k++){ const ang = (k/n)*Math.PI*2 - Math.PI/2; dots += `<circle cx="${(120+R[si]*Math.cos(ang)).toFixed(1)}" cy="${(120+R[si]*Math.sin(ang)).toFixed(1)}" r="7" fill="var(--coral)" stroke="var(--ink)" stroke-width="2"/>`; } });
+    return `<svg viewBox="0 0 240 240" role="img" aria-label="Atom with ${P} protons, ${N} neutrons and ${E} electrons">
+      ${R.map(r=>`<circle cx="120" cy="120" r="${r}" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 5"/>`).join("")}
+      <circle cx="120" cy="120" r="24" fill="var(--glow)" stroke="var(--ink)" stroke-width="3"/>
+      <text x="120" y="117" text-anchor="middle" font-family="League Spartan, sans-serif" font-weight="800" font-size="12" fill="#0a1628">${P}p</text>
+      <text x="120" y="131" text-anchor="middle" font-family="League Spartan, sans-serif" font-weight="800" font-size="12" fill="#0a1628">${N}n</text>${dots}</svg>`; };
+  const draw = (msg) => { const t = a.targets[ti];
+    el.innerHTML = `<span class="eyebrow">Activity · ${ti+1} of ${a.targets.length}</span><h3>${esc(a.title)}: build ${esc(t[1])} (${esc(t[0])})</h3>
+      <p class="muted" style="font-size:.8em">Atomic number ${t[2]}${t[3] ? `, mass number ${t[2]+t[3]}` : ""}. Add protons, neutrons and electrons. Electrons fill the rows 2, 8, 8.</p>
+      <div class="atomwrap">${svg()}<div class="ctr">
+        ${[["P","Protons (+)"],["N","Neutrons (0)"],["E","Electrons (−)"]].map(([k,l]) => `<div class="r"><b>${l}</b><div class="pm"><button type="button" class="btn small" data-k="${k}" data-d="-1" aria-label="Remove one">−</button><span class="n">${{P,N,E}[k]}</span><button type="button" class="btn small" data-k="${k}" data-d="1" aria-label="Add one">+</button></div></div>`).join("")}
+        <p style="font-size:.78em">Shells: <b class="score">${shells(E).filter(Boolean).join(".") || "0"}</b></p>
+        <div class="actions"><button type="button" class="btn lime" id="aChk">Check my atom</button></div></div></div>
+      <div aria-live="polite">${msg||""}</div>`;
+    el.querySelectorAll("[data-k]").forEach(b => b.onclick = () => { const d = +b.dataset.d;
+      if (b.dataset.k==="P") P=Math.max(0,Math.min(20,P+d)); if (b.dataset.k==="N") N=Math.max(0,Math.min(20,N+d)); if (b.dataset.k==="E") E=Math.max(0,Math.min(18,E+d)); draw(); });
+    el.querySelector("#aChk").onclick = () => {
+      const [sym,name,p,n,e] = a.targets[ti];
+      let hint = null;
+      if (P !== p) hint = `Protons decide the element. ${name} has atomic number ${p}, so it needs ${p} protons.`;
+      else if (E !== e) hint = `A neutral atom has as many electrons as protons: ${p}.`;
+      else if (N !== n) hint = `Mass number = protons + neutrons. ${p + n} − ${p} = ${n} neutrons.`;
+      if (hint){ missed = true; draw(`<div class="fb no"><strong>✗ Try again.</strong> ${esc(hint)}</div>`); return; }
+      award(missed ? 10 : 20); const arr = shells(E).filter(Boolean).join(".");
+      const last = ti === a.targets.length - 1;
+      const msg2 = `<div class="fb ok"><strong>✓ That's ${esc(name)}!</strong> Electrons arranged ${arr}, so it has ${shells(E).filter(Boolean).slice(-1)[0]} valence electron(s) in the back row.</div>
+        <div class="actions" style="margin-top:10px"><button type="button" class="btn small lime" id="aNext">${last ? "Finish" : "Next atom"}</button></div>`;
+      draw(msg2);
+      el.querySelector("#aNext").onclick = () => { if (last){ actDone(s, idx); draw(`<div class="fb ok"><strong>✓ You built ${a.targets.length} atoms.</strong> ${esc(pick(CHEERS))}</div>`); return; } ti++; P=N=E=0; missed=false; draw(); };
+    };
+  };
+  draw();
+}
+
+/* ---------------- Self-check ---------------- */
+function checkLayer(L, s){
+  let qi = 0, sel = null, conf = null, wrong = new Set(), first = 0, firstTry = true;
+  const draw = (msg, answered) => { const q = s.check[qi];
+    L.innerHTML = `<p class="intro">Five quick questions. This is only for you: nothing here is a grade.</p>
+      <div class="act q"><div class="qmeta"><span class="eyebrow">Question ${qi+1} of ${s.check.length}</span><span>First-try: <b class="score">${first}</b></span></div>
+      <h3>${esc(q.q)}</h3>
+      <div class="opts">${q.o.map((o,i) => `<button type="button" class="opt ${answered && i===q.a ? "ok" : wrong.has(i) ? "no" : ""}" aria-pressed="${sel===i}" data-i="${i}" ${answered||wrong.has(i)?"disabled":""}>${esc(o)}</button>`).join("")}</div>
+      ${answered ? "" : `<div><p style="font-size:.78em" class="muted">How sure are you?</p><div class="chips" id="conf">${["I'm guessing","Fairly sure","Sure"].map(c=>`<button type="button" class="chip" data-c="${c}" aria-pressed="${conf===c}">${c}</button>`).join("")}</div></div>
+      <div class="actions"><button type="button" class="btn lime" id="qChk">Check</button></div>`}
+      <div aria-live="polite">${msg||""}</div></div>`;
+    L.querySelectorAll(".opt").forEach(b => b.onclick = () => { sel = +b.dataset.i; draw(msg); });
+    L.querySelectorAll("#conf .chip").forEach(b => b.onclick = () => { conf = b.dataset.c; draw(msg); });
+    const chk = L.querySelector("#qChk");
+    if (chk) chk.onclick = () => {
+      if (sel === null){ draw(`<div class="fb info">Pick an answer first.</div>`); return; }
+      if (sel === q.a){ if (firstTry){ first++; award(100); } else award(50);
+        const last = qi === s.check.length - 1;
+        draw(`<div class="fb ok"><strong>✓ ${esc(pick(CHEERS))}</strong> ${esc(q.w)}</div><div class="actions" style="margin-top:10px"><button type="button" class="btn lime" id="qNext">${last ? "See my result" : "Next question"}</button></div>`, true);
+        L.querySelector("#qNext").onclick = () => { if (last) return finish(); qi++; sel=null; conf=null; wrong=new Set(); firstTry=true; draw(); };
+      } else { wrong.add(sel); firstTry = false; sel = null; draw(`<div class="fb no"><strong>✗ Try again.</strong> ${esc(q.h)}</div>`); }
+    };
+  };
+  const finish = () => { const p = prog(s.id); p.checkDone = true; p.best = Math.max(p.best, first);
+    const r = stopRec(s.id); const firstTime = !r.completed; r.completed = true; if (r.firstTry === null) r.firstTry = first; commit();
+    L.innerHTML = `<div class="act" style="text-align:left"><span class="eyebrow">${esc(s.num)} complete${firstTime ? " · badge earned" : ""}</span>
+      <h2>You did it!</h2><p>You answered <b class="score">${first} of ${s.check.length}</b> on the first try. Every try counts as learning, not as a mark.</p>
+      ${says(first >= 4 ? "You are already thinking like a chemist. On to the next stop!" : "Some of these are tricky the first time. Flip back through the cards whenever you like; they are always here.")}
+      <div class="actions"><button type="button" class="btn lime" id="toFb">Tell Dr. NAM how it went</button><button type="button" class="btn ghost" id="toMap">Back to the map</button></div></div>`;
+    document.getElementById("toFb").onclick = () => go("fb", s.id);
+    document.getElementById("toMap").onclick = () => go("map");
+  };
+  draw();
+}
+
+/* ---------------- Feedback form ---------------- */
+function renderFeedback(id){
+  const s = STOPS.find(x => x.id === id); const r = stopRec(id); const prev = r.rating || {};
+  const askRec = S.rec.recommend === null;
+  const f = { like: prev.like || null, helpful: prev.helpful || null, helped: prev.helped ? prev.helped.slice() : [], rec: null };
+  const FACES = [["😞","Did not like it"],["😕","Not really"],["😐","It was okay"],["🙂","Liked it"],["😄","Loved it"]];
+  app.innerHTML = `<section class="stophead"><span class="eyebrow">${esc(s.num)} · Your feedback</span><h2>How was this stop?</h2>
+    <p class="muted">Anonymous and optional. It helps Dr. NAM make the next stops better.${S.consent ? "" : " (Sharing is off, so this stays on your device.)"}</p></section>
+    <div class="form">
+      <div><label class="q2">How much did you like it?</label><div class="faces" id="likes">${FACES.map(([e,l],i)=>`<button type="button" class="face" data-v="${i+1}" aria-label="${l}" aria-pressed="${f.like===i+1}">${e}</button>`).join("")}</div></div>
+      <div><label class="q2">How helpful was it for understanding chemistry?</label><div class="nums chips" id="help">${[1,2,3,4,5].map(n=>`<button type="button" class="chip" data-v="${n}" aria-pressed="${f.helpful===n}">${n}</button>`).join("")}</div><p class="muted" style="font-size:.7em">1 = not helpful · 5 = very helpful</p></div>
+      <div><label class="q2">What helped most? (pick any)</label><div class="chips" id="helped">${["The analogies","Everyday examples","The activities","Dr. NAM's tips","The self-check"].map(x=>`<button type="button" class="chip" data-v="${x}" aria-pressed="${f.helped.includes(x)}">${x}</button>`).join("")}</div></div>
+      <div><label class="q2" for="conf1">What was confusing?</label><textarea id="conf1" maxlength="600" placeholder="Optional">${esc(prev.confusing||"")}</textarea></div>
+      <div><label class="q2" for="wish1">What would you like to learn next?</label><textarea id="wish1" maxlength="600" placeholder="Optional">${esc(prev.wish||"")}</textarea></div>
+      ${askRec ? `<div><label class="q2">How likely are you to recommend this hub to a friend?</label><div class="nums chips" id="rec">${[0,1,2,3,4,5,6,7,8,9,10].map(n=>`<button type="button" class="chip" data-v="${n}" aria-pressed="false">${n}</button>`).join("")}</div><p class="muted" style="font-size:.7em">0 = not at all · 10 = definitely</p></div>` : ""}
+      <div class="actions"><button type="button" class="btn lime" id="send">Send feedback</button><button type="button" class="btn ghost" id="skip">Skip</button></div>
+    </div>`;
+  const single = (sel, key, num) => document.querySelectorAll(sel).forEach(b => b.onclick = () => { f[key] = num ? +b.dataset.v : b.dataset.v; document.querySelectorAll(sel).forEach(x => x.setAttribute("aria-pressed", x === b)); });
+  single("#likes .face","like",true); single("#help .chip","helpful",true); if (askRec) single("#rec .chip","rec",true);
+  document.querySelectorAll("#helped .chip").forEach(b => b.onclick = () => { const v = b.dataset.v; const i = f.helped.indexOf(v); i<0 ? f.helped.push(v) : f.helped.splice(i,1); b.setAttribute("aria-pressed", i<0); });
+  document.getElementById("skip").onclick = () => go("map");
+  document.getElementById("send").onclick = () => {
+    r.rating = { like:f.like, helpful:f.helpful, helped:f.helped, confusing:document.getElementById("conf1").value.trim().slice(0,600), wish:document.getElementById("wish1").value.trim().slice(0,600), at:new Date().toISOString() };
+    if (askRec && f.rec !== null) S.rec.recommend = f.rec;
+    commit(); pushRemote(true); toast("Thank you! Feedback sent."); go("map");
+  };
+}
+
+/* ---------------- Footer privacy line ---------------- */
+function renderPrivacy(){
+  const el = document.getElementById("privacyLine");
+  const state = !S.consent ? "Feedback sharing is off; your progress stays on this device." : remoteOk ? "Anonymous feedback is on: ratings, comments and time spent go to Dr. NAM, never your name." : "Your progress is saved on this device.";
+  el.innerHTML = `${esc(state)} <button type="button" class="linkbtn" id="privToggle">${S.consent ? "Turn feedback off" : "Turn feedback on"}</button>`;
+  document.getElementById("privToggle").onclick = () => { S.consent = !S.consent; commit(); renderPrivacy(); if (S.consent) pushRemote(true); };
+}
+
+/* ---------------- Boot ---------------- */
+renderPrivacy();
+S.welcomed ? go("map") : go("welcome");
+initRemote();
+</script>
+<script>
+if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>
