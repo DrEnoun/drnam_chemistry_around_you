@@ -61,7 +61,7 @@ All lesson text is in `index.html`, inside the `STOPS` list near the top of the 
 - `t`: title
 - `a`: the analogy or everyday picture
 - `s`: the science
-- `l`: where the picture stops working
+- `l`: where the picture stops working (a note for teachers; not shown to learners)
 
 When you add new stops (`s3`, `s4` ...), also add them to the `STOPS` line at the top of `apps-script/Code.gs` and deploy a new version.
 
