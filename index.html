@@ -53,6 +53,22 @@ p{margin:0}
 .logo{width:64px;height:64px;border-radius:50%;background:#fff;border:3px solid var(--ink);object-fit:cover;flex:none}
 .avatar{width:56px;height:56px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none;box-shadow:3px 3px 0 var(--shadow)}
 .herologo{width:clamp(140px,22vw,200px);height:auto;border-radius:50%;background:#fff;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--shadow)}
+/* About-you pop-up */
+dialog.about{border:3px solid var(--ink);border-radius:24px;padding:0;background:var(--sticker);color:var(--ink);box-shadow:8px 8px 0 var(--shadow);width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;animation:dlgpop .45s cubic-bezier(.2,.8,.3,1.25) both}
+dialog.about::backdrop{background:rgba(6,13,27,.62);backdrop-filter:blur(3px)}
+dialog.about.closing{animation:dlgout .22s ease-in both}
+.about-in{padding:20px;display:grid;gap:16px}
+.about-head{display:flex;gap:12px;align-items:center}
+.about-head h3{color:var(--ink);font-size:1.25em}
+.about .eyebrow{color:var(--teal)}
+.about .muted{color:var(--sticker-sub)}
+.about-q{display:grid;gap:8px}
+.about-q b{font-family:var(--f-title)}
+.about .chip{background:#f3f7fb;color:var(--ink);border-color:#cfdcef}
+.about .chip[aria-pressed="true"]{background:var(--lime);color:var(--on-lime);border-color:var(--ink)}
+@keyframes dlgpop{0%{opacity:0;transform:translateY(24px) scale(.9)}100%{opacity:1;transform:none}}
+@keyframes dlgout{to{opacity:0;transform:scale(.96)}}
+@media (prefers-reduced-motion: reduce){ dialog.about,dialog.about.closing{animation:none} }
 /* Header */
 .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:8px}
 .badge{width:58px;height:58px;border-radius:50%;background:#fff;border:3px solid var(--ink);display:grid;place-items:center;flex:none;text-align:center;font-family:var(--f-title);font-weight:800;font-size:12px;line-height:1;color:var(--ink);position:relative}
@@ -492,6 +508,7 @@ const art = (sid, key, i) => { const n = ILL[sid] && ILL[sid][key] && ILL[sid][k
 
 /* ---------------- State ---------------- */
 const LS = "cay_v1";
+const AVATAR_SRC = "assets/avatar.png";
 function blank(){ return { welcomed:false, consent:true, profile:{type:null,bg:null}, prog:{}, points:0, rec:{ visits:0, firstVisit:null, lastVisit:null, prevVisit:null, totalSec:0, stops:{}, recommend:null, recall:[], profile:{type:null,bg:null} }, recallShownFor:null }; }
 let S = blank();
 try { const raw = localStorage.getItem(LS); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch(e) {}
@@ -588,22 +605,42 @@ function renderWelcome(){
     <h1>From Zero to <span>Chemistry Hero!</span></h1>
     <p class="lead">No science background needed, just bring your curiosity. Every expert was once a beginner, so let's start together.</p>
     ${says("Every idea here starts with something you have already seen: your kitchen, your phone, your own body. The science is just the answer to a question you already have.")}
-    <div class="pick"><b>Tell us a little about you (optional)</b>
-      <div class="chips" id="ptype">${["PHD115 student","Other student","Just curious"].map(x=>`<button type="button" class="chip" aria-pressed="${S.profile.type===x}" data-v="${x}">${x}</button>`).join("")}</div>
-      <div class="chips" id="pbg">${["I studied chemistry at school","I never studied chemistry"].map(x=>`<button type="button" class="chip" aria-pressed="${S.profile.bg===x}" data-v="${x}">${x}</button>`).join("")}</div>
-    </div>
     <div class="notice"><b>About your feedback</b>
       <span>This hub does not grade you. It asks how much you liked each stop and how helpful it was, and it notes the time you spend. Feedback is anonymous: no names, emails or student IDs.</span>
       <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="consent" ${S.consent?"checked":""} style="width:22px;height:22px"> Share anonymous feedback with Dr. NAM</label>
     </div>
     <div class="actions"><button class="btn lime" type="button" id="startBtn">Start my journey</button></div>
   </section>`;
-  const bind = (id, key) => document.querySelectorAll(`#${id} .chip`).forEach(b => b.onclick = () => {
-    const v = b.dataset.v; S.profile[key] = S.profile[key] === v ? null : v;
-    document.querySelectorAll(`#${id} .chip`).forEach(c => c.setAttribute("aria-pressed", c.dataset.v === S.profile[key])); commit(); });
-  bind("ptype","type"); bind("pbg","bg");
   document.getElementById("consent").onchange = e => { S.consent = e.target.checked; commit(); renderPrivacy(); };
-  document.getElementById("startBtn").onclick = () => { S.welcomed = true; commit(); go("map"); };
+  document.getElementById("startBtn").onclick = () => { S.welcomed = true; commit(); if (S.profileDone) go("map"); else askProfile(() => go("map")); };
+}
+
+/* ---------------- "Tell us about you" pop-up (asked once, saved on this device) ---------------- */
+function askProfile(after){
+  if (document.getElementById("aboutDlg")) return;
+  const Q = [
+    ["type","Who are you?",[["PHD115 student","PHD115 student"],["Other student","Other student"],["Just curious","Just curious"],["Prefer not to say","Prefer not to say"]]],
+    ["bg","Have you studied chemistry before?",[["I studied chemistry at school","Yes, at school"],["I never studied chemistry","No, never"],["Prefer not to say","Prefer not to say"]]]
+  ];
+  const pickd = { type: S.profile.type, bg: S.profile.bg };
+  const d = document.createElement("dialog"); d.id = "aboutDlg"; d.className = "about"; d.setAttribute("aria-labelledby","aboutTitle");
+  const draw = () => {
+    const ready = pickd.type && pickd.bg;
+    d.innerHTML = `<div class="about-in">
+      <div class="about-head"><img class="avatar" src="${AVATAR_SRC}" alt="" width="56" height="56"><div><span class="eyebrow">Before we start</span><h3 id="aboutTitle">Tell Dr. NAM a little about you</h3></div></div>
+      <p class="muted" style="font-size:.8em">Two quick taps. It helps Dr. NAM make the hub better for learners like you. You only answer once.</p>
+      ${Q.map(([k,label,opts]) => `<div class="about-q"><b>${label}</b><div class="chips">${opts.map(([v,t]) => `<button type="button" class="chip" data-k="${k}" data-v="${esc(v)}" aria-pressed="${pickd[k]===v}">${esc(t)}</button>`).join("")}</div></div>`).join("")}
+      <div class="actions"><button type="button" class="btn lime" id="aboutGo" ${ready ? "" : "disabled"}>Let's go!</button>${ready ? "" : `<span class="muted" style="font-size:.75em">Pick one answer for each question</span>`}</div></div>`;
+    d.querySelectorAll(".chip").forEach(b => b.onclick = () => { pickd[b.dataset.k] = b.dataset.v; draw(); });
+    const go2 = d.querySelector("#aboutGo");
+    go2.onclick = () => { S.profile = { type: pickd.type, bg: pickd.bg }; S.profileDone = true; commit(); pushRemote(true);
+      d.classList.add("closing"); setTimeout(() => { d.close(); d.remove(); toast("Thanks! Enjoy the journey."); if (after) after(); }, 220); };
+    if (ready) go2.focus();
+  };
+  draw();
+  d.addEventListener("cancel", e => e.preventDefault());   // the two taps are needed before going on
+  document.body.appendChild(d);
+  try { d.showModal(); } catch(e) { d.setAttribute("open",""); }
 }
 
 /* ---------------- Map ---------------- */
@@ -628,7 +665,7 @@ function renderMap(){
     <div class="soon">${LATER.map(([a,b,c]) => `<div><span class="eyebrow">${a}</span><b>${esc(b)}</b>${esc(c)}</div>`).join("")}</div>
   </section>`;
   document.querySelectorAll(".stop").forEach(b => b.onclick = () => go("stop", b.dataset.id));
-  renderRecall();
+  if (!S.profileDone) askProfile(); else renderRecall();
 }
 
 /* "Do you still remember?" after 7+ days away */
