@@ -81,6 +81,11 @@ p{margin:0}
 .stop.done{background:#f4ffe0;padding-right:86px}
 @keyframes stampin{0%{transform:scale(2.2) rotate(-20deg);opacity:0}70%{transform:scale(.92) rotate(18deg);opacity:1}100%{transform:rotate(14deg)}}
 @media (prefers-reduced-motion: reduce){ .stop .stamp{animation:none} }
+/* Branded footer */
+.credit{display:flex;gap:12px;align-items:center;border-top:2px dashed var(--line);padding-top:12px;margin-top:4px;text-transform:uppercase;letter-spacing:.05em;font-size:.92em;line-height:1.6}
+.credit img{width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--ink);flex:none}
+.credit b{font-family:var(--f-title);color:var(--text);letter-spacing:.04em}
+.credit p{margin:0;min-width:0}
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -271,7 +276,7 @@ body::before{content:"";position:fixed;inset:0;background:var(--ground);z-index:
 
 /* Illustrations and visual cards */
 svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
-.flip,.flip .in{min-height:550px}
+.flip,.flip .in{min-height:590px}
 .front svg.ill{margin-bottom:4px;width:100%;max-width:300px;align-self:center}
 .back svg.back-ill{margin-block:2px 4px;width:100%;max-width:290px;align-self:center}
 .vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
@@ -325,6 +330,7 @@ svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
   <footer>
     <p>Chemistry Around You is for learning only. For your health, always ask a pharmacist or doctor.</p>
     <p id="privacyLine"></p>
+    <div class="credit"><img src="assets/logo.png" alt="" width="44" height="44"><p><span>Developed by</span> <b>Ts. Dr. Nur 'Ainun Mokhtar</b><br>Faculty of Pharmacy, UiTM Kampus Bertam, Penang, Malaysia<br>© <span id="yr">2026</span> Chemistry with Dr. NAM</p></div>
   </footer>
 </div>
 <div id="toast" class="toast" hidden role="status"></div>
@@ -484,11 +490,42 @@ const STOPS = [
     {q:"Oxygen gas (O₂) has a double bond. This means…", o:["Two atoms share two pairs of electrons","Two molecules join together","The atoms become ions","Oxygen has two nuclei"], a:0, h:"Holding hands with both hands.", w:"A double bond is two shared pairs of electrons."},
     {q:"A thin stream of tap water stays unbroken mainly because of…", o:["Ionic bonds","Hydrogen bonds between water molecules","Gravity alone","Air pressure"], a:1, h:"Water molecules holding hands with their neighbours.", w:"Hydrogen bonds pull neighbouring water molecules together."}
   ]}
+,
+{ id:"s4b", num:"Stop 4B", title:"Why is carbon in almost everything?", topic:"Carbon, the LEGO master (a first look at organic chemistry)",
+  hook:"Why is cooking gas a gas, cooking oil a liquid and candle wax a solid?",
+  tip:"Carbon is the LEGO master. With four hands it can build chains, branches and rings of almost any size.",
+  core:[
+    {t:"Carbon has four hands", a:"A LEGO brick with four studs: it can click onto four other pieces at once.", s:"Carbon has 4 outer electrons, so it makes 4 covalent bonds. It can also bond to other carbon atoms again and again. That is why there are millions of different carbon compounds."},
+    {t:"Short chains, long chains", a:"A short LEGO chain is easy to pull apart; a long one tangles and holds on.", s:"Molecules made of only carbon and hydrogen are called hydrocarbons. Short chains like methane (1 carbon, cooking gas) are gases. Longer chains like petrol (about 8 carbons) are liquids. Very long chains like candle wax (20 to 40 carbons) are solids."},
+    {t:"Branches and rings", a:"LEGO pieces can be built straight, with branches, or joined into a circle.", s:"Carbon chains can branch, or close up into rings. A flat ring of 6 carbons, called a benzene ring, is found in many medicines, including aspirin and paracetamol."},
+    {t:"Functional groups", a:"Accessories that give a molecule its personality, like a hat or a scarf.", s:"A small group of atoms on a carbon chain changes how it behaves. –OH makes an alcohol, like the ethanol in hand sanitiser. –COOH makes an acid, like the acetic acid in vinegar. Esters give fruits their sweet smell."},
+    {t:"Isomers", a:"The same LEGO pieces, built into a different shape.", s:"Isomers have the same atoms arranged differently, so they behave differently. Carvone comes in two mirror-image forms: one smells of spearmint and the other of caraway seeds."},
+    {t:"Organic is all around you", a:"Carbon is in almost everything you eat, wear and take.", s:"Organic chemistry is the chemistry of carbon compounds. Sugar, proteins, DNA, plastics, petrol, soap and most medicines are organic. Here, \"organic\" does not mean \"grown without pesticides\"."}
+  ],
+  acts:[
+    {type:"sort", title:"Sort It: gas, liquid or solid?", bins:["Gas","Liquid","Solid"],
+     items:[["Methane (cooking gas), 1 C","Gas","A very short chain: molecules let go of each other easily."],["Propane, 3 C","Gas","Short chain, so it is a gas at room temperature."],["Butane (lighter fuel), 4 C","Gas","Still short: a gas, kept liquid only under pressure in the lighter."],["Petrol, about 8 C","Liquid","Medium chains: they cling enough to be a liquid."],["Kerosene, about 12 C","Liquid","Medium-long chains, still a liquid."],["Diesel, about 16 C","Liquid","Longer chains: a thicker liquid."],["Candle wax, 20 to 40 C","Solid","Long chains tangle and hold tight, so wax is solid."],["Plastic bag, thousands of C","Solid","Polyethylene: enormous chains, a tough solid."]]},
+    {type:"match", title:"Memory Match: group and where you meet it", pairs:[["–OH","Alcohol (hand sanitiser)"],["–COOH","Acid (vinegar)"],["Ester","Fruity smell (banana)"],["Benzene ring","Ring in aspirin"],["CH₄","Cooking gas"],["C=C","Double bond"]]}
+  ],
+  deeper:[
+    {t:"Longer chain, higher boiling point", a:"Every extra carbon adds a little more 'stickiness' between molecules.", s:"Methane (1 C) boils at −162 °C, propane (3 C) at −42 °C and butane (4 C) at about −1 °C, so they are gases. Octane (8 C) boils at 126 °C and hexadecane (16 C) at 287 °C, so they are liquids."},
+    {t:"How chemists draw organic molecules", a:"A shortcut drawing: every corner is a carbon, and the hydrogens are left out.", s:"In a skeletal formula, each corner or line end is a carbon atom with enough hydrogens to make 4 bonds. Only other atoms, like O, are written. You will meet these drawings again in PHD115."}
+  ],
+  side:[
+    {t:"From willow bark to aspirin", a:"Pharmacy link: a tree bark used for pain led chemists to a famous medicine.", s:"Willow bark contains salicin, which the body turns into salicylic acid. Chemists changed one functional group to make acetylsalicylic acid, called aspirin, which is gentler on the stomach. For your health, ask a pharmacist or doctor."},
+    {t:"Why plastic stays for years", a:"A chain so long that nature has almost no scissors to cut it.", s:"A plastic bag is made of polyethylene: chains of thousands of carbon atoms. Very few living things have enzymes that can cut these chains, so plastic can stay in the environment for decades or even centuries."}
+  ],
+  check:[
+    {q:"How many bonds does a carbon atom usually make?", o:["1","2","3","4"], a:3, h:"Think of the LEGO brick with four studs.", w:"Carbon has 4 outer electrons, so it makes 4 bonds."},
+    {q:"Which of these is a solid at room temperature?", o:["Methane","Petrol","Candle wax","Butane"], a:2, h:"Longer chains hold on to each other more.", w:"Candle wax has very long chains (20 to 40 carbons), so it is solid."},
+    {q:"The –OH group makes a molecule an…", o:["Acid","Alcohol","Ester","Ion"], a:1, h:"Think of hand sanitiser.", w:"–OH makes an alcohol, like ethanol in hand sanitiser."},
+    {q:"Isomers have…", o:["Different atoms","The same atoms arranged differently","No carbon","Only one atom"], a:1, h:"The same LEGO pieces, a different shape.", w:"Isomers share the same atoms but in a different arrangement."},
+    {q:"In chemistry, \"organic\" means…", o:["Grown without pesticides","Compounds of carbon","Anything natural","Only living things"], a:1, h:"Think of what sugar, petrol and aspirin share.", w:"Organic chemistry is the chemistry of carbon compounds."}
+  ]}
 
 ];
 
 const LATER = [
-  ["Stop 4B","Carbon, the LEGO master","Why is carbon in almost everything?"],
   ["Stop 5","Formulas and equations","How do we write a chemical recipe?"],
   ["Stop 6","The mole and concentration","How do chemists count tiny things?"],
   ["Stop 7","Chemistry in daily life","Why does this matter to me?"],
@@ -852,6 +889,60 @@ Object.assign(BACK, {
 });
 
 
+/* ---------------- Stop 4B pictures ---------------- */
+const CG = "#cfd8e3";
+const hexP = (cx, cy, r) => Array.from({length:6}, (_, i) => { const g = Math.PI/6 + i*Math.PI/3; return `${(cx+r*Math.cos(g)).toFixed(1)},${(cy+r*Math.sin(g)).toFixed(1)}`; }).join(" ");
+const beads = (x, y, n, gap, r, c) => `<path d="M${x} ${y}h${(n-1)*gap}" stroke="${K}" stroke-width="2.4"/>` + Array.from({length:n}, (_, i) => `<circle cx="${x+i*gap}" cy="${y}" r="${r}" fill="${c||CG}" stroke="${K}" stroke-width="1.4"/>`).join("");
+Object.assign(ILLS, {
+  c4hands: () => sv([[60,40],[180,40],[60,112],[180,112]].map(([x,y]) => `<path d="M120 76L${x} ${y}" stroke="${K}" stroke-width="4" stroke-linecap="round"/>` + ka(x, y, 15, W, "H", 9)).join("") + ka(120, 76, 28, CG, "C", 14), "A happy carbon atom holding four hydrogen atoms with four hands"),
+  cchains: () => sv(beads(30,34,1,0,9) + TX(66,38,"gas",{a:"start",s:11,w:800}) + `<path d="M110 26q6 10 0 16q-8-6 0-16z" fill="${C}" stroke="${K}" stroke-width="1.4"/>`
+     + beads(30,74,6,14,7) + TX(122,78,"liquid",{a:"start",s:11,w:800}) + `<path d="M174 64c5 6 7 10 7 13a7 7 0 0 1-14 0c0-3 2-7 7-13z" fill="${T}" stroke="${K}" stroke-width="1.4"/>`
+     + beads(30,114,13,12,6) + TX(196,118,"solid",{a:"start",s:11,w:800}) + kf(30,114,6) + kf(102,74,7), "Short, medium and long carbon chains: gas, liquid and solid"),
+  crings: () => sv(beads(24,70,4,18,8) + arw(90,70,100,70,112,70,K) + `<polygon points="${hexP(176,72,40)}" fill="none" stroke="${K}" stroke-width="3"/>` + hexP(176,72,40).split(" ").map(pt=>{const [x,y]=pt.split(","); return `<circle cx="${x}" cy="${y}" r="8" fill="${CG}" stroke="${K}" stroke-width="1.4"/>`;}).join("") + kf(176,74,18) + TX(176,136,"a ring of 6 carbons",{s:11}) + TX(54,100,"a chain",{s:11}), "A carbon chain closing into a ring of six"),
+  cfgroups: () => sv(beads(40,86,5,26,11) + kf(92,86,11) + `<path d="M40 74v-18" stroke="${K}" stroke-width="2.4"/><rect x="18" y="30" width="44" height="26" rx="8" fill="${A}" stroke="${K}" stroke-width="2"/>` + TX(40,48,"–OH",{s:12,w:800})
+     + `<path d="M144 74v-18" stroke="${K}" stroke-width="2.4"/><rect x="112" y="30" width="64" height="26" rx="8" fill="${GOLD}" stroke="${K}" stroke-width="2"/>` + TX(144,48,"–COOH",{s:12,w:800}) + `<path d="M28 30l12-14l12 14z" fill="${C}" stroke="${K}" stroke-width="1.6"/>` + TX(120,130,"small groups = big personality",{s:11}), "A carbon chain wearing –OH and –COOH accessories like hats"),
+  cisomers: () => sv(`<path d="M120 18v114" stroke="${K}" stroke-width="2" stroke-dasharray="5 4"/>` + TX(120,144,"mirror",{s:9.5,w:400})
+     + `<polygon points="${hexP(68,70,26)}" fill="${CG}" stroke="${K}" stroke-width="2"/><path d="M90 56l18-12" stroke="${K}" stroke-width="2.4"/>` + ka(110,40,9,C,"O",6) + kf(68,72,14)
+     + `<polygon points="${hexP(172,70,26)}" fill="${CG}" stroke="${K}" stroke-width="2"/><path d="M150 56l-18-12" stroke="${K}" stroke-width="2.4"/>` + ka(130,40,9,C,"O",6) + kf(172,72,14)
+     + `<path d="M40 112q10-14 22-4q-6 14-22 4z" fill="#7bd389" stroke="${K}" stroke-width="1.4"/>` + TX(68,128,"spearmint",{s:10,w:800}) + `<ellipse cx="190" cy="112" rx="8" ry="4" fill="#c79a5b" stroke="${K}" stroke-width="1.2" transform="rotate(-30 190 112)"/>` + TX(172,128,"caraway",{s:10,w:800}), "Two mirror-image molecules: one smells of spearmint, the other of caraway"),
+  corganic: () => sv([[44,"sugar",W],[98,"soap",P],[152,"fuel",C],[204,"medicine",A]].map(([x,l,c],i) => (i===0?`<rect x="${x-16}" y="44" width="32" height="32" rx="5" fill="${c}" stroke="${K}" stroke-width="2"/>`:i===1?`<rect x="${x-20}" y="48" width="40" height="26" rx="10" fill="${c}" stroke="${K}" stroke-width="2"/>`:i===2?`<rect x="${x-14}" y="40" width="28" height="38" rx="5" fill="${c}" stroke="${K}" stroke-width="2"/><rect x="${x+2}" y="34" width="8" height="8" fill="${c}" stroke="${K}" stroke-width="1.6"/>`:`<g transform="rotate(-30 ${x} 60)"><rect x="${x-20}" y="50" width="40" height="18" rx="9" fill="${W}" stroke="${K}" stroke-width="2"/><path d="M${x} 50h11a9 9 0 0 1 0 18h-11z" fill="${c}" stroke="${K}" stroke-width="2"/></g>`) + kf(x,62,10) + `<circle cx="${x+16}" cy="38" r="9" fill="${L}" stroke="${K}" stroke-width="1.4"/>` + TX(x+16,42,"C",{s:10,w:800}) + TX(x,100,l,{s:10,w:800})).join("") + TX(120,132,"all built on carbon",{s:11}), "Sugar, soap, fuel and medicine, each marked with a carbon badge"),
+  cwillow: () => sv(`<path d="M60 130V70" stroke="#8a5a3b" stroke-width="8" stroke-linecap="round"/>` + [[36,60],[60,42],[84,58],[48,82],[74,82]].map(([x,y])=>`<path d="M${x} ${y}q-6 22-2 40" fill="none" stroke="#7bd389" stroke-width="5" stroke-linecap="round"/>`).join("") + `<ellipse cx="60" cy="56" rx="34" ry="22" fill="#7bd389" fill-opacity=".6" stroke="${K}" stroke-width="2"/>` + kf(60,58,14)
+     + arw(104,78,120,70,136,78,K) + `<g transform="rotate(-25 182 78)"><rect x="152" y="66" width="60" height="26" rx="13" fill="${W}" stroke="${K}" stroke-width="2.2"/><path d="M182 66h17a13 13 0 0 1 0 26h-17z" fill="${A}" stroke="${K}" stroke-width="2.2"/></g>` + kf(176,80,9) + TX(182,124,"aspirin",{s:11,w:800}), "A willow tree leading to an aspirin tablet"),
+  cplastic: () => sv(`<path d="M40 40h56l6 84H34z" fill="${W}" fill-opacity=".85" stroke="${K}" stroke-width="2.2"/><path d="M52 40q16-22 32 0" fill="none" stroke="${K}" stroke-width="2.2"/>` + `<ellipse cx="60" cy="80" rx="1.8" ry="2.2" fill="${K}"/><ellipse cx="76" cy="80" rx="1.8" ry="2.2" fill="${K}"/><path d="M62 92q6-4 12 0" fill="none" stroke="${K}" stroke-width="1.8" stroke-linecap="round"/>`
+     + beads(126,50,7,14,5) + beads(126,74,7,14,5) + beads(126,98,7,14,5) + TX(172,124,"…thousands long",{s:10,w:700}), "A sad plastic bag next to very long carbon chains")
+});
+Object.assign(ILLS, {
+  cboil: () => { const rows = [["methane, 1 C",-162],["propane, 3 C",-42],["butane, 4 C",-1],["octane, 8 C",126],["hexadecane, 16 C",287]]; const X = v => 110 + v*0.32;
+     return sv(`<rect x="${X(-200)}" y="14" width="${X(25)-X(-200)}" height="116" fill="${A}" fill-opacity=".25"/>` + TX(X(-185),26,"gas at room temp.",{a:"start",s:8.5,w:700,f:D}) + `<path d="M${X(25)} 14v116" stroke="${C}" stroke-width="1.6" stroke-dasharray="4 3"/>` + TX(X(25)+4,26,"25 °C",{a:"start",s:8.5,w:700,f:C})
+       + rows.map(([n,v],i)=>{ const y = 42+i*19, x0 = X(0), x1 = X(v); return `<rect x="${Math.min(x0,x1).toFixed(1)}" y="${y-7}" width="${Math.abs(x1-x0).toFixed(1)}" height="14" rx="3" fill="${v<25?T:GOLD}" stroke="${K}" stroke-width="1.2"/>` + (v<0 ? TX(x0+4,y+4,n,{a:"start",s:8.5,w:700}) + TX(x1-3,y+4,v+"°",{a:"end",s:8.5,w:800}) : TX(x0-4,y+4,n,{a:"end",s:8.5,w:700}) + TX(x1+3,y+4,v+"°",{a:"start",s:8.5,w:800})); }).join("")
+       + `<path d="M${X(0)} 32v100" stroke="${K}" stroke-width="1.4"/>` + TX(120,144,"Boiling point (°C) rises with chain length",{s:10.5}), "Bar chart of boiling points: methane −162, propane −42, butane −1, octane 126, hexadecane 287 degrees Celsius", 150); },
+  cskeletal: () => sv(`<rect x="8" y="10" width="112" height="112" rx="10" fill="${W}" stroke="${K}" stroke-width="2"/><rect x="128" y="10" width="104" height="112" rx="10" fill="${W}" stroke="${K}" stroke-width="2"/>`
+     + TX(64,28,"Full drawing",{s:10,w:800}) + [[36,66,"C"],[66,66,"C"],[96,66,"O"]].map(([x,y,t])=>TX(x,y+4,t,{s:13,w:800})).join("") + `<path d="M43 66h16M73 66h16M101 66h6" stroke="${K}" stroke-width="2"/>` + TX(113,70,"H",{s:11,w:700})
+     + [[36,44],[36,92],[66,44],[66,92],[16,66]].map(([x,y])=>TX(x,y+4,"H",{s:11,w:700})).join("") + `<path d="M36 50v8M36 74v10M66 50v8M66 74v10M22 66h7" stroke="${K}" stroke-width="1.6"/>` + TX(64,112,"ethanol",{s:9.5,w:400})
+     + TX(180,28,"Skeletal drawing",{s:10,w:800}) + `<path d="M146 76l18-12l18 12" fill="none" stroke="${K}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>` + TX(196,80,"OH",{s:13,w:800}) + TX(180,112,"same ethanol!",{s:9.5,w:400}) + TX(120,142,"corners are carbons; H's are hidden",{s:10.5}), "Ethanol drawn in full with every atom, and as a short skeletal drawing", 150)
+});
+Object.assign(ILL, { s4b: {core:["c4hands","cchains","crings","cfgroups","cisomers","corganic"], deeper:["cboil","cskeletal"], side:["cwillow","cplastic"]} });
+Object.assign(BACK, { s4b: { core: {
+  0: () => bsv(pan(8,8,224,154,"4 bonds = methane, CH₄","cooking gas") + [[70,40],[170,40],[70,112],[170,112]].map(([x,y])=>`<path d="M120 76L${x} ${y}" stroke="${K}" stroke-width="2.6"/><circle cx="${(120+(x-120)*0.5).toFixed(1)}" cy="${(76+(y-76)*0.5-4).toFixed(1)}" r="2.6" fill="${L}" stroke="${K}" stroke-width="1"/><circle cx="${(120+(x-120)*0.5).toFixed(1)}" cy="${(76+(y-76)*0.5+4).toFixed(1)}" r="2.6" fill="${L}" stroke="${K}" stroke-width="1"/>` + ka(x,y,12,W,"H",8)).join("") + ka(120,76,18,CG,"C",11), "Methane: one carbon sharing a pair of electrons with each of four hydrogens"),
+  1: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + [[1,"methane","gas",T],[4,"butane","gas",T],[8,"octane (petrol)","liquid",A],[16,"diesel","liquid",A],[25,"candle wax","solid",GOLD]].map(([n,l,st,c],i)=>{ const y = 24+i*28, g = n>8 ? 5.4 : 9; return beads(20,y,Math.min(n,25),g,n>8?2.8:4.2,c) + TX(20,y+17,`${l} · ${n} C`,{a:"start",s:9,w:700}) + TX(226,y+4,st,{a:"end",s:10,w:800}); }).join(""), "Chains of 1, 4, 8, 16 and 25 carbons: gases, liquids, then a solid", 172),
+  2: () => bsv(pan(8,8,72,154,"Straight","in a line") + pan(84,8,72,154,"Branched","with arms") + pan(160,8,72,154,"Ring","a circle")
+     + `<path d="M44 36v72" stroke="${K}" stroke-width="2"/>` + Array.from({length:4},(_,i)=>`<circle cx="44" cy="${36+i*24}" r="8" fill="${CG}" stroke="${K}" stroke-width="1.4"/>`).join("")
+     + `<path d="M120 36v72M120 60h-22M120 84h22" stroke="${K}" stroke-width="2"/>` + [[120,36],[120,60],[120,84],[120,108],[98,60],[142,84]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="8" fill="${CG}" stroke="${K}" stroke-width="1.4"/>`).join("")
+     + `<polygon points="${hexP(196,74,26)}" fill="none" stroke="${K}" stroke-width="2"/>` + hexP(196,74,26).split(" ").map(pt=>{const [x,y]=pt.split(","); return `<circle cx="${x}" cy="${y}" r="7" fill="${CG}" stroke="${K}" stroke-width="1.4"/>`;}).join("") + kf(196,76,12), "Carbon atoms in a straight chain, a branched chain and a ring"),
+  3: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + TX(120,24,"Same chain, new accessory",{s:11,w:800})
+     + [["–OH","alcohol","hand sanitiser",A],["–COOH","acid","vinegar",GOLD],["–COO–","ester","banana smell",P]].map(([g,n,e,c],i)=>{ const y = 52+i*38; return `<rect x="14" y="${y-14}" width="62" height="28" rx="8" fill="${c}" stroke="${K}" stroke-width="1.8"/>` + TX(45,y+5,g,{s:12,w:800}) + arw(80,y,92,y,104,y,K) + TX(112,y-1,n,{a:"start",s:11,w:800}) + TX(112,y+12,e,{a:"start",s:9.5,w:400}) + kf(214,y,10); }).join(""), "–OH makes an alcohol (sanitiser), –COOH an acid (vinegar), –COO– an ester (banana smell)", 172),
+  4: () => bsv(pan(8,8,224,154,"Same atoms, mirror shapes","different smells") + `<path d="M120 18v104" stroke="${K}" stroke-width="2" stroke-dasharray="5 4"/>`
+     + `<path d="M50 96c-10-30 2-58 20-60c6 0 8 8 4 14c10-6 18 2 12 10c8 0 10 10 2 14c4 8-4 16-12 12c-6 12-20 14-26 10z" fill="${CG}" stroke="${K}" stroke-width="2"/>` + kf(70,78,14)
+     + `<path d="M190 96c10-30-2-58-20-60c-6 0-8 8-4 14c-10-6-18 2-12 10c-8 0-10 10-2 14c-4 8 4 16 12 12c6 12 20 14 26 10z" fill="${CG}" stroke="${K}" stroke-width="2"/>` + kf(170,78,14)
+     + TX(70,124,"spearmint",{s:10,w:800}) + TX(170,124,"caraway",{s:10,w:800}), "Two mirror-image molecules, like left and right hands, with different smells"),
+  5: () => bsv(pan(8,8,224,154,"Organic = carbon compounds","not the same as 'organic food'") + [[42,"DNA",P],[94,"protein",A],[146,"plastic",W],[198,"aspirin",GOLD]].map(([x,l,c])=>ka(x,52,17,c,"C",10) + TX(x,86,l,{s:9.5,w:700})).join("")
+     + `<rect x="58" y="100" width="124" height="22" rx="11" fill="${W}" stroke="${C}" stroke-width="2"/>` + TX(120,115,"pesticide-free ✗",{s:10,w:800,f:C}), "DNA, protein, plastic and aspirin all contain carbon; organic here does not mean pesticide-free")
+}, side: {
+  0: () => bsv(pan(8,8,224,154,"Change one group, get aspirin","gentler on the stomach") + [[40,"willow","salicin","#7bd389"],[120,"body","salicylic acid",GOLD],[200,"chemists","aspirin",A]].map(([x,a,b,c],i)=>`<polygon points="${hexP(x,62,20)}" fill="${c}" stroke="${K}" stroke-width="2"/>` + kf(x,64,11) + TX(x,100,b,{s:9.5,w:800}) + TX(x,34,a,{s:9,w:400}) + (i<2?arw(x+26,62,x+40,56,x+54,62,K):"")).join(""), "Salicin from willow becomes salicylic acid, and chemists changed one group to make aspirin"),
+  1: () => bsv(pan(8,8,224,154,"Too long for nature's scissors","plastic lasts for decades") + beads(22,52,16,13,5,W) + beads(22,72,16,13,5,W) + TX(120,36,"polyethylene chains",{s:9.5,w:700})
+     + `<g transform="translate(120 104)"><circle cx="-10" cy="-6" r="7" fill="none" stroke="${K}" stroke-width="2"/><circle cx="-10" cy="10" r="7" fill="none" stroke="${K}" stroke-width="2"/><path d="M-4 -2L22 10M-4 6L22 -6" stroke="${K}" stroke-width="2.4"/></g><path d="M96 84l48 40M144 84l-48 40" stroke="${C}" stroke-width="3" stroke-linecap="round"/>`, "Very long polyethylene chains that nature's enzyme scissors cannot cut")
+}}});
+
 /* ---------------- State ---------------- */
 const LS = "cay_v1";
 const AVATAR_SRC = "assets/avatar.png";
@@ -1013,7 +1104,8 @@ const BADGES = {
   s1:{ name:"Element Finder", c:"#ffd166", icon:()=>`<rect x="34" y="34" width="32" height="34" rx="5" fill="#ffffff" stroke="#231f20" stroke-width="2.4"/><text x="50" y="58" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="16" fill="#231f20">Au</text>` },
   s2:{ name:"Atom Builder", c:"#fc7a7a", icon:()=>`<ellipse cx="50" cy="52" rx="20" ry="8" fill="none" stroke="#231f20" stroke-width="2.2"/><ellipse cx="50" cy="52" rx="20" ry="8" fill="none" stroke="#231f20" stroke-width="2.2" transform="rotate(60 50 52)"/><ellipse cx="50" cy="52" rx="20" ry="8" fill="none" stroke="#231f20" stroke-width="2.2" transform="rotate(120 50 52)"/><circle cx="50" cy="52" r="5" fill="#d4ff3a" stroke="#231f20" stroke-width="2"/>` },
   s3:{ name:"Ion Maker", c:"#b8f2a0", icon:()=>`<circle cx="50" cy="52" r="15" fill="#ffd166" stroke="#231f20" stroke-width="2.4"/><text x="50" y="57" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="12" fill="#231f20">Na⁺</text>` },
-  s4:{ name:"Bond Buddy", c:"#ff9fb4", icon:()=>`<circle cx="38" cy="52" r="11" fill="#5eead4" stroke="#231f20" stroke-width="2.2"/><circle cx="62" cy="52" r="11" fill="#fc7a7a" stroke="#231f20" stroke-width="2.2"/><path d="M47 52h6" stroke="#231f20" stroke-width="3" stroke-linecap="round"/>` }
+  s4:{ name:"Bond Buddy", c:"#ff9fb4", icon:()=>`<circle cx="38" cy="52" r="11" fill="#5eead4" stroke="#231f20" stroke-width="2.2"/><circle cx="62" cy="52" r="11" fill="#fc7a7a" stroke="#231f20" stroke-width="2.2"/><path d="M47 52h6" stroke="#231f20" stroke-width="3" stroke-linecap="round"/>` },
+  s4b:{ name:"Carbon Crafter", c:"#c9b8ff", icon:()=>`<polygon points="${hexP(50,52,16)}" fill="#ffffff" stroke="#231f20" stroke-width="2.6"/><circle cx="50" cy="52" r="5" fill="#cfd8e3" stroke="#231f20" stroke-width="1.6"/>` },
 };
 function badgeSVG(id, earned, size){
   const b = BADGES[id] || {name:"Badge", c:"#5eead4", icon:()=>""};
@@ -1332,6 +1424,7 @@ function renderPrivacy(){
 
 /* ---------------- Boot ---------------- */
 renderPrivacy();
+try { document.getElementById("yr").textContent = new Date().getFullYear(); } catch(e) {}
 go("welcome");
 initRemote();
 </script>

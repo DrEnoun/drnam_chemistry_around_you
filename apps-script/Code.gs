@@ -4,7 +4,7 @@
  * Setup steps are in README.md, section "Switch on feedback".
  */
 const SHEET_NAME = "Feedback";
-const STOPS = ["s0", "s1", "s2", "s3", "s4"];   // add "s3", "s4", ... as new stops are released
+const STOPS = ["s0", "s1", "s2", "s3", "s4", "s4b"];   // add "s3", "s4", ... as new stops are released
 
 function header_() {
   const h = ["learner_id", "last_update", "learner_type", "chemistry_background", "visits",

@@ -8,7 +8,7 @@ Every idea starts with an everyday question, then an analogy, then the science. 
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The whole hub: welcome page, journey map, Prelude plus Stops 1 to 4, activities, self-checks, feedback form |
+| `index.html` | The whole hub: welcome page, journey map, Prelude plus Stops 1 to 4 and 4B, activities, self-checks, feedback form |
 | `config.js` | One setting: the address of your feedback inbox (Google Sheet) |
 | `assets/bg-dna.mp4`, `assets/bg-dna.jpg` | Background video and its still image |
 | `assets/logo.png`, `assets/logo-192.png`, `assets/avatar.png` | Chemistry with Dr. NAM logo, app icon, and the face used in "Dr. NAM Says" |
