@@ -53,6 +53,22 @@ p{margin:0}
 .logo{width:64px;height:64px;border-radius:50%;background:#fff;border:3px solid var(--ink);object-fit:cover;flex:none}
 .avatar{width:56px;height:56px;border-radius:50%;border:3px solid var(--ink);background:#fff;object-fit:cover;flex:none;box-shadow:3px 3px 0 var(--shadow)}
 .herologo{width:clamp(140px,22vw,200px);height:auto;border-radius:50%;background:#fff;border:4px solid var(--ink);box-shadow:6px 6px 0 var(--shadow)}
+/* Home button + badges */
+.btn.homebtn{display:inline-flex;align-items:center;gap:8px;font-size:1.02em;min-height:54px;padding:.45em 1.1em}
+.btn.homebtn svg{flex:none}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;margin-top:6px}
+.badge-item{margin:0;display:grid;justify-items:center;gap:6px;text-align:center;background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:12px 8px}
+.badge-item.earned{border-color:var(--lime)}
+.badge-item.locked svg{opacity:.7}
+.badge-item figcaption{display:grid;gap:2px;font-size:.78em}
+.badge-item b{font-family:var(--f-title)}
+.badge-item span{color:var(--muted);font-size:.9em}
+.badge-won{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.badge-won div{display:grid;gap:2px}
+.badge-won b{font-family:var(--f-title);font-size:1.2em;color:var(--pop)}
+.badge-won.new svg{animation:badgepop .8s cubic-bezier(.2,.8,.3,1.4) both}
+@keyframes badgepop{0%{transform:scale(.3) rotate(-20deg);opacity:0}70%{transform:scale(1.12) rotate(6deg);opacity:1}100%{transform:none}}
+@media (prefers-reduced-motion: reduce){ .badge-won.new svg{animation:none} }
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -288,7 +304,7 @@ svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
     <img class="logo" src="assets/logo.png" alt="Chemistry with Dr. NAM logo" width="64" height="64">
     <div class="brand"><b>Chemistry Around You</b><span>with Dr. NAM · Bringing everyday life into simple science, explained.</span></div>
     <div class="tools">
-      <button class="btn small" id="homeBtn" type="button">Journey map</button>
+      <button class="btn lime homebtn" id="homeBtn" type="button" aria-label="Home: journey map"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 10v9.5h5v-5.5h3v5.5h5V10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/></svg><span>Journey map</span></button>
       <button class="btn small" id="themeBtn" type="button">Day / Night</button>
       <button class="btn small" id="motionBtn" type="button" aria-pressed="false">Pause background</button>
     </div>
@@ -961,6 +977,31 @@ function askProfile(after){
   try { d.showModal(); } catch(e) { d.setAttribute("open",""); }
 }
 
+
+/* ---------------- Badges ---------------- */
+const BADGES = {
+  s0:{ name:"Matter Explorer", c:"#5eead4", icon:()=>`<circle cx="40" cy="54" r="7" fill="#fc7a7a" stroke="#231f20" stroke-width="2"/><circle cx="58" cy="44" r="7" fill="#d4ff3a" stroke="#231f20" stroke-width="2"/><circle cx="56" cy="64" r="7" fill="#ffffff" stroke="#231f20" stroke-width="2"/>` },
+  s1:{ name:"Element Finder", c:"#ffd166", icon:()=>`<rect x="34" y="34" width="32" height="34" rx="5" fill="#ffffff" stroke="#231f20" stroke-width="2.4"/><text x="50" y="58" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="16" fill="#231f20">Au</text>` },
+  s2:{ name:"Atom Builder", c:"#fc7a7a", icon:()=>`<ellipse cx="50" cy="52" rx="20" ry="8" fill="none" stroke="#231f20" stroke-width="2.2"/><ellipse cx="50" cy="52" rx="20" ry="8" fill="none" stroke="#231f20" stroke-width="2.2" transform="rotate(60 50 52)"/><ellipse cx="50" cy="52" rx="20" ry="8" fill="none" stroke="#231f20" stroke-width="2.2" transform="rotate(120 50 52)"/><circle cx="50" cy="52" r="5" fill="#d4ff3a" stroke="#231f20" stroke-width="2"/>` },
+  s3:{ name:"Ion Maker", c:"#b8f2a0", icon:()=>`<circle cx="50" cy="52" r="15" fill="#ffd166" stroke="#231f20" stroke-width="2.4"/><text x="50" y="57" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="12" fill="#231f20">Na⁺</text>` },
+  s4:{ name:"Bond Buddy", c:"#ff9fb4", icon:()=>`<circle cx="38" cy="52" r="11" fill="#5eead4" stroke="#231f20" stroke-width="2.2"/><circle cx="62" cy="52" r="11" fill="#fc7a7a" stroke="#231f20" stroke-width="2.2"/><path d="M47 52h6" stroke="#231f20" stroke-width="3" stroke-linecap="round"/>` }
+};
+function badgeSVG(id, earned, size){
+  const b = BADGES[id] || {name:"Badge", c:"#5eead4", icon:()=>""};
+  const fill = earned ? b.c : "#cfd8e3", z = size || 92;
+  const rib = earned ? `<path d="M34 76l-8 22l12-6l6 10l6-20zM66 76l8 22l-12-6l-6 10l-6-20z" fill="#0d7f74" stroke="#231f20" stroke-width="2" stroke-linejoin="round"/>` : "";
+  const face = earned ? `<ellipse cx="45" cy="70" rx="1.7" ry="2.1" fill="#231f20"/><ellipse cx="55" cy="70" rx="1.7" ry="2.1" fill="#231f20"/><path d="M48 73q2 2.4 4 0" fill="none" stroke="#231f20" stroke-width="1.6" stroke-linecap="round"/>` : "";
+  const inner = earned ? `<g transform="translate(0 -6) translate(50 52) scale(.86) translate(-50 -52)">${b.icon()}</g>` : `<rect x="40" y="48" width="20" height="16" rx="3" fill="#8a97a8"/><path d="M44 48v-5a6 6 0 0 1 12 0v5" fill="none" stroke="#8a97a8" stroke-width="3"/>`;
+  return `<svg viewBox="0 0 100 106" width="${z}" height="${Math.round(z*1.06)}" role="img" aria-label="${esc(b.name)} badge${earned ? "" : " (locked)"}">${rib}<path d="M50 6l9 7l11-2l4 10l10 4l-2 11l7 9l-7 9l2 11l-10 4l-4 10l-11-2l-9 7l-9-7l-11 2l-4-10l-10-4l2-11l-7-9l7-9l-2-11l10-4l4-10l11 2z" fill="${fill}" stroke="#231f20" stroke-width="2.6" stroke-linejoin="round"/><circle cx="50" cy="52" r="27" fill="#ffffff" fill-opacity="${earned?0.55:0.4}" stroke="#231f20" stroke-width="2"/>${inner}${face}</svg>`;
+}
+function badgeShelf(){
+  const ids = STOPS.map(s => s.id).filter(id => BADGES[id]);
+  const got = ids.filter(id => stopRec(id).completed).length;
+  return `<section class="block badges" aria-label="My badges"><div class="eyebrow">My badges</div><h3>${got} of ${ids.length} badges collected</h3>
+    <div class="shelf">${ids.map(id => { const e = stopRec(id).completed, st = STOPS.find(x => x.id === id);
+      return `<figure class="badge-item ${e ? "earned" : "locked"}">${badgeSVG(id, e, 84)}<figcaption><b>${e ? esc(BADGES[id].name) : "Locked"}</b><span>${esc(st.num)}</span></figcaption></figure>`; }).join("")}</div>
+    <p class="muted" style="font-size:.78em">Finish a stop's Self-check to earn its badge.</p></section>`;
+}
 /* ---------------- Map ---------------- */
 function renderMap(){
   const n = doneCount(); const pct = Math.round(n / TOTAL_STOPS * 100);
@@ -980,6 +1021,7 @@ function renderMap(){
     return `<button type="button" class="stop ${nextStop && nextStop.id === s.id ? "glow" : ""}" data-id="${s.id}">
       <span class="num">${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.topic)}</p><span class="state">${st}</span></button>`; }).join("")}
   </div>
+  ${badgeShelf()}
   <section class="block"><div class="eyebrow">Coming next</div><h3>More stops, themes and a trip to space</h3>
     <div class="soon">${LATER.map(([a,b,c]) => `<div><span class="eyebrow">${a}</span><b>${esc(b)}</b>${esc(c)}</div>`).join("")}</div>
   </section>`;
@@ -1213,6 +1255,7 @@ function checkLayer(L, s){
   const finish = () => { const p = prog(s.id); p.checkDone = true; p.best = Math.max(p.best, first);
     const r = stopRec(s.id); const firstTime = !r.completed; r.completed = true; if (r.firstTry === null) r.firstTry = first; commit();
     L.innerHTML = `<div class="act" style="text-align:left"><span class="eyebrow">${esc(s.num)} complete${firstTime ? " · badge earned" : ""}</span>
+      ${BADGES[s.id] ? `<div class="badge-won ${firstTime ? "new" : ""}">${badgeSVG(s.id, true, 120)}<div><b>${firstTime ? "New badge!" : "Your badge"}</b><span>${esc(BADGES[s.id].name)}</span><span class="muted">Find it on the journey map under My badges.</span></div></div>` : ""}
       <h2>You did it!</h2><p>You answered <b class="score">${first} of ${s.check.length}</b> on the first try. Every try counts as learning, not as a mark.</p>
       ${says(first >= 4 ? "You are already thinking like a chemist. On to the next stop!" : "Some of these are tricky the first time. Flip back through the cards whenever you like; they are always here.")}
       <div class="actions"><button type="button" class="btn lime" id="toFb">Tell Dr. NAM how it went</button><button type="button" class="btn ghost" id="toMap">Back to the map</button></div></div>`;
