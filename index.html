@@ -86,6 +86,21 @@ p{margin:0}
 .credit img{width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--ink);flex:none}
 .credit b{font-family:var(--f-title);color:var(--text);letter-spacing:.04em}
 .credit p{margin:0;min-width:0}
+/* Clickable title + Balance It */
+.brandbtn{font:inherit;font-family:var(--f-title);font-weight:800;font-size:clamp(20px,2.4vw,26px);letter-spacing:-.01em;line-height:1;color:var(--text);background:none;border:0;padding:0;text-align:left;cursor:pointer}
+.brandbtn:hover{color:var(--pop);text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px}
+.brandbtn:focus-visible{outline:4px solid var(--lime);outline-offset:3px;border-radius:6px}
+.eqrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.eqrow .sp{display:grid;justify-items:center;gap:4px;background:var(--ground);border:2px solid var(--line);border-radius:14px;padding:8px 10px}
+.eqrow .sp .n{font-family:var(--f-title);font-weight:800;font-size:1.4em;min-width:1.6ch;text-align:center;color:var(--pop)}
+.eqrow .fm{font-family:var(--f-title);font-size:1.3em}
+.eqrow .op{font-family:var(--f-title);font-weight:800;font-size:1.4em}
+.eqrow .arrow{color:var(--pop)}
+.tally{display:flex;flex-wrap:wrap;gap:8px}
+.tally .tl{display:grid;grid-template-columns:auto auto auto auto;gap:8px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:6px 10px;font-size:.85em}
+.tally .tl b{font-family:var(--f-title);font-size:1.1em}
+.tally .tl.ok{border-color:var(--lime)} .tally .tl.no{border-color:var(--coral)}
+.tally .tl i{font-style:normal;font-weight:800}
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -319,7 +334,7 @@ svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
 <div class="wrap">
   <header class="top">
     <img class="logo" src="assets/logo.png" alt="Chemistry with Dr. NAM logo" width="64" height="64">
-    <div class="brand"><b>Chemistry Around You</b><span>with Dr. NAM · Bringing everyday life into simple science, explained.</span></div>
+    <div class="brand"><button type="button" class="brandbtn" id="brandBtn" aria-label="Chemistry Around You: back to the welcome page">Chemistry Around You</button><span>with Dr. NAM · Bringing everyday life into simple science, explained.</span></div>
     <div class="tools">
       <button class="btn lime homebtn" id="homeBtn" type="button" aria-label="Home: journey map"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M3 11.5L12 4l9 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 10v9.5h5v-5.5h3v5.5h5V10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/></svg><span>Journey map</span></button>
       <button class="btn small" id="themeBtn" type="button">Day / Night</button>
@@ -522,11 +537,47 @@ const STOPS = [
     {q:"Isomers have…", o:["Different atoms","The same atoms arranged differently","No carbon","Only one atom"], a:1, h:"The same LEGO pieces, a different shape.", w:"Isomers share the same atoms but in a different arrangement."},
     {q:"In chemistry, \"organic\" means…", o:["Grown without pesticides","Compounds of carbon","Anything natural","Only living things"], a:1, h:"Think of what sugar, petrol and aspirin share.", w:"Organic chemistry is the chemistry of carbon compounds."}
   ]}
+,
+{ id:"s5", num:"Stop 5", title:"How do we write a chemical recipe?", topic:"Chemical formulas and equations",
+  hook:"Why does a gas stove need air to burn?",
+  tip:"A formula is a list of ingredients. An equation is the whole recipe: what goes in, and what comes out.",
+  core:[
+    {t:"A formula is an ingredient list", a:"A shopping list for one molecule: which atoms, and how many.", s:"A chemical formula shows the elements in a substance and how many atoms of each. The small number after a symbol counts its atoms: H₂O has 2 hydrogen atoms and 1 oxygen atom. No number means 1."},
+    {t:"Big numbers in front", a:"\"2 packets of nasi lemak\": the number in front counts whole packets, not what is inside.", s:"A number in front of a formula counts whole molecules. 2H₂O means two water molecules, so 4 hydrogen atoms and 2 oxygen atoms in total. Never change the small numbers, or you make a different substance."},
+    {t:"An equation is a recipe", a:"Flour + eggs + sugar → cake. Ingredients on the left, the dish on the right.", s:"A chemical equation shows a reaction. The starting substances (reactants) are on the left, the arrow means \"react to make\", and the new substances (products) are on the right. Example: hydrogen + oxygen → water."},
+    {t:"Balancing: no atom goes missing", a:"Pull a LEGO house apart and build a car: you still have the very same bricks.", s:"Atoms are never created or destroyed in a reaction, only rearranged. So both sides must have the same number of each atom. We balance by changing the big numbers in front: 2H₂ + O₂ → 2H₂O."},
+    {t:"Signs of a reaction", a:"Clues that something new has been made, like a detective's checklist.", s:"Common signs of a chemical reaction are gas bubbles, a colour change, heat or light, a new smell, or a solid appearing in a liquid. Baking soda and vinegar fizzing is a reaction you can see."},
+    {t:"Why a gas stove needs air", a:"A fire is a recipe too, and oxygen from the air is one of its ingredients.", s:"Cooking gas (methane) burns with oxygen: CH₄ + 2O₂ → CO₂ + 2H₂O + energy. Without enough air, the flame turns yellow and can make soot and harmful carbon monoxide. That is why kitchens need good airflow."}
+  ],
+  acts:[
+    {type:"balance", title:"Balance It", eqs:[
+      {r:[["H₂",{H:2}],["O₂",{O:2}]], p:[["H₂O",{H:2,O:1}]], ans:[2,1,2], name:"making water"},
+      {r:[["N₂",{N:2}],["H₂",{H:2}]], p:[["NH₃",{N:1,H:3}]], ans:[1,3,2], name:"making ammonia"},
+      {r:[["Na",{Na:1}],["Cl₂",{Cl:2}]], p:[["NaCl",{Na:1,Cl:1}]], ans:[2,1,2], name:"making table salt"},
+      {r:[["CH₄",{C:1,H:4}],["O₂",{O:2}]], p:[["CO₂",{C:1,O:2}],["H₂O",{H:2,O:1}]], ans:[1,2,1,2], name:"burning cooking gas"}]},
+    {type:"sort", title:"Sort It: chemical or physical change?", bins:["Chemical change","Physical change"],
+     items:[["Burning paper","Chemical change","Ash and smoke are new substances."],["Ice melting","Physical change","Still water, just a different state."],["Iron rusting","Chemical change","Rust is a new substance: iron oxide."],["Frying an egg","Chemical change","The egg's proteins change for good."],["Sugar dissolving in tea","Physical change","The sugar is still there; you can taste it."],["Baking soda + vinegar fizz","Chemical change","Bubbles of a new gas, carbon dioxide."],["Chopping vegetables","Physical change","Smaller pieces, same substance."],["Boiling water","Physical change","Steam is still water."],["Milk going sour","Chemical change","Bacteria make new acids: a new smell and taste."]]},
+    {type:"match", title:"Memory Match: formula and its atoms", pairs:[["H₂O","2 H + 1 O"],["CO₂","1 C + 2 O"],["CH₄","1 C + 4 H"],["NH₃","1 N + 3 H"],["NaCl","1 Na + 1 Cl"],["C₆H₁₂O₆","6 C + 12 H + 6 O"]]}
+  ],
+  deeper:[
+    {t:"Counting atoms in medicines", a:"Big molecules have long ingredient lists, but you read them the same way.", s:"Glucose is C₆H₁₂O₆: 24 atoms. Aspirin is C₉H₈O₄: 21 atoms. Paracetamol is C₈H₉NO₂: 20 atoms. Pharmacists meet these formulas on every medicine's information sheet."},
+    {t:"Mass is saved", a:"Weigh a fizzing drink in a sealed bottle, and the scale does not move.", s:"In a closed container, the total mass before and after a reaction is the same, because no atoms escape. In an open cup, the gas floats away, so the mass seems to drop. This is the law of conservation of mass."}
+  ],
+  side:[
+    {t:"Why cakes rise", a:"Tiny gas balloons trapped in the batter.", s:"Baking soda (sodium hydrogen carbonate, NaHCO₃) reacts with acids in the batter, or breaks down with heat, to make carbon dioxide gas. The bubbles get trapped and the cake rises."},
+    {t:"Why bicycles rust", a:"Iron slowly \"burns\" with oxygen and water from the air.", s:"Iron reacts with oxygen and water to make rust, a reddish iron oxide: 4Fe + 3O₂ → 2Fe₂O₃ (water helps it along). Paint, oil and grease keep air and water away, so the iron stays shiny."}
+  ],
+  check:[
+    {q:"How many hydrogen atoms are in one H₂O molecule?", o:["1","2","3","4"], a:1, h:"Look at the small number after H.", w:"The small 2 after H means 2 hydrogen atoms."},
+    {q:"How many hydrogen atoms are in 2H₂O?", o:["2","3","4","6"], a:2, h:"Two whole water molecules, each with 2 H.", w:"2 molecules × 2 H = 4 hydrogen atoms."},
+    {q:"In a chemical equation, the substances on the left are called…", o:["Products","Reactants","Catalysts","Ions"], a:1, h:"They are the starting ingredients.", w:"The starting substances, on the left, are the reactants."},
+    {q:"Why must an equation be balanced?", o:["To make it look neat","Atoms are not created or destroyed","To make the reaction faster","Products are always heavier"], a:1, h:"Remember the LEGO bricks.", w:"Atoms are only rearranged, so each side must have the same atoms."},
+    {q:"Which of these is a chemical change?", o:["Ice melting","Chopping onions","Frying an egg","Dissolving salt"], a:2, h:"Which one makes something new that you cannot undo?", w:"Frying changes the egg's proteins into something new."}
+  ]}
 
 ];
 
 const LATER = [
-  ["Stop 5","Formulas and equations","How do we write a chemical recipe?"],
   ["Stop 6","The mole and concentration","How do chemists count tiny things?"],
   ["Stop 7","Chemistry in daily life","Why does this matter to me?"],
   ["Theme","Chemistry and human health","Blood, medicines, natural products"],
@@ -943,6 +994,50 @@ Object.assign(BACK, { s4b: { core: {
      + `<g transform="translate(120 104)"><circle cx="-10" cy="-6" r="7" fill="none" stroke="${K}" stroke-width="2"/><circle cx="-10" cy="10" r="7" fill="none" stroke="${K}" stroke-width="2"/><path d="M-4 -2L22 10M-4 6L22 -6" stroke="${K}" stroke-width="2.4"/></g><path d="M96 84l48 40M144 84l-48 40" stroke="${C}" stroke-width="3" stroke-linecap="round"/>`, "Very long polyethylene chains that nature's enzyme scissors cannot cut")
 }}});
 
+/* ---------------- Stop 5 pictures ---------------- */
+const mH2 = (x, y, r) => ka(x - r*0.8, y, r, W, "H", r*0.6) + ka(x + r*0.8, y, r, W, "H", r*0.6);
+const mO2 = (x, y, r) => ka(x - r*0.8, y, r, C, "O", r*0.6) + ka(x + r*0.8, y, r, C, "O", r*0.6);
+const mCO2 = (x, y, r) => ka(x - r*1.5, y, r*0.85, C, "O", r*0.55) + ka(x + r*1.5, y, r*0.85, C, "O", r*0.55) + ka(x, y, r, CG, "C", r*0.6);
+const mCH4 = (x, y, r) => [[-1,-1],[1,-1],[-1,1],[1,1]].map(([dx,dy]) => ka(x+dx*r*1.05, y+dy*r*0.95, r*0.55, W, "H", r*0.4)).join("") + ka(x, y, r*0.8, CG, "C", r*0.55);
+const mH2O = (x, y, r) => ka(x - r*0.95, y + r*0.75, r*0.6, W, "H", r*0.42) + ka(x + r*0.95, y + r*0.75, r*0.6, W, "H", r*0.42) + ka(x, y, r, C, "O", r*0.6);
+Object.assign(ILLS, {
+  f5list: () => sv(`<path d="M66 16h108v118H66z" fill="${W}" ${ST}/><path d="M66 16l10 8l10-8l10 8l10-8l10 8l10-8l10 8l10-8l10 8l10-8l10 8" fill="none" stroke="${K}" stroke-width="1.6"/>` + TX(120,46,"Water, H₂O",{s:13,w:800})
+     + `<path d="M80 56h80" stroke="${K}" stroke-width="1" stroke-dasharray="3 3"/>` + ka(90,78,10,W,"H",7) + TX(110,82,"× 2",{a:"start",s:13,w:800}) + ka(90,108,10,C,"O",7) + TX(110,112,"× 1",{a:"start",s:13,w:800}) + kf(158,118,8), "A shopping list for water: 2 hydrogen and 1 oxygen"),
+  f5packets: () => sv([70,170].map(x => `<path d="M${x-40} 112L${x} 34L${x+40} 112z" fill="#7bd389" stroke="${K}" stroke-width="2.4" stroke-linejoin="round"/><path d="M${x-26} 112L${x} 64L${x+26} 112" fill="none" stroke="#4e9e5f" stroke-width="2"/>` + mH2O(x, 88, 10)).join("") + TX(120,134,"2H₂O = 2 whole packets",{s:12,w:800}), "Two leaf packets, each holding one water molecule"),
+  f5cake: () => sv(`<path d="M18 66q12-18 30 0v30H18z" fill="${W}" stroke="${K}" stroke-width="2"/>` + TX(33,86,"flour",{s:8.5,w:700}) + TX(58,82,"+",{s:14,w:800}) + `<ellipse cx="80" cy="80" rx="12" ry="15" fill="#fff6e0" stroke="${K}" stroke-width="2"/>` + kf(80,82,8) + TX(102,82,"+",{s:14,w:800}) + `<rect x="112" y="68" width="22" height="26" rx="4" fill="${P}" stroke="${K}" stroke-width="2"/>` + TX(123,85,"sugar",{s:6.5,w:700})
+     + arw(140,80,148,80,158,80,K) + `<rect x="168" y="70" width="58" height="34" rx="6" fill="${GOLD}" stroke="${K}" stroke-width="2"/><path d="M168 82q15 8 29 0t29 0" fill="none" stroke="${W}" stroke-width="4"/><path d="M198 70v-12" stroke="${K}" stroke-width="2"/><path d="M198 58q-4-6 0-10q4 4 0 10z" fill="${C}"/>` + kf(197,92,10) + TX(120,128,"ingredients → dish",{s:11,w:800}), "Flour, egg and sugar turn into a cake, like reactants into a product"),
+  f5lego: () => sv(brick(20,90,66,T) + brick(30,62,44,C) + TX(52,134,"a house",{s:10,w:700}) + arw(98,82,112,74,128,82,K) + brick(144,96,80,T) + brick(154,72,22,C) + brick(184,72,22,C) + kf(184,112,10) + TX(184,134,"a car: same bricks!",{s:10,w:700}), "The same LEGO bricks rebuilt from a house into a car"),
+  f5signs: () => sv([[40,"bubbles"],[96,"colour"],[150,"heat/light"],[204,"new solid"]].map(([x,l],i)=>`<rect x="${x-24}" y="30" width="48" height="56" rx="8" fill="${W}" stroke="${K}" stroke-width="2"/>` + (i===0?[[x-8,70],[x+6,60],[x-2,48],[x+8,42]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="4" fill="${A}" stroke="${K}" stroke-width="1.2"/>`).join(""):i===1?`<rect x="${x-18}" y="38" width="17" height="40" fill="${T}"/><rect x="${x+1}" y="38" width="17" height="40" fill="#b48cff"/>`:i===2?`<path d="M${x} 40c10 12 12 20 10 30a10 10 0 0 1-20 0c-2-10 0-18 10-30z" fill="${C}" stroke="${K}" stroke-width="1.6"/>`:`<path d="M${x-18} 74h36" stroke="${K}" stroke-width="1"/>`+[[x-8,70],[x,68],[x+8,70],[x-4,64],[x+4,64]].map(([a,b])=>`<rect x="${a-3}" y="${b-3}" width="6" height="6" fill="${CG}" stroke="${K}" stroke-width="1"/>`).join("")) + TX(x,104,l,{s:9.5,w:800})).join("") + TX(120,132,"clues that something new formed",{s:11}), "Four signs of a reaction: bubbles, colour change, heat or light, and a new solid"),
+  f5stove: () => sv(`<rect x="40" y="96" width="160" height="30" rx="8" fill="${N}" ${ST}/><ellipse cx="120" cy="96" rx="44" ry="8" fill="#56607a" stroke="${K}" stroke-width="2"/>` + [-30,-15,0,15,30].map(dx=>`<path d="M${120+dx} 92c-6-10-4-20 0-30c4 10 6 20 0 30z" fill="#4da3ff" stroke="${K}" stroke-width="1.2"/>`).join("") + kf(120,76,10) + [[28,40],[208,40],[40,64],[198,66]].map(([x,y])=>ka(x,y,9,C,"O",6)).join("") + TX(120,140,"oxygen from the air feeds the flame",{s:10.5}), "A blue gas stove flame with oxygen from the air floating in"),
+  f5bake: () => sv(`<path d="M60 84h120l-10 44H70z" fill="${CG}" ${ST}/><path d="M66 84q54-64 108 0z" fill="${GOLD}" stroke="${K}" stroke-width="2.2"/>` + [[96,66],[120,56],[144,68],[110,76],[132,78]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5" fill="${W}" stroke="${K}" stroke-width="1.2"/>`).join("") + kf(120,100,12) + `<path d="M120 30v-12M104 34l-6-10M136 34l6-10" stroke="${K}" stroke-width="2" stroke-linecap="round"/>` + TX(196,40,"CO₂",{s:12,w:800}), "A cake rising in its tin, full of carbon dioxide bubbles"),
+  f5rust: () => sv(`<circle cx="120" cy="76" r="50" fill="none" stroke="${CG}" stroke-width="10"/><circle cx="120" cy="76" r="50" fill="none" stroke="${K}" stroke-width="1.6"/><circle cx="120" cy="76" r="40" fill="none" stroke="${K}" stroke-width="1.6"/>` + Array.from({length:8},(_,i)=>{const g=i/8*Math.PI*2; return `<path d="M120 76L${(120+40*Math.cos(g)).toFixed(1)} ${(76+40*Math.sin(g)).toFixed(1)}" stroke="${K}" stroke-width="1.4"/>`;}).join("")
+     + [[86,40],[150,112],[160,52],[78,104]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="9" ry="6" fill="#c8693a" stroke="${K}" stroke-width="1.2"/>`).join("") + `<circle cx="120" cy="76" r="12" fill="${CG}" stroke="${K}" stroke-width="1.8"/><ellipse cx="116" cy="74" rx="1.6" ry="2" fill="${K}"/><ellipse cx="124" cy="74" rx="1.6" ry="2" fill="${K}"/><path d="M116 82q4-3 8 0" fill="none" stroke="${K}" stroke-width="1.5" stroke-linecap="round"/>`, "A sad bicycle wheel with rust spots"),
+  /* deeper */
+  f5counts: () => { const rows = [["glucose",[["C",6,CG],["H",12,W],["O",6,C]]],["aspirin",[["C",9,CG],["H",8,W],["O",4,C]]],["paracetamol",[["C",8,CG],["H",9,W],["N",1,"#9ab8ff"],["O",2,C]]]]; const u = 4.4;
+     return sv(rows.map(([n,parts],i)=>{ let x = 80; const y = 34+i*30; return TX(74,y+5,n,{a:"end",s:10.5,w:700}) + parts.map(([e,c,f])=>{ const w = c*u, o = `<rect x="${x}" y="${y-9}" width="${w}" height="18" fill="${f}" stroke="${K}" stroke-width="1.2"/>` + (w>14?TX(x+w/2,y+4,e+c,{s:8,w:800}):""); x += w; return o; }).join("") + TX(x+4,y+4,parts.reduce((t,p)=>t+p[1],0)+" atoms",{a:"start",s:9,w:400}); }).join("")
+       + [["C",CG],["H",W],["N","#9ab8ff"],["O",C]].map(([e,f],i)=>`<rect x="${62+i*34}" y="124" width="12" height="12" fill="${f}" stroke="${K}" stroke-width="1"/>` + TX(78+i*34,134,e,{a:"start",s:10,w:700})).join(""), "Atoms in glucose (24), aspirin (21) and paracetamol (20), split by element", 150); },
+  f5mass: () => sv([[64,"sealed",true],[176,"open",false]].map(([x,l,cl])=>`<rect x="${x-46}" y="104" width="92" height="22" rx="6" fill="${A}" stroke="${K}" stroke-width="2"/>` + TX(x,119,cl?"100.0 g":"99.6 g",{s:11,w:800}) + `<path d="M${x-16} 50h32v52h-32z" fill="${W}" fill-opacity=".8" stroke="${K}" stroke-width="2"/><path d="M${x-14} 70h28v30h-28z" fill="${T}" fill-opacity=".6"/>` + (cl?`<rect x="${x-10}" y="42" width="20" height="10" rx="2" fill="${C}" stroke="${K}" stroke-width="1.6"/>`:[[x-4,34],[x+6,24],[x-6,14]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="4" fill="${W}" stroke="${K}" stroke-width="1.2"/>`).join("")) + [[x-6,90],[x+4,82],[x-2,76]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="2.5" fill="${W}" stroke="${K}" stroke-width="1"/>`).join("") + kf(x,64,9) + TX(x,142,l,{s:10,w:800})).join(""), "A sealed fizzing bottle keeps its mass; an open one loses gas and seems lighter", 150)
+});
+Object.assign(ILL, { s5: {core:["f5list","f5packets","f5cake","f5lego","f5signs","f5stove"], deeper:["f5counts","f5mass"], side:["f5bake","f5rust"]} });
+Object.assign(BACK, { s5: { core: {
+  0: () => bsv(pan(8,8,224,154,"Read the small numbers","no number means 1") + TX(66,74,"H",{s:44,w:800}) + TX(88,86,"2",{s:24,w:800,f:C}) + TX(118,74,"O",{s:44,w:800})
+     + `<path d="M88 92v14" stroke="${C}" stroke-width="2"/>` + TX(88,120,"2 H atoms",{s:10,w:800,f:C}) + `<path d="M144 60q16 0 18 10" fill="none" stroke="${D}" stroke-width="2"/>` + TX(170,82,"1 O atom",{a:"start",s:10,w:800,f:D}) + mH2O(196,40,12), "In H2O, the small 2 means 2 hydrogen atoms; no number after O means 1"),
+  1: () => bsv(pan(8,8,224,154,"2H₂O = 4 H + 2 O","front number × small number") + mH2O(66,58,15) + mH2O(132,58,15) + TX(36,30,"2 ×",{s:13,w:800,f:C})
+     + `<rect x="166" y="34" width="56" height="54" rx="8" fill="${A}" fill-opacity=".4" stroke="${K}" stroke-width="1.6"/>` + TX(194,56,"H: 4",{s:12,w:800}) + TX(194,78,"O: 2",{s:12,w:800}), "Two water molecules contain 4 hydrogen atoms and 2 oxygen atoms"),
+  2: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + mH2(36,74,11) + TX(64,78,"+",{s:16,w:800}) + mO2(94,74,11) + arw(122,74,134,74,148,74,K) + mH2O(186,70,14)
+     + `<rect x="14" y="98" width="110" height="26" rx="8" fill="${A}" stroke="${K}" stroke-width="1.6"/>` + TX(69,115,"reactants (in)",{s:10,w:800}) + `<rect x="154" y="98" width="72" height="26" rx="8" fill="${GOLD}" stroke="${K}" stroke-width="1.6"/>` + TX(190,115,"products",{s:10,w:800}) + TX(141,52,"makes",{s:9.5,w:800,f:D}) + TX(120,150,"hydrogen + oxygen → water",{s:11,w:700}), "Reactants hydrogen and oxygen on the left, the product water on the right", 172),
+  3: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + mH2(32,46,9) + mH2(32,80,9) + TX(60,66,"+",{s:16,w:800}) + mO2(86,62,10) + arw(110,62,120,62,132,62,K) + mH2O(168,46,11) + mH2O(206,70,11)
+     + TX(70,116,"left: H 4, O 2",{s:11,w:800}) + TX(184,116,"right: H 4, O 2",{s:11,w:800}) + TX(120,146,"2H₂ + O₂ → 2H₂O  ✓ balanced",{s:12,w:800,f:D}), "Two hydrogen molecules and one oxygen molecule make two water molecules; 4 H and 2 O on each side", 172),
+  4: () => bsv(pan(8,8,224,154,"Fizz = a new gas formed","baking soda + vinegar → CO₂") + `<path d="M72 44h64l-6 76H78z" fill="${W}" stroke="${K}" stroke-width="2"/><path d="M76 74h56l-4 44H80z" fill="${GOLD}" fill-opacity=".6"/>` + [[90,66],[104,56],[118,64],[96,46],[112,40],[124,50],[100,30]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5" fill="${W}" stroke="${K}" stroke-width="1.2"/>`).join("") + kf(104,96,10) + mCO2(186,56,10) + TX(186,84,"carbon dioxide",{s:9.5,w:700}), "Baking soda and vinegar fizz, making bubbles of carbon dioxide gas"),
+  5: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + mCH4(30,50,12) + TX(56,54,"+",{s:14,w:800}) + mO2(80,40,8) + mO2(80,64,8) + arw(100,52,108,52,118,52,K) + mCO2(150,40,8) + mH2O(146,76,8) + mH2O(176,76,8) + TX(212,56,"+ heat",{s:10,w:800,f:C})
+     + TX(120,106,"CH₄ + 2O₂ → CO₂ + 2H₂O",{s:12,w:800}) + `<rect x="18" y="118" width="204" height="40" rx="10" fill="${GOLD}" fill-opacity=".35" stroke="${K}" stroke-width="1.4"/>` + TX(120,135,"Yellow flame = not enough air",{s:10,w:800}) + TX(120,150,"open a window: let oxygen in",{s:9.5,w:400}), "Methane burns with two oxygen molecules to make carbon dioxide, water and heat; a yellow flame means not enough air", 172)
+}, side: {
+  0: () => bsv(pan(8,8,224,154,"Bubbles lift the cake","NaHCO₃ → CO₂ gas") + `<path d="M40 110h160l-8 22H48z" fill="${CG}" stroke="${K}" stroke-width="2"/><path d="M46 110q74-82 148 0z" fill="${GOLD}" stroke="${K}" stroke-width="2"/>` + [[80,96],[104,80],[132,72],[156,90],[118,100],[92,104],[140,104]].map(([x,y])=>mCO2(x,y,4)).join("") + kf(120,62,10) + arw(206,92,214,70,206,48,D), "Carbon dioxide molecules trapped in the batter push the cake upward"),
+  1: () => bsv(pan(8,8,108,154,"No paint","rust forms") + pan(124,8,108,154,"Painted","iron stays shiny")
+     + `<rect x="22" y="96" width="80" height="20" rx="4" fill="${CG}" stroke="${K}" stroke-width="1.6"/>` + [[36,96],[60,96],[84,96]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="9" ry="5" fill="#c8693a" stroke="${K}" stroke-width="1"/>`).join("") + ka(40,52,9,C,"O",6) + `<path d="M74 44c5 6 7 10 7 13a7 7 0 0 1-14 0c0-3 2-7 7-13z" fill="${T}" stroke="${K}" stroke-width="1.2"/>` + arw(46,64,48,76,52,88,K)
+     + `<rect x="138" y="96" width="80" height="20" rx="4" fill="${CG}" stroke="${K}" stroke-width="1.6"/><rect x="134" y="88" width="88" height="8" rx="3" fill="${T}" stroke="${K}" stroke-width="1.4"/>` + kf(178,106,7) + ka(156,50,9,C,"O",6) + `<path d="M196 42c5 6 7 10 7 13a7 7 0 0 1-14 0c0-3 2-7 7-13z" fill="${T}" stroke="${K}" stroke-width="1.2"/>` + `<path d="M150 66l12 14M204 66l-12 14" stroke="${C}" stroke-width="2.6"/>`, "Without paint, oxygen and water rust the iron; paint keeps them out")
+}}});
+
 /* ---------------- State ---------------- */
 const LS = "cay_v1";
 const AVATAR_SRC = "assets/avatar.png";
@@ -1026,6 +1121,8 @@ document.getElementById("themeBtn").onclick = () => {
   try { localStorage.setItem("cay_theme", next); } catch(e) {}
 };
 document.getElementById("homeBtn").onclick = () => go("map");
+document.getElementById("brandBtn").onclick = () => go("welcome");
+try { document.querySelector("header .logo").style.cursor = "pointer"; document.querySelector("header .logo").onclick = () => go("welcome"); } catch(e) {}
 
 /* Background video: respects reduced motion and the viewer's pause choice */
 const BGV = document.getElementById("bgVideo"), MB = document.getElementById("motionBtn");
@@ -1106,6 +1203,7 @@ const BADGES = {
   s3:{ name:"Ion Maker", c:"#b8f2a0", icon:()=>`<circle cx="50" cy="52" r="15" fill="#ffd166" stroke="#231f20" stroke-width="2.4"/><text x="50" y="57" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="12" fill="#231f20">Na⁺</text>` },
   s4:{ name:"Bond Buddy", c:"#ff9fb4", icon:()=>`<circle cx="38" cy="52" r="11" fill="#5eead4" stroke="#231f20" stroke-width="2.2"/><circle cx="62" cy="52" r="11" fill="#fc7a7a" stroke="#231f20" stroke-width="2.2"/><path d="M47 52h6" stroke="#231f20" stroke-width="3" stroke-linecap="round"/>` },
   s4b:{ name:"Carbon Crafter", c:"#c9b8ff", icon:()=>`<polygon points="${hexP(50,52,16)}" fill="#ffffff" stroke="#231f20" stroke-width="2.6"/><circle cx="50" cy="52" r="5" fill="#cfd8e3" stroke="#231f20" stroke-width="1.6"/>` },
+  s5:{ name:"Recipe Reader", c:"#a0e7ff", icon:()=>`<rect x="33" y="34" width="34" height="36" rx="4" fill="#ffffff" stroke="#231f20" stroke-width="2.4"/><path d="M39 45h14M39 52h22M39 59h10" stroke="#231f20" stroke-width="2" stroke-linecap="round"/><path d="M52 59h10m-3-3l3 3l-3 3" fill="none" stroke="#fc7a7a" stroke-width="2" stroke-linecap="round"/>` },
 };
 function badgeSVG(id, earned, size){
   const b = BADGES[id] || {name:"Badge", c:"#5eead4", icon:()=>""};
@@ -1235,10 +1333,43 @@ function cardsLayer(L, s, key, intro, tip){
 function actsLayer(L, s){
   L.innerHTML = s.acts.map((a,i) => `<div class="act" id="act${i}"></div>`).join("") + nextBtn(s.id, "deeper", "Next: Go deeper");
   s.acts.forEach((a,i) => { const el = document.getElementById("act"+i);
-    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); });
+    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); if (a.type === "balance") balanceAct(el, s, a, i); });
 }
 function award(n){ S.points += n; }
 function actDone(s, i){ prog(s.id).actsDone[i] = 1; commit(); }
+
+
+function balanceAct(el, s, a, idx){
+  let ei = 0, co = null, missed = false, msg = "";
+  const gcd = (x, y) => y ? gcd(y, x % y) : x;
+  const reset = () => { const q = a.eqs[ei]; co = q.r.concat(q.p).map(() => 1); missed = false; msg = ""; };
+  const tally = () => { const q = a.eqs[ei], L = {}, R = {}; const sp = q.r.concat(q.p);
+    sp.forEach(([f, at], i) => { const side = i < q.r.length ? L : R; for (const k in at) side[k] = (side[k] || 0) + at[k] * co[i]; });
+    return {L, R, els: [...new Set(Object.keys(L).concat(Object.keys(R)))]}; };
+  const draw = () => {
+    const q = a.eqs[ei], n = q.r.length, {L, R, els} = tally();
+    const sp = q.r.concat(q.p).map(([f], i) => `<div class="sp"><div class="pm"><button type="button" class="btn small" data-i="${i}" data-d="-1" aria-label="Fewer ${esc(f)}">−</button><span class="n">${co[i]}</span><button type="button" class="btn small" data-i="${i}" data-d="1" aria-label="More ${esc(f)}">+</button></div><b class="fm">${esc(f)}</b></div>`);
+    const row = sp.slice(0, n).join(`<span class="op">+</span>`) + `<span class="op arrow">→</span>` + sp.slice(n).join(`<span class="op">+</span>`);
+    el.innerHTML = `<span class="eyebrow">Activity · ${ei + 1} of ${a.eqs.length}</span><h3>${esc(a.title)}: ${esc(q.name)}</h3>
+      <p class="muted" style="font-size:.8em">Change only the big numbers in front. Make every atom count match on both sides.</p>
+      <div class="eqrow">${row}</div>
+      <div class="tally">${els.map(e => { const ok = (L[e] || 0) === (R[e] || 0); return `<div class="tl ${ok ? "ok" : "no"}"><b>${esc(e)}</b><span>left ${L[e] || 0}</span><span>right ${R[e] || 0}</span><i>${ok ? "✓" : "✗"}</i></div>`; }).join("")}</div>
+      <div class="actions"><button type="button" class="btn lime" id="bChk">Check my balance</button></div>
+      <div aria-live="polite">${msg}</div>`;
+    el.querySelectorAll("[data-d]").forEach(b => b.onclick = () => { const i = +b.dataset.i; co[i] = Math.max(1, Math.min(6, co[i] + (+b.dataset.d))); msg = ""; draw(); });
+    el.querySelector("#bChk").onclick = () => {
+      const {L, R, els} = tally(); const bad = els.find(e => (L[e] || 0) !== (R[e] || 0));
+      if (bad){ missed = true; msg = `<div class="fb no"><strong>✗ Not balanced yet.</strong> ${esc(bad)} has ${L[bad] || 0} on the left but ${R[bad] || 0} on the right. ${esc(pick(TRYS))}</div>`; draw(); return; }
+      if (co.reduce(gcd) > 1){ msg = `<div class="fb info"><strong>Balanced, but…</strong> every number can be divided by ${co.reduce(gcd)}. Use the smallest whole numbers.</div>`; draw(); return; }
+      award(missed ? 10 : 20); const last = ei === a.eqs.length - 1;
+      const eq = q => { const all = q.r.concat(q.p), n = q.r.length; const t = all.map(([f], i) => (co[i] > 1 ? co[i] : "") + f); return t.slice(0, n).join(" + ") + " → " + t.slice(n).join(" + "); };
+      msg = `<div class="fb ok"><strong>✓ Balanced!</strong> ${esc(eq(a.eqs[ei]))}</div><div class="actions" style="margin-top:10px"><button type="button" class="btn small lime" id="bNext">${last ? "Finish" : "Next equation"}</button></div>`;
+      draw();
+      el.querySelector("#bNext").onclick = () => { if (last){ actDone(s, idx); el.querySelector("#bNext").remove(); el.insertAdjacentHTML("beforeend", `<div class="fb ok" style="margin-top:8px"><strong>✓ You balanced ${a.eqs.length} equations.</strong> ${esc(pick(CHEERS))}</div>`); return; } ei++; reset(); draw(); };
+    };
+  };
+  reset(); draw();
+}
 
 function sortAct(el, s, a, idx){
   let left = shuffle(a.items), placed = {}, sel = null, missed = {}, msg = "", lastBin = null, shake = null;
