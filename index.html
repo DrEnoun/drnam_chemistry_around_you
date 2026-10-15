@@ -239,9 +239,9 @@ body::before{content:"";position:fixed;inset:0;background:var(--ground);z-index:
 
 /* Illustrations and visual cards */
 svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
-.flip,.flip .in{min-height:470px}
-.front svg.ill{margin-bottom:4px}
-.back svg.back-ill{margin-block:2px 4px}
+.flip,.flip .in{min-height:520px}
+.front svg.ill{margin-bottom:4px;width:100%;max-width:300px;align-self:center}
+.back svg.back-ill{margin-block:2px 4px;width:100%;max-width:290px;align-self:center}
 .vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
 .vcard{margin:0;background:var(--sticker);color:var(--ink);border:3px solid var(--ink);border-radius:20px;padding:14px;box-shadow:6px 6px 0 var(--shadow);display:grid;gap:12px;align-content:start;min-width:0}
 .vcard .k{font-family:var(--f-title);font-weight:700;font-size:.7em;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
@@ -524,7 +524,126 @@ const zoomAtom = () => {
   const arrows = arrow("M116 44h8m-5-5l5 5l-5 5") + arrow("M178 98v4m-5-3l5 5l5-5") + arrow("M124 148h-8m5-5l-5 5l5 5");
   return `<svg class="ill back-ill" viewBox="0 0 240 200" role="img" aria-label="Zooming in: a glass of water, then many water molecules, then one water molecule H2O, then one oxygen atom">${t1}${t2}${t3}${t4}${arrows}</svg>`;
 };
-const BACK = { s1:{ core:{ 0: zoomAtom } } };
+/* ---- Kawaii back-of-card pictures ---- */
+const P = "#ff9fb4", GOLD = "#ffd166", SKIN = "#ffd9bf";
+const kf = (cx, cy, r) => { const e = Math.max(1.3, r*0.1), ex = r*0.34, ey = cy + r*0.08;
+  return `<ellipse cx="${(cx-ex).toFixed(1)}" cy="${ey.toFixed(1)}" rx="${e.toFixed(1)}" ry="${(e*1.25).toFixed(1)}" fill="${K}"/><ellipse cx="${(cx+ex).toFixed(1)}" cy="${ey.toFixed(1)}" rx="${e.toFixed(1)}" ry="${(e*1.25).toFixed(1)}" fill="${K}"/>`
+   + (r >= 9 ? `<circle cx="${(cx-ex+e*0.4).toFixed(1)}" cy="${(ey-e*0.5).toFixed(1)}" r="${(e*0.4).toFixed(1)}" fill="${W}"/><circle cx="${(cx+ex+e*0.4).toFixed(1)}" cy="${(ey-e*0.5).toFixed(1)}" r="${(e*0.4).toFixed(1)}" fill="${W}"/>` : "")
+   + `<ellipse cx="${(cx-r*0.58).toFixed(1)}" cy="${(cy+r*0.34).toFixed(1)}" rx="${(r*0.17).toFixed(1)}" ry="${(r*0.1).toFixed(1)}" fill="${P}" opacity=".9"/><ellipse cx="${(cx+r*0.58).toFixed(1)}" cy="${(cy+r*0.34).toFixed(1)}" rx="${(r*0.17).toFixed(1)}" ry="${(r*0.1).toFixed(1)}" fill="${P}" opacity=".9"/>`
+   + `<path d="M${(cx-r*0.14).toFixed(1)} ${(cy+r*0.3).toFixed(1)}q${(r*0.14).toFixed(1)} ${(r*0.16).toFixed(1)} ${(r*0.28).toFixed(1)} 0" fill="none" stroke="${K}" stroke-width="${Math.max(1,r*0.08).toFixed(1)}" stroke-linecap="round"/>`; };
+const ka = (cx, cy, r, fill, sym, fs) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${K}" stroke-width="${r>10?2:1.4}"/>` + (sym ? TX(cx, cy - r*0.28, sym, {s: fs || r*0.62, w:800}) + kf(cx, cy + r*0.22, r*0.62) : kf(cx, cy, r));
+const pan = (x, y, w, h, l1, l2) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + TX(x+w/2, y+h-(l2?19:9), l1, {s:11, w:800}) + (l2 ? TX(x+w/2, y+h-7, l2, {s:9.5, w:400}) : "");
+const arw = (x1, y1, qx, qy, x2, y2, c) => { const a = Math.atan2(y2-qy, x2-qx), h = 7;
+  return `<path d="M${x1} ${y1}Q${qx} ${qy} ${x2} ${y2}" fill="none" stroke="${c||K}" stroke-width="2.6" stroke-linecap="round"/><path d="M${x2} ${y2}L${(x2-h*Math.cos(a-0.5)).toFixed(1)} ${(y2-h*Math.sin(a-0.5)).toFixed(1)}M${x2} ${y2}L${(x2-h*Math.cos(a+0.5)).toFixed(1)} ${(y2-h*Math.sin(a+0.5)).toFixed(1)}" stroke="${c||K}" stroke-width="2.6" stroke-linecap="round"/>`; };
+const bsv = (inner, label, h=170) => `<svg class="ill back-ill" viewBox="0 0 240 ${h}" role="img" aria-label="${label}">${inner}</svg>`;
+const tile = (x, y, w, h, num, sym, name, sub, fill) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${fill||W}" stroke="${K}" stroke-width="2.2"/>${TX(x+8, y+14, num, {a:"start", s:9.5, w:700})}${TX(x+w/2, y+h*0.52, sym, {s:24, w:800})}${TX(x+w/2, y+h-(sub?18:8), name, {s:10, w:700})}${sub?TX(x+w/2, y+h-6, sub, {s:8.5, w:400}):""}`;
+
+const BACKS = {
+ matter: () => bsv(pan(8,8,108,154,"Has mass","it weighs something") + pan(124,8,108,154,"Takes up space","it fills a place")
+   + `<rect x="28" y="98" width="68" height="34" rx="9" fill="${A}" stroke="${K}" stroke-width="2.2"/><rect x="32" y="90" width="60" height="9" rx="4" fill="${W}" stroke="${K}" stroke-width="2"/><circle cx="62" cy="116" r="10" fill="${W}" stroke="${K}" stroke-width="2"/><path d="M62 116l6-5" stroke="${C}" stroke-width="2.4" stroke-linecap="round"/>${TX(62,128,"kg",{s:7,w:700})}`
+   + `<ellipse cx="62" cy="72" rx="22" ry="17" fill="${C}" stroke="${K}" stroke-width="2.2"/>${kf(62,74,15)}`
+   + `<rect x="146" y="34" width="64" height="72" rx="6" fill="none" stroke="${K}" stroke-width="2" stroke-dasharray="5 4"/><rect x="152" y="42" width="52" height="58" rx="12" fill="${T}" stroke="${K}" stroke-width="2.2"/>${kf(178,70,20)}<path d="M142 120h72" stroke="${K}" stroke-width="1.5"/>`, "Matter has mass, shown by a smiling stone on a scale, and takes up space, shown by a smiling block filling a box"),
+ particles: () => bsv(pan(8,8,224,154,"Particles are always moving!","even in a still glass of water")
+   + [[54,48,C],[118,40,T],[184,52,L],[78,100,A],[146,92,C],[198,104,T]].map(([x,y,c]) => `<path d="M${x-22} ${y-5}h-9M${x-24} ${y+1}h-12M${x-22} ${y+7}h-9" stroke="${K}" stroke-width="2" stroke-linecap="round"/>` + ka(x,y,13,c)).join(""), "Six smiling particles with motion lines"),
+ states: () => { const box = (x, l1, l2) => pan(x,8,72,154,l1,l2); const t = (x,y,c) => `<circle cx="${x}" cy="${y}" r="8" fill="${c}" stroke="${K}" stroke-width="1.4"/>${kf(x,y,8)}`;
+   return bsv(box(8,"Solid","vibrate in place") + box(84,"Liquid","slide past") + box(160,"Gas","fly freely")
+   + [0,1,2].map(i=>[0,1,2].map(j=>t(27+i*17, 52+j*17, A)).join("")).join("")
+   + [[98,98],[115,94],[132,99],[147,92],[104,80],[122,77],[140,80],[110,112]].map(([x,y])=>t(x,y,T)).join("")
+   + [[176,36],[214,52],[184,82],[218,98],[190,116]].map(([x,y])=>t(x,y,C)).join(""), "Solid particles packed and vibrating, liquid particles close and sliding, gas particles far apart and flying"); },
+ changeState: () => bsv(`<rect x="4" y="4" width="232" height="168" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>`
+   + `<rect x="22" y="70" width="38" height="36" rx="9" fill="${A}" stroke="${K}" stroke-width="2.2"/>${kf(41,89,15)}`
+   + `<path d="M120 64C132 80 137 88 137 96a17 17 0 0 1-34 0C103 88 108 80 120 64z" fill="${T}" stroke="${K}" stroke-width="2.2"/>${kf(120,97,14)}`
+   + `<g fill="${W}" stroke="${K}" stroke-width="2.2"><circle cx="190" cy="92" r="12"/><circle cx="205" cy="83" r="15"/><circle cx="220" cy="93" r="11"/></g><rect x="188" y="90" width="34" height="14" fill="${W}"/><path d="M178 104h50" stroke="${K}" stroke-width="2.2" stroke-linecap="round"/>${kf(205,93,13)}`
+   + TX(41,122,"solid",{s:10,w:700}) + TX(120,122,"liquid",{s:10,w:700}) + TX(205,122,"gas",{s:10,w:700})
+   + arw(56,66,82,38,104,62,C) + TX(80,30,"melting",{s:10,w:700,f:C}) + arw(138,62,162,36,186,72,C) + TX(162,28,"boiling",{s:10,w:700,f:C})
+   + arw(196,130,166,158,134,132,D) + TX(166,164,"condensing",{s:10,w:700,f:D}) + arw(104,132,76,158,46,130,D) + TX(76,164,"freezing",{s:10,w:700,f:D})
+   + TX(14,20,"+ heat",{a:"start",s:9.5,w:800,f:C}) + TX(226,20,"− heat ↓",{a:"end",s:9.5,w:800,f:D}), "A smiling ice cube, water drop and steam cloud: melting and boiling with heat, condensing and freezing when cooled", 176),
+ durian: () => bsv(pan(8,8,224,154,"Diffusion: from many to few","smell particles spread out")
+   + `<rect x="20" y="22" width="200" height="94" rx="8" fill="${A}" fill-opacity=".25" stroke="${K}" stroke-width="1.6" stroke-dasharray="4 4"/>`
+   + [[34,40],[48,60],[34,80],[52,96],[66,44],[70,76],[86,58],[88,96],[104,40],[108,82]].map(([x,y])=>ka(x,y,7,C)).join("")
+   + [[152,48],[184,92],[208,54]].map(([x,y])=>ka(x,y,7,C)).join("") + arw(118,66,140,58,168,70,K)
+   + TX(62,112,"many",{s:10,w:800}) + TX(184,112,"few",{s:10,w:800}), "Many smiling smell particles on one side spreading to the side with few"),
+ sweat: () => bsv(pan(8,8,224,154,"Sweat carries heat away","so your skin cools down")
+   + `<rect x="20" y="96" width="200" height="22" rx="6" fill="${SKIN}" stroke="${K}" stroke-width="2"/>${TX(120,111,"your skin",{s:9.5,w:700})}`
+   + [[56,86],[120,84],[184,86]].map(([x,y])=>`<path d="M${x} ${y-16}c6 7 9 11 9 15a9 9 0 0 1-18 0c0-4 3-8 9-15z" fill="${T}" stroke="${K}" stroke-width="1.8"/>${kf(x,y+1,8)}`).join("")
+   + [[70,46],[150,40],[200,50]].map(([x,y])=>ka(x,y,7,T)).join("")
+   + [[86,52],[166,48]].map(([x,y])=>`<path d="M${x} ${y}q4-6 0-12q-4-6 0-12" fill="none" stroke="${C}" stroke-width="2.4" stroke-linecap="round"/>`).join("") + TX(118,28,"heat out ↑",{s:10,w:800,f:C}), "Smiling sweat drops on skin turn into vapour and carry heat away"),
+ chips: () => { const pk = (cx, puff) => `<path d="M${cx-26} 44h52${puff?"c10 22 10 50 0 72":"c3 22 3 50 0 72"}h-52${puff?"c-10-22-10-50 0-72":"c-3-22-3-50 0-72"}z" fill="${C}" stroke="${K}" stroke-width="2.2"/><rect x="${cx-14}" y="58" width="28" height="14" rx="3" fill="${L}" stroke="${K}" stroke-width="1.6"/>${kf(cx,92,14)}`;
+   const push = (cx, len) => [[cx-34-len,80,1,0],[cx+34+len,80,-1,0]].map(([x,y,dx])=>arw(x,y,x+dx*len/2,y,x+dx*len,y,D)).join("");
+   return bsv(pan(8,8,108,154,"At the beach","air pushes hard") + pan(124,8,108,154,"Up the mountain","air pushes less") + pk(62,false) + pk(178,true) + push(62,14) + push(178,6), "A flat chip packet at sea level with big air pushes, and a puffy packet on a mountain with small pushes"); },
+ element: () => bsv(pan(8,8,108,154,"✓ Element","one kind of atom") + pan(124,8,108,154,"✗ Not one element","different atoms")
+   + [[38,38],[78,38],[38,74],[78,74],[38,110],[78,110]].map(([x,y])=>ka(x,y,14,GOLD,"Au",8)).join("")
+   + [[154,44,C,"O"],[196,44,W,"H"],[154,86,T,"C"],[196,86,GOLD,"Au"],[175,112,A,"N"]].map(([x,y,c,s])=>ka(x,y,14,c,s,8)).join(""), "A box of identical gold atoms is an element; a mix of different atoms is not"),
+ symbols: () => bsv(tile(8,6,108,76,"1","H","Hydrogen","",W) + tile(124,6,108,76,"8","O","Oxygen","",W) + tile(8,88,108,78,"11","Na","Sodium","Latin: natrium",GOLD) + tile(124,88,108,78,"26","Fe","Iron","Latin: ferrum",GOLD)
+   + [[100,22],[216,22],[100,104],[216,104]].map(([x,y])=>ka(x,y,8,P)).join(""), "Element tiles for hydrogen H, oxygen O, sodium Na from natrium, and iron Fe from ferrum", 172),
+ compound: () => bsv(`<rect x="4" y="4" width="232" height="166" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>`
+   + ka(24,46,13,W,"H",9) + TX(44,50,"+",{s:14,w:800}) + ka(62,46,13,W,"H",9) + TX(82,50,"+",{s:14,w:800}) + ka(102,46,15,C,"O",10) + arw(124,46,134,46,146,46,K)
+   + `<path d="M186 40L168 58M186 40L204 58" stroke="${K}" stroke-width="3"/>` + ka(168,60,11,W,"H",8) + ka(204,60,11,W,"H",8) + ka(186,38,15,C,"O",10) + TX(186,86,"water, H₂O",{s:10,w:800})
+   + `<path d="M14 98h212" stroke="${K}" stroke-width="1.2" stroke-dasharray="4 4"/>`
+   + ka(26,128,14,GOLD,"Na",8) + TX(48,132,"+",{s:14,w:800}) + ka(70,128,14,"#b8f2a0","Cl",8) + arw(92,128,104,128,116,128,K)
+   + [0,1,2,3].map(i=>[0,1,2].map(j=>{const na=(i+j)%2===0; return `<circle cx="${140+i*21}" cy="${102+j*17}" r="${na?7:9}" fill="${na?GOLD:"#b8f2a0"}" stroke="${K}" stroke-width="1.4"/>`;}).join("")).join("") + TX(171,162,"table salt, NaCl",{s:10,w:800})
+   + TX(62,78,"elements join…",{s:9.5,w:400}) + TX(62,160,"elements join…",{s:9.5,w:400}), "Two hydrogen atoms and one oxygen atom join into a water molecule; sodium and chlorine join into salt", 174),
+ mixture: () => bsv(pan(8,8,224,154,"Filtering separates a mixture","sand stays, water passes")
+   + `<path d="M28 34h44v52a8 8 0 0 1-8 8H36a8 8 0 0 1-8-8z" fill="${A}" fill-opacity=".45" stroke="${K}" stroke-width="2"/>` + [[38,82],[50,86],[62,80],[44,72],[58,70]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4" fill="${GOLD}" stroke="${K}" stroke-width="1.2"/>`).join("") + kf(50,52,12)
+   + arw(80,52,92,46,104,52,K) + `<path d="M112 36h60l-26 34v18h-8V70z" fill="${W}" stroke="${K}" stroke-width="2"/><path d="M118 40h48l-20 26h-8z" fill="${W}" stroke="${K}" stroke-width="1.2" stroke-dasharray="3 2"/>`
+   + [[132,48],[142,52],[150,46],[138,42]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3.6" fill="${GOLD}" stroke="${K}" stroke-width="1.1"/>`).join("") + TX(196,50,"sand",{a:"start",s:9.5,w:700}) + `<path d="M176 48h18" stroke="${K}" stroke-width="1"/>`
+   + `<path d="M126 100h40v26a6 6 0 0 1-6 6h-28a6 6 0 0 1-6-6z" fill="${W}" stroke="${K}" stroke-width="2"/><path d="M128 110h36v16a5 5 0 0 1-5 5h-26a5 5 0 0 1-5-5z" fill="${T}" fill-opacity=".7"/>${kf(146,118,10)}<path d="M142 92v6" stroke="${T}" stroke-width="3" stroke-linecap="round"/>` + TX(196,120,"water",{a:"start",s:9.5,w:700}) + `<path d="M170 116h22" stroke="${K}" stroke-width="1"/>`, "Sandy water poured through a filter: the sand stays on the paper and clean water drips through"),
+ seating: () => { const M = "m", NM = "n", MD = "d"; const rows = [[["H",0,NM],["He",7,NM]],[["Li",0,M],["Be",1,M],["B",2,MD],["C",3,NM],["N",4,NM],["O",5,NM],["F",6,NM],["Ne",7,NM]],[["Na",0,M],["Mg",1,M],["Al",2,M],["Si",3,MD],["P",4,NM],["S",5,NM],["Cl",6,NM],["Ar",7,NM]],[["K",0,M],["Ca",1,M]]];
+   const col = {m:"#ffd0d0", n:"#d4f6ef", d:"#f2ffc4"};
+   const cells = rows.map((r,ri)=>r.map(([s,c,k])=>{ const x = 12+c*27.5, y = 8+ri*29, g1 = c===0 && s!=="H"; return `<rect x="${x}" y="${y}" width="25" height="26" rx="5" fill="${g1?C:col[k]}" stroke="${K}" stroke-width="${g1?2:1.2}"/>` + TX(x+12.5, y+(g1?11:17), s, {s:g1?9:10, w:800}) + (g1?kf(x+12.5,y+18,7):""); }).join("")).join("");
+   return bsv(`<rect x="4" y="2" width="232" height="168" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + cells + `<rect x="8" y="35" width="33" height="93" rx="8" fill="none" stroke="${D}" stroke-width="2.5" stroke-dasharray="5 3"/>` + TX(132,146,"Group 1 sit in one column:",{s:10,w:800}) + TX(132,160,"all react strongly with water",{s:9.5,w:400}), "A mini periodic table where lithium, sodium and potassium smile together in column 1", 172); },
+ phoneEl: () => { const box = (x, y, sym, name, icon) => pan(x,y,108,76,"","") + ka(x+26,y+28,15,GOLD,sym,9) + icon + TX(x+54,y+66,name,{s:9.5,w:700});
+   return bsv(box(8,6,"Li","battery",`<rect x="64" y="20" width="36" height="20" rx="4" fill="${A}" stroke="${K}" stroke-width="1.8"/><rect x="100" y="26" width="4" height="8" rx="1" fill="${K}"/><rect x="67" y="23" width="18" height="14" rx="2" fill="${T}"/>`)
+   + box(124,6,"Si","computer chip",`<rect x="182" y="18" width="26" height="26" rx="4" fill="${N}" stroke="${K}" stroke-width="1.8"/>` + [0,1,2].map(i=>`<path d="M${186+i*8} 14v4M${186+i*8} 44v4M178 ${22+i*8}h4M208 ${22+i*8}h4" stroke="${K}" stroke-width="1.6"/>`).join(""))
+   + box(8,88,"Cu","wires",`<path d="M64 110q8-12 16 0t16 0t12 0" fill="none" stroke="#d9773a" stroke-width="5" stroke-linecap="round"/>`)
+   + box(124,88,"Au","gold contacts",[0,1,2,3].map(i=>`<rect x="${180+i*8}" y="102" width="5" height="18" rx="1" fill="${GOLD}" stroke="${K}" stroke-width="1.2"/>`).join("")), "Inside a phone: lithium in the battery, silicon in the chip, copper in the wires, gold in the contacts", 172); },
+ blood: () => bsv(pan(8,8,224,154,"Iron holds the oxygen","inside every red blood cell")
+   + `<ellipse cx="96" cy="72" rx="62" ry="44" fill="${C}" stroke="${K}" stroke-width="2.4"/><ellipse cx="96" cy="72" rx="34" ry="22" fill="#ff8f8f" stroke="${K}" stroke-width="1.4"/>` + ka(96,72,16,GOLD,"Fe",9)
+   + [[184,40],[198,82],[176,112]].map(([x,y])=>`<path d="M112 72L${x-14} ${y}" stroke="${K}" stroke-width="1.6" stroke-dasharray="3 3"/>` + ka(x,y,13,W,"O₂",8)).join(""), "A smiling iron atom in a red blood cell holding oxygen molecules"),
+ stadium: () => bsv(`<rect x="4" y="4" width="232" height="162" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>`
+   + `<circle cx="84" cy="84" r="62" fill="none" stroke="${K}" stroke-width="1.6" stroke-dasharray="4 4"/><circle cx="84" cy="84" r="24" fill="${A}" fill-opacity=".5" stroke="${K}" stroke-width="1.6"/>`
+   + [[-7,-7,1],[7,-7,0],[-7,7,0],[7,7,1],[0,0,1]].map(([dx,dy,p])=>`<circle cx="${84+dx}" cy="${84+dy}" r="7" fill="${p?C:W}" stroke="${K}" stroke-width="1.3"/>${TX(84+dx,88+dy,p?"+":"",{s:10,w:800})}`).join("")
+   + [[84,22],[138,114],[30,114]].map(([x,y])=>ka(x,y,10,T)+TX(x+(x<84?-14:14),y-8,"−",{s:12,w:800})).join("")
+   + `<path d="M108 84H160" stroke="${K}" stroke-width="1"/>` + TX(164,80,"nucleus",{a:"start",s:10,w:800}) + TX(164,93,"tiny centre",{a:"start",s:9,w:400})
+   + `<circle cx="168" cy="122" r="6" fill="${C}" stroke="${K}" stroke-width="1.3"/>` + TX(178,126,"proton (+)",{a:"start",s:9.5,w:700})
+   + `<circle cx="168" cy="138" r="6" fill="${W}" stroke="${K}" stroke-width="1.3"/>` + TX(178,142,"neutron (0)",{a:"start",s:9.5,w:700})
+   + `<circle cx="168" cy="154" r="6" fill="${T}" stroke="${K}" stroke-width="1.3"/>` + TX(178,158,"electron (−)",{a:"start",s:9.5,w:700})
+   + TX(164,40,"mostly",{a:"start",s:10,w:800}) + TX(164,53,"empty space!",{a:"start",s:10,w:800}), "An atom: a tiny nucleus of protons and neutrons with smiling electrons around it; mostly empty space"),
+ idcard: () => { const nuc = (cx, n) => Array.from({length:n},(_,i)=>{const g=i/n*Math.PI*2, rr=n>1?(n>6?11:9):0; return `<circle cx="${(cx+rr*Math.cos(g)).toFixed(1)}" cy="${(70+rr*Math.sin(g)).toFixed(1)}" r="4.6" fill="${C}" stroke="${K}" stroke-width="1"/>`;}).join("");
+   return bsv([[8,"H","Hydrogen",1],[84,"C","Carbon",6],[160,"O","Oxygen",8]].map(([x,s,nm,n])=>pan(x,8,72,154,nm,n+" proton"+(n>1?"s":"")) + `<circle cx="${x+36}" cy="70" r="24" fill="${A}" fill-opacity=".45" stroke="${K}" stroke-width="1.6"/>` + nuc(x+36,n) + `<circle cx="${x+36}" cy="30" r="13" fill="${L}" stroke="${K}" stroke-width="2"/>` + TX(x+36,35,String(n),{s:13,w:800}) + TX(x+36,112,s,{s:20,w:800})).join(""), "Hydrogen has 1 proton, carbon 6, oxygen 8: the number of protons is the atomic number"); },
+ scale: () => bsv(pan(8,8,224,154,"6 + and 6 − cancel out","a neutral atom has no charge")
+   + TX(30,46,"protons",{a:"start",s:10,w:800}) + [0,1,2,3,4,5].map(i=>`<circle cx="${100+i*20}" cy="42" r="8" fill="${C}" stroke="${K}" stroke-width="1.4"/>${TX(100+i*20,46,"+",{s:11,w:800})}`).join("")
+   + TX(30,76,"electrons",{a:"start",s:10,w:800}) + [0,1,2,3,4,5].map(i=>`<circle cx="${100+i*20}" cy="72" r="8" fill="${T}" stroke="${K}" stroke-width="1.4"/>${TX(100+i*20,76,"−",{s:11,w:800})}`).join("")
+   + `<path d="M30 90h190" stroke="${K}" stroke-width="2"/>` + ka(86,116,18,L) + TX(130,122,"= 0 charge",{a:"start",s:14,w:800}), "Six protons and six electrons cancel out, so the smiling atom has zero charge"),
+ cinema: () => { const cx = 74, cy = 86; const ring = (r, n, c) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${K}" stroke-width="1.4" stroke-dasharray="3 3"/>` + Array.from({length:n},(_,i)=>{const g=i/n*Math.PI*2-Math.PI/2; return `<circle cx="${(cx+r*Math.cos(g)).toFixed(1)}" cy="${(cy+r*Math.sin(g)).toFixed(1)}" r="5.5" fill="${c}" stroke="${K}" stroke-width="1.2"/>`;}).join("");
+   return bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + ring(26,2,T) + ring(48,8,T) + ring(70,1,L) + ka(cx,cy,12,C,"Na",8)
+   + `<circle cx="${cx}" cy="${cy-70}" r="9" fill="${L}" stroke="${K}" stroke-width="1.4"/>` + kf(cx,cy-70,9)
+   + TX(156,40,"Sodium: 2.8.1",{a:"start",s:12,w:800}) + TX(156,70,"shell 1 → 2",{a:"start",s:10,w:700}) + TX(156,90,"shell 2 → 8",{a:"start",s:10,w:700}) + TX(156,110,"shell 3 → 1",{a:"start",s:10,w:700})
+   + TX(156,138,"inner shells",{a:"start",s:9.5,w:400}) + TX(156,151,"fill first",{a:"start",s:9.5,w:400}), "Sodium's electrons: 2 in shell 1, 8 in shell 2, and 1 smiling electron in shell 3", 172); },
+ hands: () => { const ox = 70, oy = 74; return bsv(pan(8,8,224,154,"Valence electrons","the outer row reaches out")
+   + `<circle cx="${ox}" cy="${oy}" r="22" fill="none" stroke="${K}" stroke-width="1.3" stroke-dasharray="3 3"/><circle cx="${ox}" cy="${oy}" r="40" fill="none" stroke="${D}" stroke-width="2.4" stroke-dasharray="5 3"/>`
+   + [0,1].map(i=>{const g=i*Math.PI; return `<circle cx="${(ox+22*Math.cos(g)).toFixed(1)}" cy="${(oy+22*Math.sin(g)).toFixed(1)}" r="5" fill="${T}" stroke="${K}" stroke-width="1.2"/>`;}).join("")
+   + [0,1,2,3,4,5].map(i=>{const g=i/6*Math.PI*2+0.3, x=ox+40*Math.cos(g), y=oy+40*Math.sin(g); return ka(x.toFixed(1)*1, y.toFixed(1)*1, 8, L);}).join("")
+   + ka(ox,oy,13,C,"O",9) + `<path d="M118 70q14-12 30-4" fill="none" stroke="${K}" stroke-width="2.4" stroke-linecap="round"/>` + ka(176,74,16,W,"H",10) + TX(176,108,"a neighbour",{s:9.5,w:400}), "An oxygen atom whose six smiling outer electrons reach out to a hydrogen neighbour"); },
+ fireworks: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${N}" stroke="${K}" stroke-width="2.5"/>`
+   + [[46,"high row"],[96,"low row"]].map(([y,l])=>`<path d="M24 ${y}h110" stroke="${W}" stroke-width="2.4" stroke-linecap="round"/>` + TX(24,y-6,l,{a:"start",s:9,w:400,f:W})).join("")
+   + ka(72,96,9,T) + arw(72,84,64,66,72,56,C) + TX(36,74,"heat",{a:"start",s:9.5,w:800,f:C}) + ka(112,46,9,T) + arw(114,58,120,72,114,86,L)
+   + `<path d="M130 72q8-8 16 0t16 0t16 0t16 0" fill="none" stroke="${L}" stroke-width="3" stroke-linecap="round"/>` + TX(176,62,"light out!",{s:10,w:800,f:L})
+   + [[50,"Na","yellow",L],[120,"Sr","red",C],[190,"Cu","blue-green",T]].map(([x,s,l,c])=>ring(x,138,15,10,(px,py)=>`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="2.6" fill="${c}"/>`) + `<circle cx="${x}" cy="138" r="9" fill="${c}" stroke="${K}" stroke-width="1.2"/>` + kf(x,138,9) + TX(x+(x===190?0:0),164,s+" · "+l,{s:9,w:700,f:W})).join(""), "An electron jumps up with heat and gives out light as it drops back; sodium glows yellow, strontium red, copper blue-green", 172),
+ lamp: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${N}" stroke="${K}" stroke-width="2.5"/><circle cx="70" cy="64" r="44" fill="${GOLD}" opacity=".22"/>`
+   + `<path d="M40 40h60l-10 22H50z" fill="${GOLD}" stroke="${K}" stroke-width="2.2"/>${kf(70,48,12)}<path d="M70 62v90" stroke="${W}" stroke-width="5" stroke-linecap="round"/>`
+   + ring(70,52,40,8,(x,y,g)=> g>0.2&&g<2.9 ? `<path d="M${(70+30*Math.cos(g)).toFixed(1)} ${(52+30*Math.sin(g)).toFixed(1)}L${x.toFixed(1)} ${y.toFixed(1)}" stroke="${GOLD}" stroke-width="2.5" stroke-linecap="round"/>` : "")
+   + `<rect x="126" y="60" width="96" height="18" rx="3" fill="url(#spec)" stroke="${W}" stroke-width="1.5"/><defs><linearGradient id="spec"><stop offset="0" stop-color="#7b5cff"/><stop offset=".3" stop-color="#3fa9f5"/><stop offset=".5" stop-color="#4cd964"/><stop offset=".65" stop-color="#ffd166"/><stop offset=".85" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ff4d4d"/></linearGradient></defs>`
+   + `<path d="M190 54v30" stroke="${W}" stroke-width="3"/>` + TX(174,48,"sodium's own colour",{s:9.5,w:800,f:W}) + TX(174,100,"each element has",{s:9.5,w:400,f:W}) + TX(174,113,"its own light 'barcode'",{s:9.5,w:400,f:W}), "A smiling sodium street lamp glowing yellow; each element gives its own colour of light"),
+ capsule: () => bsv(pan(8,8,224,154,"The thyroid collects iodine","so tagged iodine shows on a scan")
+   + `<path d="M60 64c-22-16-40 4-30 26c8 18 30 18 38 4c4-8 4-18-8-30z" fill="${P}" stroke="${K}" stroke-width="2.2"/><path d="M84 64c22-16 40 4 30 26c-8 18-30 18-38 4c-4-8-4-18 8-30z" fill="${P}" stroke="${K}" stroke-width="2.2"/><rect x="66" y="78" width="12" height="12" rx="5" fill="${P}" stroke="${K}" stroke-width="2"/>` + kf(72,96,12)
+   + [[170,42],[196,78],[166,112]].map(([x,y])=>arw(x-12,y,x-34,y-2,124+ (y-78)*0.1,80+(y-78)*0.4,K) + ka(x,y,12,L,"I",9)).join("") + TX(72,130,"thyroid",{s:9.5,w:700}), "A smiling butterfly-shaped thyroid gland pulling in tagged iodine atoms")
+};
+const BACK = {
+  s0:{ core:{0:BACKS.matter,1:BACKS.particles,2:BACKS.states,3:BACKS.changeState,4:BACKS.durian}, side:{0:BACKS.sweat,1:BACKS.chips} },
+  s1:{ core:{0:zoomAtom,1:BACKS.element,2:BACKS.symbols,3:BACKS.compound,4:BACKS.mixture,5:BACKS.seating}, side:{0:BACKS.phoneEl,1:BACKS.blood} },
+  s2:{ core:{0:BACKS.stadium,1:BACKS.idcard,2:BACKS.scale,3:BACKS.cinema,4:BACKS.hands,5:BACKS.fireworks}, side:{0:BACKS.lamp,1:BACKS.capsule} }
+};
 const backArt = (sid, key, i) => { const f = BACK[sid] && BACK[sid][key] && BACK[sid][key][i]; return f ? f() : ""; };
 const art = (sid, key, i) => { const n = ILL[sid] && ILL[sid][key] && ILL[sid][key][i]; return n && ILLS[n] ? ILLS[n]() : ""; };
 
