@@ -107,6 +107,10 @@ p{margin:0}
 .concrow .pm{display:flex;gap:6px;align-items:center}
 .concrow .n{font-family:var(--f-title);font-weight:800;font-size:1.4em;min-width:2ch;text-align:center;color:var(--pop)}
 .concval{font-size:.88em;line-height:1.5}
+.spgrp{margin:.55em 0;font-size:.85em}.spopts{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.spmeter{height:10px;border:2px solid var(--line);border-radius:999px;overflow:hidden;margin:6px 4px}.spmeter i{display:block;height:100%;background:linear-gradient(90deg,#5eead4,#d4ff3a,#fc7a7a)}
+.bub{animation:bubUp 2s linear infinite;transform-box:fill-box}@keyframes bubUp{from{transform:translateY(0);opacity:1}to{transform:translateY(-72px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.bub{animation:none}}
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -612,12 +616,47 @@ const STOPS = [
     {q:"What is the molar mass of water, H₂O? (H = 1, O = 16)", o:["17 g/mol","18 g/mol","32 g/mol","2 g/mol"], a:1, h:"Add 1 + 1 + 16.", w:"1 + 1 + 16 = 18 g/mol."},
     {q:"The same amount of sugar is dissolved in a bigger volume of water. The concentration…", o:["Goes up","Goes down","Stays the same","Becomes zero"], a:1, h:"Same people, bigger room.", w:"Same amount in a bigger volume = lower concentration."},
     {q:"Which is a unit of concentration?", o:["mol/L","kg","m","°C"], a:0, h:"Amount per volume.", w:"mol/L means moles per litre."}
+  ]},
+{ id:"s7", num:"Stop 7", title:"Why does chemistry matter to me?", topic:"Chemistry in daily life: acids, bases, pH and reaction speed",
+  hook:"Why does Mak squeeze lime over fish before cooking it?",
+  tip:"Everything you have learned so far is happening in your kitchen, your bathroom and your body, every single day.",
+  core:[
+    {t:"Acids: the sour team", a:"Lime, vinegar, assam jawa and even your stomach juice taste sour. That sour taste is the acid team waving hello.", s:"Acids give out hydrogen ions (H⁺) in water. The more H⁺ they give, the stronger the acid. Weak acids (lime, vinegar) are safe to eat. Strong acids (like car battery acid) can burn skin."},
+    {t:"Bases: the bitter, slippery team", a:"Soap feels slippery and tastes bitter. Baking soda and antacid tablets belong to this team too.", s:"Bases are the opposite of acids: they can take away H⁺. A base that dissolves in water is called an alkali. Strong alkalis, like drain cleaner and bleach, are just as dangerous as strong acids."},
+    {t:"pH: the sourness ruler", a:"A ruler from 0 to 14. The middle, 7, is neutral, like pure water.", s:"Below 7 is acidic (lower = more acidic). Above 7 is alkaline (higher = more alkaline). Each step is 10 times stronger: pH 3 is ten times more acidic than pH 4. Chemists check pH with indicator paper that changes colour."},
+    {t:"Neutralisation: making peace", a:"When the sour team and the bitter team meet, they cancel each other out, like a fight that ends in a handshake.", s:"Acid + base → salt + water. This is how an antacid calms heartburn: the base in the tablet neutralises extra stomach acid. It is also why lime (acid) reduces fishy smell: the smell comes from basic molecules."},
+    {t:"Reaction speed: busy particles", a:"In a cold room, people walk slowly and rarely bump into each other. Heat the room and everyone rushes about, bumping all the time.", s:"Particles must collide (bump) to react. Heat makes them move faster, so they collide more often and harder. That is why food goes bad fast on a hot day and stays fresh in the fridge."},
+    {t:"Catalysts: a chair to rest on", a:"Eating while running is hard work. Give someone a chair and they can eat easily. A catalyst is that chair.", s:"A catalyst gives the reaction an easier path that needs less energy, so it goes faster. The catalyst itself is not used up. The enzymes in your body are catalysts: they digest food in hours instead of years."}
+  ],
+  acts:[
+    {type:"sort", title:"Sort It: acid, neutral or alkali?", bins:["Acid (pH below 7)","Neutral (pH 7)","Alkali (pH above 7)"],
+     items:[["Lime juice","Acid (pH below 7)","Sour taste: citric acid, about pH 2."],["Vinegar","Acid (pH below 7)","Contains acetic acid, about pH 3."],["Pure water","Neutral (pH 7)","Exactly in the middle: pH 7."],["Soap","Alkali (pH above 7)","Slippery and bitter: about pH 9 to 10."],["Stomach juice","Acid (pH below 7)","Strong hydrochloric acid, about pH 1.5 to 2."],["Baking soda in water","Alkali (pH above 7)","A mild alkali, about pH 8 to 9."],["Fizzy cola","Acid (pH below 7)","Phosphoric and carbonic acid, about pH 2.5."],["Bleach","Alkali (pH above 7)","A strong alkali, about pH 12 to 13. Never mix it with acids!"]]},
+    {type:"speed", title:"Reaction Speed Lab", rounds:[
+      {goal:"Make the vitamin C tablet fizz as FAST as possible.", need:{temp:2, size:1, cat:1}},
+      {goal:"You are a fridge! Make the reaction as SLOW as possible, so food stays fresh.", need:{temp:0, size:0, cat:0}},
+      {goal:"You only have cold water. Make it fizz fast anyway.", need:{temp:0, size:1, cat:1}}
+    ]},
+    {type:"match", title:"Memory Match: everyday life and its chemistry", pairs:[["Antacid tablet","Neutralises acid"],["Fridge","Slows reactions"],["Enzymes","Body's catalysts"],["Hand warmer pack","Gives out heat"],["Instant cold pack","Takes in heat"],["Lime on fish","Acid meets base"]]}
+  ],
+  deeper:[
+    {t:"Hot packs and cold packs", a:"Some reactions give out heat, some take heat in.", s:"Exothermic reactions give out heat: burning gas, hand warmer packs (iron rusting very fast). Endothermic reactions take in heat from around them: instant cold packs (a salt dissolving in water) feel icy. Energy is never lost, it only moves."},
+    {t:"Your body's pH map", a:"Different parts of your body keep very different pH levels.", s:"Stomach: pH 1.5 to 3.5, strong enough to kill germs. Skin: about pH 5.5, slightly acidic, which is why shampoos say \"pH balanced\". Blood: kept between 7.35 and 7.45. If blood pH moves outside that narrow range, a person becomes very sick."}
+  ],
+  side:[
+    {t:"Why a cut apple turns brown", a:"Cut an apple, wait 10 minutes, and it starts to look rusty.", s:"Cutting breaks the cells. An enzyme inside the apple meets oxygen in the air and makes brown pigments. A squeeze of lime helps: its acid slows the enzyme down. A fridge slows it too (cold = slow particles)."},
+    {t:"Sugar, acid and your teeth", a:"Your teeth are under acid attack after every sweet snack.", s:"Mouth bacteria eat sugar and make acid. When the pH in your mouth drops below about 5.5, tooth enamel starts to dissolve. Saliva slowly neutralises the acid. So how often you snack matters more than how much."}
+  ],
+  check:[
+    {q:"A liquid has pH 3. It is…", o:["Acidic","Neutral","Alkaline","Pure water"], a:0, h:"Below 7 or above 7?", w:"Below 7 means acidic. pH 3 is quite acidic, like vinegar."},
+    {q:"An antacid tablet helps heartburn because it…", o:["Adds more acid","Neutralises extra stomach acid","Makes the stomach colder","Is a catalyst"], a:1, h:"Acid + base → ?", w:"The base in the antacid neutralises extra acid: acid + base → salt + water."},
+    {q:"Why does food stay fresh longer in the fridge?", o:["Cold kills all germs","Cold particles move slower and collide less, so reactions slow down","The fridge adds a catalyst","The fridge removes all the water"], a:1, h:"Think of people in a cold room.", w:"Colder means slower particles and fewer collisions, so spoiling reactions slow down."},
+    {q:"What does a catalyst do?", o:["Gets used up in the reaction","Makes a reaction slower","Gives the reaction an easier path so it goes faster","Changes an acid into a base"], a:2, h:"Remember the chair.", w:"A catalyst lowers the energy needed, so the reaction goes faster, and it is not used up."},
+    {q:"pH 2 compared with pH 4 is…", o:["2 times more acidic","10 times more acidic","100 times more acidic","Less acidic"], a:2, h:"Each step is ×10.", w:"Two steps: 10 × 10 = 100 times more acidic."}
   ]}
 
 ];
 
 const LATER = [
-  ["Stop 7","Chemistry in daily life","Why does this matter to me?"],
   ["Theme","Chemistry and human health","Blood, medicines, natural products"],
   ["Theme","Chemistry and the environment","Air, water, plastic"],
   ["Special","Chemistry Beyond the Atmosphere","Star stuff and rocket fuel"]
@@ -1122,6 +1161,69 @@ Object.assign(BACK, { s6: { core: {
      + `<path d="M96 84h48v40q0 8-24 8t-24-8z" fill="${C}" fill-opacity=".5" stroke="${K}" stroke-width="2"/>` + [[108,104],[120,96],[132,108]].map(([x,y])=>`<polygon points="${hexP(x,y,5)}" fill="${GOLD}" stroke="${K}" stroke-width="1"/>`).join("") + TX(170,108,"glucose in",{a:"start",s:9.5,w:700}) + TX(170,121,"1 L of blood",{a:"start",s:9.5,w:700}), "One mole equals 1000 millimoles; mmol per litre counts glucose in each litre of blood")
 }}});
 
+/* ---------------- Stop 7 pictures ---------------- */
+const PHC = ["#e8203a","#f0452b","#f56a2a","#f99a2a","#f9c22a","#f2e22c","#c4e23a","#7fd04a","#3fb86a","#2aa79a","#2a8fc4","#3a6fd0","#4f52c4","#6640b0","#7a2f96"];
+const phStrip = (x, y, w, h) => PHC.map((c, i) => `<rect x="${(x + i*w/15).toFixed(1)}" y="${y}" width="${(w/15+0.4).toFixed(1)}" height="${h}" fill="${c}"/>`).join("") + `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="none" stroke="${K}" stroke-width="1.8"/>`;
+const lime = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#9be15d" stroke="${K}" stroke-width="2"/><path d="M${x} ${y-r}q4 -6 10 -6" fill="none" stroke="#3a8a2a" stroke-width="2"/>` + kf(x, y+1, r*0.75);
+const blob = (x, y, r, c) => `<path d="M${x-r} ${y+r*0.6}q0-${r*1.7} ${r} -${r*1.7}t${r} ${r*1.7}q0 ${r*0.5}-${r} ${r*0.5}t-${r}-${r*0.5}z" fill="${c}" stroke="${K}" stroke-width="2"/>` + kf(x, y, r*0.7);
+const hIon = (x, y, r) => ka(x, y, r||8, "#ffd6de", "H⁺", (r||8)*0.75);
+const tooth = (x, y, s, c) => `<path d="M${x-14*s} ${y-12*s}q0-8 ${8*s}-8q${6*s} 0 ${6*s} ${3*s}q0-${3*s} ${6*s}-${3*s}q${8*s} 0 ${8*s} 8q0 ${10*s}-${4*s} ${16*s}l-${2*s} ${14*s}q-${2*s} ${3*s}-${4*s}-${1*s}l-${4*s}-${10*s}l-${4*s} ${10*s}q-${2*s} ${4*s}-${4*s} ${1*s}l-${2*s}-${14*s}q-${4*s}-${6*s}-${4*s}-${16*s}z" fill="${c||W}" stroke="${K}" stroke-width="2"/>` + kf(x, y-2*s, 8*s);
+Object.assign(ILLS, {
+  m7sour: () => sv(lime(56, 84, 30) + `<path d="M120 46h22v10l8 10v54q0 6-6 6h-26q-6 0-6-6V66l8-10z" fill="#fff6e0" stroke="${K}" stroke-width="2.2"/><rect x="118" y="78" width="30" height="20" rx="3" fill="${W}" stroke="${K}" stroke-width="1.2"/>` + TX(133,92,"vinegar",{s:7,w:800}) + kf(133,110,9)
+     + hIon(182,46,9) + hIon(206,72,9) + hIon(186,100,9) + TX(196,132,"sour = H⁺",{s:11,w:800}), "A smiling lime and vinegar bottle giving out H⁺ ions"),
+  m7base: () => sv(`<rect x="24" y="62" width="76" height="44" rx="14" fill="#a0e7ff" stroke="${K}" stroke-width="2.2"/>` + kf(62,84,14) + TX(62,124,"soap",{s:11,w:800})
+     + [[32,50,7],[48,40,5],[96,48,8],[86,30,5]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${W}" fill-opacity=".7" stroke="${K}" stroke-width="1.2"/>`).join("")
+     + `<circle cx="168" cy="84" r="28" fill="${W}" stroke="${K}" stroke-width="2.2"/><path d="M144 84h48" stroke="${K}" stroke-width="1.2" opacity=".4"/>` + kf(168,90,14) + TX(168,130,"antacid",{s:11,w:800}), "A slippery soap bar and an antacid tablet, both bases"),
+  m7ph: () => sv(phStrip(16, 62, 208, 26) + Array.from({length:15},(_,i)=>TX(16+i*208/15+208/30, 102, String(i), {s:8,w:700})).join("")
+     + TX(46,52,"acid",{s:12,w:800,f:"#c0182e"}) + TX(120,40,"neutral",{s:11,w:800}) + `<path d="M120 44v16" stroke="${K}" stroke-width="2"/>` + TX(196,52,"alkali",{s:12,w:800,f:"#4f52c4"}) + kf(120,75,9) + TX(120,128,"the sourness ruler",{s:11,w:700}), "A rainbow pH strip from 0 to 14 with neutral 7 in the middle"),
+  m7peace: () => sv(blob(56,78,24,"#ff8a8a") + TX(56,124,"acid",{s:11,w:800}) + blob(184,78,24,"#8ab8ff") + TX(184,124,"base",{s:11,w:800})
+     + `<path d="M80 86q20 -12 40 0q20 12 40 0" fill="none" stroke="${K}" stroke-width="3" stroke-linecap="round"/><circle cx="120" cy="86" r="9" fill="${SKIN}" stroke="${K}" stroke-width="1.6"/>` + TX(120,42,"salt + water",{s:12,w:800}) + `<path d="M108 30l4-6l4 6M124 30l4-6l4 6" stroke="${GOLD}" stroke-width="2" fill="none"/>`, "An acid and a base shaking hands to make salt and water"),
+  m7speed: () => sv([[16,"#bfe3ff","cold",0],[124,"#ffc9b8","hot",1]].map(([x,c,l,h])=>`<rect x="${x}" y="22" width="100" height="92" rx="10" fill="${c}" stroke="${K}" stroke-width="2"/>` + TX(x+50,132,l,{s:12,w:800})
+       + (h ? [[34,50],[74,46],[54,78],[84,86],[30,90]].map(([dx,dy],i)=>person(x+dx, 10+dy, [C,GOLD,A,P,L][i], 7) + `<path d="M${x+dx-12} ${10+dy-4}h-7M${x+dx-12} ${10+dy+2}h-8" stroke="${K}" stroke-width="1.4"/>`).join("") + TX(x+60,40,"bump!",{s:9,w:800,f:"#c0182e"})
+            : [[28,56],[72,54],[50,88]].map(([dx,dy],i)=>person(x+dx, 10+dy, [A,P,GOLD][i], 7)).join("") + TX(x+50,40,"z z z",{s:9,w:700}))).join(""), "In a cold room people move slowly; in a hot room they rush and bump"),
+  m7chair: () => sv(person(52, 82, C, 10) + `<path d="M40 104l-8 16M62 104l10 14" stroke="${K}" stroke-width="2.4"/><path d="M28 70h-12M26 80h-14M28 90h-10" stroke="${K}" stroke-width="1.6"/>` + TX(52,138,"running + eating",{s:10,w:700}) + TX(52,40,"hard!",{s:10,w:800,f:"#c0182e"})
+     + `<rect x="150" y="96" width="44" height="7" rx="3" fill="#c9b8ff" stroke="${K}" stroke-width="1.8"/><path d="M154 103v22M190 103v22M190 96v-36" stroke="${K}" stroke-width="2.6"/>` + person(172, 86, A, 10) + `<ellipse cx="150" cy="84" rx="9" ry="4" fill="${W}" stroke="${K}" stroke-width="1.4"/>` + TX(172,138,"sitting = catalyst",{s:10,w:700}) + TX(172,40,"easy!",{s:10,w:800,f:"#1f8a4c"}), "Eating while running is hard; sitting on a chair, the catalyst, makes it easy"),
+  /* deeper */
+  m7packs: () => sv(`<rect x="22" y="36" width="80" height="74" rx="14" fill="#ffb38a" stroke="${K}" stroke-width="2.2"/>` + kf(62,74,16) + [36,62,88].map(x=>`<path d="M${x} 30q-5-7 0-12q5-5 0-12" fill="none" stroke="#e8503a" stroke-width="2"/>`).join("") + TX(62,130,"hot pack",{s:11,w:800})
+     + `<rect x="138" y="36" width="80" height="74" rx="14" fill="#bfe3ff" stroke="${K}" stroke-width="2.2"/>` + kf(178,74,16) + `<path d="M178 14v18M170 18l16 10M186 18l-16 10" stroke="#2a8fc4" stroke-width="2"/>` + TX(178,130,"cold pack",{s:11,w:800}), "A warm hot pack and an icy cold pack"),
+  m7body: () => sv(`<circle cx="120" cy="30" r="14" fill="${SKIN}" stroke="${K}" stroke-width="2"/>` + kf(120,31,10) + `<path d="M98 50h44l6 60h-56z" fill="${A}" stroke="${K}" stroke-width="2"/><path d="M98 54l-14 40M142 54l14 40" stroke="${K}" stroke-width="2.4"/>`
+     + `<ellipse cx="114" cy="80" rx="10" ry="7" fill="#ff8a8a" stroke="${K}" stroke-width="1.4"/>` + TX(40,76,"stomach",{s:9.5,w:800}) + TX(40,88,"pH 2",{s:9.5,w:400}) + `<path d="M64 80h38" stroke="${K}" stroke-width="1" stroke-dasharray="3 3"/>`
+     + TX(200,62,"blood",{s:9.5,w:800}) + TX(200,74,"pH 7.4",{s:9.5,w:400}) + `<path d="M178 66h-44" stroke="${K}" stroke-width="1" stroke-dasharray="3 3"/>`
+     + TX(200,104,"skin",{s:9.5,w:800}) + TX(200,116,"pH 5.5",{s:9.5,w:400}) + `<path d="M182 108h-30" stroke="${K}" stroke-width="1" stroke-dasharray="3 3"/>` + TX(120,136,"one body, many pH levels",{s:10,w:700}), "A body showing stomach pH 2, blood pH 7.4 and skin pH 5.5"),
+  /* side */
+  m7apple: () => sv([[66,"#fff3c9",0],[174,"#e2b77a",1]].map(([x,c,b])=>`<path d="M${x-36} 70q0-34 36-28q36-6 36 28q0 44-36 48q-36-4-36-48z" fill="#ff6b6b" stroke="${K}" stroke-width="2.2"/><path d="M${x-30} 72q0-24 30-22q30-2 30 22q0 34-30 38q-30-4-30-38z" fill="${c}" stroke="${K}" stroke-width="1.4"/>` + kf(x, 80, 13) + `<path d="M${x} 42q2-10 8-12" fill="none" stroke="#6b4a2a" stroke-width="2.4"/>` + TX(x,136,b?"10 min later":"just cut",{s:11,w:800})).join("") + arw(110,80,120,72,130,80,K), "A freshly cut apple, then the same apple turned brown 10 minutes later"),
+  m7tooth: () => sv(tooth(70, 70, 1.6) + TX(70,136,"enamel",{s:11,w:800}) + `<path d="M138 50q10-14 20 0q-10 18-20 0z" fill="#ff8a8a" stroke="${K}" stroke-width="1.4"/><path d="M170 74q10-14 20 0q-10 18-20 0z" fill="#ff8a8a" stroke="${K}" stroke-width="1.4"/><path d="M140 98q10-14 20 0q-10 18-20 0z" fill="#ff8a8a" stroke="${K}" stroke-width="1.4"/>` + TX(176,124,"acid drops",{s:10,w:700}) + `<rect x="190" y="30" width="34" height="24" rx="6" fill="${P}" stroke="${K}" stroke-width="1.6"/>` + TX(207,46,"sweet",{s:8,w:800}), "A worried tooth under attack by acid drops after a sweet snack")
+});
+Object.assign(ILL, { s7: {core:["m7sour","m7base","m7ph","m7peace","m7speed","m7chair"], deeper:["m7packs","m7body"], side:["m7apple","m7tooth"]} });
+Object.assign(BACK, { s7: { core: {
+  0: () => bsv(pan(8,8,224,154,"Acids give out H⁺ in water","more H⁺ = stronger acid") + ka(46,52,14,"#e8e8f8","Cl",9) + ka(66,40,9,W,"H",6) + arw(84,48,96,40,108,48,K) + ka(130,56,14,"#e8e8f8","Cl⁻",8) + hIon(170,42,10) + TX(120,22,"HCl in water",{s:10,w:800})
+     + [["lime","pH 2"],["vinegar","pH 3"],["stomach","pH 1.5"]].map(([a,b],i)=>`<rect x="${18+i*70}" y="84" width="64" height="36" rx="8" fill="${PHC[i===2?1:i+2]}" fill-opacity=".55" stroke="${K}" stroke-width="1.4"/>` + TX(50+i*70,99,a,{s:9.5,w:800}) + TX(50+i*70,113,b,{s:9.5,w:400})).join(""), "Hydrogen chloride splits into H⁺ and Cl⁻ in water; lime pH 2, vinegar pH 3, stomach pH 1.5"),
+  1: () => bsv(pan(8,8,224,154,"Bases take away H⁺","OH⁻ + H⁺ → H₂O") + ka(46,46,13,"#bcd4ff","OH⁻",7.5) + TX(72,50,"+",{s:14,w:800}) + hIon(92,46,10) + arw(110,46,122,40,134,46,K) + mH2O(170,42,11)
+     + [["soap","pH 10"],["baking soda","pH 9"],["bleach","pH 12.5"]].map(([a,b],i)=>`<rect x="${18+i*70}" y="84" width="64" height="36" rx="8" fill="${PHC[[10,9,13][i]]}" fill-opacity=".45" stroke="${K}" stroke-width="${i===2?2.4:1.4}"/>` + TX(50+i*70,99,a,{s:9,w:800}) + TX(50+i*70,113,b,{s:9.5,w:400})).join("") + TX(190,80,"⚠ harsh",{s:8.5,w:800,f:"#c0182e"}), "A hydroxide ion grabs H⁺ to make water; soap pH 10, baking soda pH 9, bleach pH 12.5"),
+  2: () => bsv(pan(8,8,224,154,"Each step is 10 times stronger","pH 2 is 100× more acidic than pH 4") + phStrip(18,52,204,22) + Array.from({length:15},(_,i)=>TX(18+i*204/15+204/30, 86, String(i), {s:7.5,w:700})).join("")
+     + [["stomach",1.5],["lime",2],["coffee",5],["water",7],["sea",8],["soap",10],["bleach",12.5]].map(([l,p],i)=>{const x=(18+p*204/14).toFixed(1); const y=i%2?108:28; return `<path d="M${x} ${i%2?92:36}v${i%2?6:12}" stroke="${K}" stroke-width="1.2"/>` + TX(x, y+(i%2?2:0), l, {s:8,w:800});}).join(""), "A pH strip with stomach, lime, coffee, water, sea water, soap and bleach marked"),
+  3: () => bsv(pan(8,8,224,154,"acid + base → salt + water","neutralisation") + TX(120,24,"HCl + NaOH → NaCl + H₂O",{s:11,w:800})
+     + `<path d="M50 40q-30 0-30 34q0 40 46 40q40 0 40-30q0-44-56-44z" fill="#ffd6de" stroke="${K}" stroke-width="2"/>` + kf(62,80,12) + TX(62,104,"stomach",{s:8.5,w:700})
+     + `<circle cx="150" cy="72" r="18" fill="${W}" stroke="${K}" stroke-width="2"/>` + kf(150,74,10) + TX(150,104,"antacid",{s:8.5,w:700}) + arw(128,72,118,64,108,72,K) + `<path d="M188 52l8-6M192 66h10M188 80l8 6" stroke="${GOLD}" stroke-width="2.4"/>` + TX(206,104,"calm!",{s:9,w:800,f:"#1f8a4c"}), "Hydrochloric acid plus sodium hydroxide gives salt and water; an antacid calms the stomach"),
+  4: () => bsv(pan(8,8,224,154,"Particles must bump to react","hot = faster = more bumps") + `<rect x="18" y="20" width="96" height="98" rx="8" fill="#bfe3ff" stroke="${K}" stroke-width="1.6"/><rect x="126" y="20" width="96" height="98" rx="8" fill="#ffc9b8" stroke="${K}" stroke-width="1.6"/>`
+     + [[40,50],[90,60],[60,96]].map(([x,y])=>ka(x,y,8,GOLD) + `<path d="M${x+10} ${y}h8" stroke="${K}" stroke-width="1.2"/>`).join("") + TX(66,34,"few bumps",{s:9,w:700})
+     + [[146,52],[200,46],[172,74],[150,100],[204,98]].map(([x,y])=>ka(x,y,8,GOLD) + `<path d="M${x-10} ${y-3}h-8M${x-10} ${y+3}h-6" stroke="${K}" stroke-width="1.2"/>`).join("") + `<path d="M184 62l4-6l4 6l6-2l-4 6l6 3l-7 1l1 6l-5-4l-4 5l0-6l-6-1l5-3z" fill="${GOLD}" stroke="${K}" stroke-width="1"/>` + TX(174,34,"many bumps",{s:9,w:700}), "Cold particles move slowly and bump rarely; hot particles move fast and bump often"),
+  5: () => bsv(pan(8,8,224,154,"A catalyst lowers the energy hill","so more particles get over it") + `<path d="M20 112h200M20 112V22" stroke="${K}" stroke-width="1.6"/>` + TX(26,20,"energy",{a:"start",s:8.5,w:700})
+     + `<path d="M24 96q30 0 48-10q28-70 56 0q20 18 88 20" fill="none" stroke="#c0182e" stroke-width="2.6"/><path d="M24 96q30 0 48-10q28-34 56 0q20 18 88 20" fill="none" stroke="#1f8a4c" stroke-width="2.6" stroke-dasharray="6 4"/>`
+     + TX(100,36,"no catalyst",{s:8.5,w:800,f:"#c0182e"}) + `<rect x="134" y="62" width="12" height="3" rx="1.5" fill="#c9b8ff" stroke="${K}" stroke-width="1.1"/><path d="M135 65v6M145 65v6M145 62v-8" stroke="${K}" stroke-width="1.3"/>` + TX(152,64,"with catalyst",{a:"start",s:8.5,w:800,f:"#1f8a4c"}) + ka(36,88,7,GOLD), "An energy hill graph: the catalyst path, with a little chair on top, is much lower")
+}, deeper: {
+  0: () => bsv(pan(8,8,224,154,"Energy moves in or out","it is never lost") + `<rect x="30" y="36" width="64" height="56" rx="12" fill="#ffb38a" stroke="${K}" stroke-width="2"/>` + kf(62,64,12) + [[20,40,4,26],[20,90,4,104],[104,40,120,26],[104,90,120,104]].map(([a,b,c,d])=>arw(a+(a<62?10:0),b,(a+c)/2,(b+d)/2,c,d,"#e8503a")).join("") + TX(62,116,"exothermic: heat OUT",{s:8.5,w:800})
+     + `<rect x="146" y="36" width="64" height="56" rx="12" fill="#bfe3ff" stroke="${K}" stroke-width="2"/>` + kf(178,64,12) + [[136,28,150,40],[136,104,150,90],[222,28,208,40],[222,104,208,90]].map(([a,b,c,d])=>arw(a,b,(a+c)/2,(b+d)/2,c,d,"#2a8fc4")).join("") + TX(178,116,"endothermic: heat IN",{s:8.5,w:800}), "Exothermic packs push heat out; endothermic packs pull heat in"),
+  1: () => bsv(pan(8,8,224,154,"Blood stays between 7.35 and 7.45","a very narrow safe range") + phStrip(18,50,204,22) + Array.from({length:15},(_,i)=>TX(18+i*204/15+204/30, 84, String(i), {s:7.5,w:700})).join("")
+     + [["stomach",2],["skin",5.5],["blood",7.4]].map(([l,p],i)=>{const x=(18+p*204/14).toFixed(1); return `<path d="M${x} 34v14" stroke="${K}" stroke-width="1.6"/>` + TX(x,30,l,{s:9,w:800});}).join("") + `<rect x="${(18+7.35*204/14).toFixed(1)}" y="46" width="${(0.1*204/14+2).toFixed(1)}" height="30" fill="none" stroke="${K}" stroke-width="2"/>` + kf(120,110,10), "A pH strip marking stomach at 2, skin at 5.5 and blood in a narrow band at 7.4"),
+}, side: {
+  0: () => bsv(pan(8,8,224,154,"enzyme + oxygen → brown","lime acid or the fridge slows it") + `<circle cx="40" cy="58" r="20" fill="#fff3c9" stroke="${K}" stroke-width="1.8"/>` + kf(40,60,10) + TX(40,92,"cut",{s:9,w:800}) + TX(76,62,"+",{s:14,w:800}) + ka(104,58,12,C,"O₂",8) + arw(124,58,134,50,144,58,K) + `<circle cx="178" cy="58" r="20" fill="#e2b77a" stroke="${K}" stroke-width="1.8"/>` + kf(178,60,10) + TX(178,92,"brown",{s:9,w:800})
+     + lime(60,114,10) + TX(78,118,"slows it",{a:"start",s:9,w:700}) + `<rect x="150" y="104" width="18" height="22" rx="3" fill="${W}" stroke="${K}" stroke-width="1.4"/>` + TX(174,118,"fridge too",{a:"start",s:9,w:700}), "A cut apple meets oxygen and turns brown; lime juice or the fridge slows it down"),
+  1: () => bsv(pan(8,8,224,154,"Each snack = an acid attack","saliva slowly brings the pH back up") + `<path d="M24 26v86h200" fill="none" stroke="${K}" stroke-width="1.6"/>` + TX(28,22,"mouth pH",{a:"start",s:8.5,w:700}) + `<path d="M24 76h200" stroke="#c0182e" stroke-width="1.4" stroke-dasharray="5 4"/>` + TX(220,72,"5.5",{a:"end",s:8.5,w:800,f:"#c0182e"})
+     + `<path d="M24 50h18q6 50 14 46q12 0 26-46h30q6 50 14 46q12 0 26-46h12q6 50 14 46q12 0 26-46h16" fill="none" stroke="${D}" stroke-width="2.4"/>` + [52,112,166].map(x=>`<rect x="${x-8}" y="100" width="16" height="10" rx="3" fill="${P}" stroke="${K}" stroke-width="1"/>`).join("") + TX(120,124,"snack  snack  snack",{s:8,w:700}), "A graph of mouth pH dipping below 5.5 after each snack, then slowly recovering")
+}}});
+
+
 /* ---------------- State ---------------- */
 const LS = "cay_v1";
 const AVATAR_SRC = "assets/avatar.png";
@@ -1289,6 +1391,7 @@ const BADGES = {
   s4b:{ name:"Carbon Crafter", c:"#c9b8ff", icon:()=>`<polygon points="${hexP(50,52,16)}" fill="#ffffff" stroke="#231f20" stroke-width="2.6"/><circle cx="50" cy="52" r="5" fill="#cfd8e3" stroke="#231f20" stroke-width="1.6"/>` },
   s5:{ name:"Recipe Reader", c:"#a0e7ff", icon:()=>`<rect x="33" y="34" width="34" height="36" rx="4" fill="#ffffff" stroke="#231f20" stroke-width="2.4"/><path d="M39 45h14M39 52h22M39 59h10" stroke="#231f20" stroke-width="2" stroke-linecap="round"/><path d="M52 59h10m-3-3l3 3l-3 3" fill="none" stroke="#fc7a7a" stroke-width="2" stroke-linecap="round"/>` },
   s6:{ name:"Particle Counter", c:"#ffb86b", icon:()=>`<text x="50" y="50" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="15" fill="#231f20">mol</text>${[[38,60],[46,62],[54,60],[62,62],[42,66],[58,66]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#5eead4" stroke="#231f20" stroke-width="1"/>`).join("")}` },
+  s7:{ name:"Everyday Chemist", c:"#9be15d", icon:()=>`${["#e8203a","#f99a2a","#f2e22c","#7fd04a","#2a8fc4","#6640b0"].map((c,i)=>`<rect x="${32+i*6}" y="58" width="6" height="12" fill="${c}"/>`).join("")}<rect x="32" y="58" width="36" height="12" rx="2" fill="none" stroke="#231f20" stroke-width="1.6"/><path d="M50 30q-10 12-10 18a10 10 0 0 0 20 0q0-6-10-18z" fill="#5eead4" stroke="#231f20" stroke-width="2"/><text x="50" y="51" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="8" fill="#231f20">pH</text>` }
 };
 function badgeSVG(id, earned, size){
   const b = BADGES[id] || {name:"Badge", c:"#5eead4", icon:()=>""};
@@ -1418,7 +1521,7 @@ function cardsLayer(L, s, key, intro, tip){
 function actsLayer(L, s){
   L.innerHTML = s.acts.map((a,i) => `<div class="act" id="act${i}"></div>`).join("") + nextBtn(s.id, "deeper", "Next: Go deeper");
   s.acts.forEach((a,i) => { const el = document.getElementById("act"+i);
-    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); if (a.type === "balance") balanceAct(el, s, a, i); if (a.type === "conc") concAct(el, s, a, i); });
+    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); if (a.type === "balance") balanceAct(el, s, a, i); if (a.type === "conc") concAct(el, s, a, i); if (a.type === "speed") speedAct(el, s, a, i); });
 }
 function award(n){ S.points += n; }
 function actDone(s, i){ prog(s.id).actsDone[i] = 1; commit(); }
@@ -1480,6 +1583,48 @@ function concAct(el, s, a, idx){
       msg = `<div class="fb ok"><strong>✓ Just right!</strong> ${r.n} particles in ${V} cups = ${fmt(r.target)} per cup.</div><div class="actions" style="margin-top:10px"><button type="button" class="btn small lime" id="cNext">${last ? "Finish" : "Next round"}</button></div>`;
       draw();
       el.querySelector("#cNext").onclick = () => { if (last){ actDone(s, idx); el.querySelector("#cNext").remove(); el.insertAdjacentHTML("beforeend", `<div class="fb ok" style="margin-top:8px"><strong>✓ Concentration master!</strong> ${esc(pick(CHEERS))}</div>`); return; } ri++; V = 1; msg = ""; draw(); };
+    };
+  };
+  draw();
+}
+
+function speedAct(el, s, a, idx){
+  let ri = 0, set = {temp:1, size:0, cat:0}, missed = false, msg = "";
+  const OPT = { temp:["Cold","Warm","Hot"], size:["Whole tablet","Crushed powder"], cat:["No catalyst","Add catalyst"] };
+  const NAME = { temp:"Water temperature", size:"Tablet size", cat:"Catalyst" };
+  const WHY = { temp:["Cold water keeps particles slow.","Warm water is only in between.","Hot water makes particles fast."], size:["A whole tablet only reacts on its outside.","A powder has much more surface for particles to bump into."], cat:["Without a catalyst the reaction needs more energy.","A catalyst gives an easier path (the chair)."] };
+  const draw = () => {
+    const r = a.rounds[ri], sp = (set.temp + 1) * (set.size + 1) * (set.cat + 1), mins = Math.round(60 / sp);
+    const wc = ["#7fc8ff","#5eead4","#fc9a7a"][set.temp];
+    let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const bubbles = Array.from({length: sp * 2}, (_, i) => { const x = 70 + rnd() * 100, d = (2.6 - sp * 0.15 + rnd()).toFixed(2), de = (rnd() * 2).toFixed(2), rr = (2 + rnd() * 3).toFixed(1);
+      return `<circle class="bub" cx="${x.toFixed(1)}" cy="100" r="${rr}" fill="#fff" fill-opacity=".85" stroke="#231f20" stroke-width=".8" style="animation-duration:${d}s;animation-delay:-${de}s"/>`; }).join("");
+    const tab = set.size ? Array.from({length:14}, (_, i) => `<circle cx="${96 + (i % 7) * 8}" cy="${104 - Math.floor(i / 7) * 5}" r="3" fill="#ffd166" stroke="#231f20" stroke-width=".8"/>`).join("")
+                         : `<rect x="100" y="94" width="40" height="14" rx="7" fill="#ffd166" stroke="#231f20" stroke-width="1.6"/><ellipse cx="114" cy="101" rx="1.2" ry="1.5" fill="#231f20"/><ellipse cx="126" cy="101" rx="1.2" ry="1.5" fill="#231f20"/><path d="M117 104q3 2 6 0" fill="none" stroke="#231f20" stroke-width="1"/>`;
+    const chair = set.cat ? `<g transform="translate(196 76)"><rect x="0" y="12" width="26" height="5" rx="2" fill="#c9b8ff" stroke="#231f20" stroke-width="1.4"/><path d="M2 17v16M24 17v16M24 12v-16" stroke="currentColor" stroke-width="2.4"/></g><text x="209" y="70" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="9" fill="currentColor">catalyst</text>` : "";
+    const svg = `<svg viewBox="0 0 240 126" width="100%" role="img" aria-label="Tablet in ${OPT.temp[set.temp].toLowerCase()} water, speed ${sp} out of 12">
+      <path d="M60 20v86q0 12 12 12h96q12 0 12-12V20" fill="${wc}" fill-opacity=".8" stroke="#231f20" stroke-width="2.4"/>
+      <path d="M60 40h120" stroke="#231f20" stroke-width="1" stroke-dasharray="4 4" opacity=".5"/>${tab}${bubbles}${chair}
+      <rect x="20" y="22" width="12" height="80" rx="6" fill="#fff" stroke="#231f20" stroke-width="1.8"/><rect x="22" y="${96 - set.temp * 30}" width="8" height="${8 + set.temp * 30}" rx="4" fill="#fc7a7a"/><circle cx="26" cy="106" r="9" fill="#fc7a7a" stroke="#231f20" stroke-width="1.8"/></svg>`;
+    const grp = k => `<div class="spgrp"><span class="muted">${NAME[k]}</span><div class="spopts">${OPT[k].map((o, i) => `<button type="button" class="chip" data-k="${k}" data-v="${i}" aria-pressed="${set[k] === i}">${o}</button>`).join("")}</div></div>`;
+    el.innerHTML = `<span class="eyebrow">Activity · ${ri + 1} of ${a.rounds.length}</span><h3>${esc(a.title)}</h3>
+      <p style="font-size:.88em;margin:.2em 0 .6em"><b>${esc(r.goal)}</b></p>
+      <div class="concbox">${svg}
+        <div class="spmeter" aria-hidden="true"><i style="width:${Math.round(sp / 12 * 100)}%"></i></div>
+        <div class="concval" style="text-align:center">Speed <b>${sp}</b> / 12 · fizzing finishes in about <b>${mins} min</b></div></div>
+      ${grp("temp")}${grp("size")}${grp("cat")}
+      <div class="actions"><button type="button" class="btn lime" id="spChk">Check</button></div>
+      <div aria-live="polite">${msg}</div>`;
+    el.querySelectorAll(".spopts .chip").forEach(b => b.onclick = () => { set[b.dataset.k] = +b.dataset.v; msg = ""; draw(); });
+    el.querySelector("#spChk").onclick = () => {
+      const wrong = Object.keys(r.need).filter(k => r.need[k] !== set[k]);
+      if (wrong.length){ missed = true;
+        msg = `<div class="fb no"><strong>✗ Not yet.</strong> Look again at: ${wrong.map(k => `<b>${NAME[k].toLowerCase()}</b>`).join(", ")}.${wrong.map(k => WHY[k][set[k]] ? " " + WHY[k][set[k]] : "").join("")}</div>`;
+        draw(); return; }
+      award(missed ? 10 : 20); missed = false; const last = ri === a.rounds.length - 1;
+      msg = `<div class="fb ok"><strong>✓ Perfect!</strong> ${ri === 1 ? "Cold, whole and no catalyst: that is why a fridge keeps food fresh." : "Heat, more surface and a catalyst all make particles collide more, or more easily."}</div><div class="actions" style="margin-top:10px"><button type="button" class="btn small lime" id="spNext">${last ? "Finish" : "Next round"}</button></div>`;
+      draw();
+      el.querySelector("#spNext").onclick = () => { if (last){ actDone(s, idx); el.querySelector("#spNext").remove(); el.insertAdjacentHTML("beforeend", `<div class="fb ok" style="margin-top:8px"><strong>✓ Speed master!</strong> ${esc(pick(CHEERS))}</div>`); return; } ri++; set = {temp:1, size:0, cat:0}; msg = ""; draw(); };
     };
   };
   draw();
