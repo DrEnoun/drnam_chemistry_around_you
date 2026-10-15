@@ -69,6 +69,12 @@ p{margin:0}
 .badge-won.new svg{animation:badgepop .8s cubic-bezier(.2,.8,.3,1.4) both}
 @keyframes badgepop{0%{transform:scale(.3) rotate(-20deg);opacity:0}70%{transform:scale(1.12) rotate(6deg);opacity:1}100%{transform:none}}
 @media (prefers-reduced-motion: reduce){ .badge-won.new svg{animation:none} }
+/* Welcome back + % */
+.wb{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:color-mix(in srgb,var(--ground) 70%,transparent);border:2px solid var(--lime);border-radius:20px;padding:14px 16px;color:var(--text)}
+.wb div{display:grid;gap:3px;min-width:0;flex:1}
+.wb b{font-family:var(--f-title);font-size:1.15em}
+.minibar{display:block;height:8px;border-radius:99px;background:#e6edf5;border:1.5px solid var(--ink);overflow:hidden}
+.minibar i{display:block;height:100%;background:var(--teal)}
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -891,6 +897,15 @@ function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math
 function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(t._h); t._h = setTimeout(()=>t.hidden = true, 2600); }
 function says(text, label="Dr. NAM Says"){ return `<div class="says"><img class="avatar" src="assets/avatar.png" alt="" width="56" height="56"><div class="bubble"><b>${esc(label)}</b>${esc(text)}</div></div>`; }
 function doneCount(){ return STOPS.filter(s => stopRec(s.id).completed).length; }
+function stopPct(s){
+  if (stopRec(s.id).completed) return 100;
+  const p = prog(s.id), seen = k => Object.keys(p.seen).filter(x => x.startsWith(k)).length;
+  const part = (n, tot) => tot ? Math.min(1, n / tot) : 1;
+  const v = 30*part(seen("core"), s.core.length) + 25*part(Object.keys(p.actsDone).length, s.acts.length)
+          + 10*part(seen("deeper"), s.deeper.length) + 10*part(seen("side"), s.side.length) + (p.checkDone ? 25 : 0);
+  return Math.round(v);
+}
+function overallPct(){ return STOPS.length ? Math.round(STOPS.reduce((t, s) => t + stopPct(s), 0) / STOPS.length) : 0; }
 function rank(n){ return n >= TOTAL_STOPS ? "Chemistry Hero" : n >= 6 ? "Class-ready" : n >= 3 ? "Confident" : "Curious"; }
 
 /* ---------------- Doodles ---------------- */
@@ -932,21 +947,29 @@ function go(view, id, tab){ flushTime(); cur = view === "stop" ? id : null; segS
   window.scrollTo({top:0, behavior:"instant"}); }
 
 /* ---------------- Welcome ---------------- */
+function welcomeBack(){
+  const pct = overallPct(), r = 30, c = 2*Math.PI*r, nxt = STOPS.find(x => !stopRec(x.id).completed);
+  return `<div class="wb"><svg viewBox="0 0 80 80" width="96" height="96" role="img" aria-label="${pct}% complete"><circle cx="40" cy="40" r="${r}" fill="none" stroke="var(--line)" stroke-width="9"/><circle cx="40" cy="40" r="${r}" fill="none" stroke="var(--lime)" stroke-width="9" stroke-linecap="round" stroke-dasharray="${(c*pct/100).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 40 40)"/><text x="40" y="46" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="18" fill="currentColor">${pct}%</text></svg>
+    <div><b>Welcome back, Chemistry Hero!</b><span>You are ${pct}% of the way through the open stops.</span><span class="muted">${nxt ? `Next up: ${esc(nxt.num)}, ${esc(nxt.title)}` : "You finished every open stop. New stops are coming soon!"}</span></div></div>`;
+}
 function renderWelcome(){
+  const back = !!S.welcomed, nxt = STOPS.find(x => !stopRec(x.id).completed);
   app.innerHTML = `
   <section class="hero">
     <img class="herologo" src="assets/logo.png" alt="Chemistry with Dr. NAM" width="200" height="200">
     <h1>From Zero to <span>Chemistry Hero!</span></h1>
     <p class="lead">No science background needed, just bring your curiosity. Every expert was once a beginner, so let's start together.</p>
     ${says("Every idea here starts with something you have already seen: your kitchen, your phone, your own body. The science is just the answer to a question you already have.")}
-    <div class="notice"><b>About your feedback</b>
+    ${back ? welcomeBack() : ""}
+    ${back ? "" : `<div class="notice"><b>About your feedback</b>
       <span>This hub does not grade you. It asks how much you liked each stop and how helpful it was, and it notes the time you spend. Feedback is anonymous: no names, emails or student IDs.</span>
       <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="consent" ${S.consent?"checked":""} style="width:22px;height:22px"> Share anonymous feedback with Dr. NAM</label>
-    </div>
-    <div class="actions"><button class="btn lime" type="button" id="startBtn">Start my journey</button></div>
+    </div>`}
+    <div class="actions"><button class="btn lime" type="button" id="startBtn">${back ? "Continue my journey" : "Start my journey"}</button>${back && nxt ? `<button class="btn ghost" type="button" id="nextBtn">Go straight to ${esc(nxt.num)}</button>` : ""}</div>
   </section>`;
-  document.getElementById("consent").onchange = e => { S.consent = e.target.checked; commit(); renderPrivacy(); };
+  const cbx = document.getElementById("consent"); if (cbx) cbx.onchange = e => { S.consent = e.target.checked; commit(); renderPrivacy(); };
   document.getElementById("startBtn").onclick = () => { S.welcomed = true; commit(); if (S.profileDone) go("map"); else askProfile(() => go("map")); };
+  const nb = document.getElementById("nextBtn"); if (nb) nb.onclick = () => { if (S.profileDone) go("stop", nxt.id); else askProfile(() => go("stop", nxt.id)); };
 }
 
 /* ---------------- "Tell us about you" pop-up (asked once, saved on this device) ---------------- */
@@ -1004,22 +1027,22 @@ function badgeShelf(){
 }
 /* ---------------- Map ---------------- */
 function renderMap(){
-  const n = doneCount(); const pct = Math.round(n / TOTAL_STOPS * 100);
+  const n = doneCount(); const pct = overallPct();
   const nextStop = STOPS.find(s => !stopRec(s.id).completed);
   app.innerHTML = `
   <section class="journey" aria-label="Your journey">
     <div class="eyebrow">Your journey · Zero to Chemistry Hero</div>
     <h2>${n === 0 ? "Ready when you are" : n === STOPS.length ? "You finished every open stop!" : "Welcome back, keep going"}</h2>
-    <div class="row"><span>Level: <b class="score">${rank(n)}</b></span><span><b class="score">${n}</b> of ${TOTAL_STOPS} stops · <b class="score">${S.points}</b> points (just for you)</span></div>
-    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${TOTAL_STOPS}" aria-valuenow="${n}"><i style="width:${pct}%"></i></div>
+    <div class="row"><span>Level: <b class="score">${rank(n)}</b></span><span><b class="score">${pct}%</b> complete · ${n} of ${STOPS.length} open stops · <b class="score">${S.points}</b> points</span></div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}" aria-label="Journey ${pct}% complete"><i style="width:${pct}%"></i></div>
     <div id="resetSlot" class="reset-slot"><button type="button" class="linkbtn" id="resetBtn">↺ Reset my progress</button></div>
   </section>
   <div id="recallSlot"></div>
   <div class="stops">${STOPS.map(s => { const r = stopRec(s.id); const p = prog(s.id);
     const started = Object.keys(p.seen).length || Object.keys(p.actsDone).length;
-    const st = r.completed ? "✓ Completed · badge earned" : started ? "In progress" : "Start here";
+    const sp = stopPct(s); const st = r.completed ? "✓ Completed · badge earned" : sp > 0 ? `In progress · ${sp}%` : "Start here";
     return `<button type="button" class="stop ${nextStop && nextStop.id === s.id ? "glow" : ""}" data-id="${s.id}">
-      <span class="num">${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.topic)}</p><span class="state">${st}</span></button>`; }).join("")}
+      <span class="num">${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.topic)}</p><span class="state">${st}</span>${sp > 0 && !r.completed ? `<span class="minibar"><i style="width:${sp}%"></i></span>` : ""}</button>`; }).join("")}
   </div>
   ${badgeShelf()}
   <section class="block"><div class="eyebrow">Coming next</div><h3>More stops, themes and a trip to space</h3>
@@ -1303,7 +1326,7 @@ function renderPrivacy(){
 
 /* ---------------- Boot ---------------- */
 renderPrivacy();
-S.welcomed ? go("map") : go("welcome");
+go("welcome");
 initRemote();
 </script>
 <script>
