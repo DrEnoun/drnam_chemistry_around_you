@@ -101,6 +101,12 @@ p{margin:0}
 .tally .tl b{font-family:var(--f-title);font-size:1.1em}
 .tally .tl.ok{border-color:var(--lime)} .tally .tl.no{border-color:var(--coral)}
 .tally .tl i{font-style:normal;font-weight:800}
+/* Concentration Room */
+.concbox{color:var(--text);background:var(--ground);border:2px solid var(--line);border-radius:14px;padding:8px}
+.concrow{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.concrow .pm{display:flex;gap:6px;align-items:center}
+.concrow .n{font-family:var(--f-title);font-weight:800;font-size:1.4em;min-width:2ch;text-align:center;color:var(--pop)}
+.concval{font-size:.88em;line-height:1.5}
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -574,11 +580,43 @@ const STOPS = [
     {q:"Why must an equation be balanced?", o:["To make it look neat","Atoms are not created or destroyed","To make the reaction faster","Products are always heavier"], a:1, h:"Remember the LEGO bricks.", w:"Atoms are only rearranged, so each side must have the same atoms."},
     {q:"Which of these is a chemical change?", o:["Ice melting","Chopping onions","Frying an egg","Dissolving salt"], a:2, h:"Which one makes something new that you cannot undo?", w:"Frying changes the egg's proteins into something new."}
   ]}
+,
+{ id:"s6", num:"Stop 6", title:"How do chemists count tiny things?", topic:"The mole and concentration",
+  hook:"How does a shop sell rice without counting every grain?",
+  tip:"We measure length with a ruler and weight with a scale. For particles far too tiny to count, chemists use the mole.",
+  core:[
+    {t:"Why chemists need the mole", a:"A ruler measures length, a scale measures weight, a clock measures time. But what measures how many molecules there are?", s:"A single atom or molecule is far too tiny to see, count one by one, or put on a weighing scale. So chemists use a special unit, the mole (symbol: mol), to say how many particles of an element or compound there are."},
+    {t:"A mole is a counting number", a:"A dozen always means 12, whether it is 12 eggs or 12 pencils.", s:"In the same way, 1 mole always means 6.02 × 10²³ particles (atoms, molecules or ions). This number is called Avogadro's number. 1 mole of water = 6.02 × 10²³ water molecules."},
+    {t:"How big is a mole?", a:"Imagine everyone on Earth counting together, one particle each second.", s:"6.02 × 10²³ is 602 thousand billion billion. If all 8 billion people on Earth each counted one particle every second, it would take about 2.4 million years to count just one mole."},
+    {t:"Weighing to count: molar mass", a:"A rice shop weighs 1 kg instead of counting grains. If you know how heavy one grain is, the weight tells you how many grains there are.", s:"Chemists do the same. One mole of a substance has a fixed mass, its molar mass, in grams. 1 mol of carbon is 12 g. 1 mol of water (H₂O) is 18 g: 1 + 1 + 16."},
+    {t:"Concentration: people in a room", a:"Put 10 people in a small room and they are crowded. Put the same 10 people in a big hall and there is lots of space between them.", s:"Concentration tells how much of a substance is dissolved in a certain volume. Same amount in a smaller volume = more concentrated. It is often written in mol/L (moles per litre) or g/L."},
+    {t:"Diluting: same sugar, bigger room", a:"One spoon of syrup tastes strong in a small glass but weak in a big jug.", s:"Adding more water does not remove any particles. The amount stays the same, but the volume grows, so the particles spread out and the concentration goes down. That is diluting."}
+  ],
+  acts:[
+    {type:"sort", title:"Sort It: which tool measures it?", bins:["Ruler (length)","Scale (mass)","Mole (particles)"],
+     items:[["Height of a door","Ruler (length)","Length is measured in metres with a ruler or tape."],["A bag of rice","Scale (mass)","Mass is measured in kilograms on a scale."],["Water molecules in a glass","Mole (particles)","Far too many and too tiny to count: chemists use moles."],["Width of your phone","Ruler (length)","A length, in centimetres."],["Sugar for a cake","Scale (mass)","Weighed in grams."],["Oxygen molecules in a balloon","Mole (particles)","Tiny particles: counted in moles."],["Salt particles in a spoon","Mole (particles)","Countless ions: chemists use moles."],["Your body weight","Scale (mass)","Measured in kilograms."]]},
+    {type:"conc", title:"Concentration Room", rounds:[{n:8, target:2},{n:6, target:3},{n:12, target:1.5},{n:10, target:5}]},
+    {type:"match", title:"Memory Match: unit and what it measures", pairs:[["m","Length"],["kg","Mass"],["s","Time"],["mol","Number of particles"],["mol/L","Concentration"],["°C","Temperature"]]}
+  ],
+  deeper:[
+    {t:"Working out molar mass", a:"Add up the atoms, like adding prices on a receipt.", s:"Use each atom's mass from the periodic table: H = 1, C = 12, O = 16, Na = 23, Cl = 35.5. Water H₂O = 1 + 1 + 16 = 18 g/mol. Salt NaCl = 23 + 35.5 = 58.5 g/mol. Glucose C₆H₁₂O₆ = 72 + 12 + 96 = 180 g/mol."},
+    {t:"Concentration in a hospital drip", a:"Pharmacy link: a drip bag is a carefully measured solution.", s:"Normal saline is 0.9% sodium chloride: 9 g of salt in every 1 litre (1000 mL). This matches the salt level of body fluids, so it does not harm blood cells. Getting concentration right is a daily job in pharmacy."}
+  ],
+  side:[
+    {t:"One mole of water", a:"Smaller than you think: about one big spoonful.", s:"1 mole of water weighs 18 g and fills about 18 mL, just a little more than a tablespoon. Yet that spoonful holds 6.02 × 10²³ water molecules."},
+    {t:"Blood sugar in mmol/L", a:"Your glucose meter is quietly using moles.", s:"In Malaysia, blood sugar meters show readings in mmol/L: millimoles of glucose per litre of blood. \"Milli\" means one-thousandth, so 1 mmol is 1/1000 of a mole. For your health, ask a pharmacist or doctor."}
+  ],
+  check:[
+    {q:"Why do chemists not count single molecules on a scale?", o:["Molecules are too heavy","Molecules are far too tiny to see or weigh one by one","Scales are not allowed in labs","Molecules have no mass"], a:1, h:"Think about how small one molecule is.", w:"Single molecules are far too tiny, so chemists count them in moles."},
+    {q:"1 mole of any substance contains…", o:["12 particles","1000 particles","6.02 × 10²³ particles","1 kg of particles"], a:2, h:"It is Avogadro's number.", w:"1 mole = 6.02 × 10²³ particles, like a dozen = 12."},
+    {q:"What is the molar mass of water, H₂O? (H = 1, O = 16)", o:["17 g/mol","18 g/mol","32 g/mol","2 g/mol"], a:1, h:"Add 1 + 1 + 16.", w:"1 + 1 + 16 = 18 g/mol."},
+    {q:"The same amount of sugar is dissolved in a bigger volume of water. The concentration…", o:["Goes up","Goes down","Stays the same","Becomes zero"], a:1, h:"Same people, bigger room.", w:"Same amount in a bigger volume = lower concentration."},
+    {q:"Which is a unit of concentration?", o:["mol/L","kg","m","°C"], a:0, h:"Amount per volume.", w:"mol/L means moles per litre."}
+  ]}
 
 ];
 
 const LATER = [
-  ["Stop 6","The mole and concentration","How do chemists count tiny things?"],
   ["Stop 7","Chemistry in daily life","Why does this matter to me?"],
   ["Theme","Chemistry and human health","Blood, medicines, natural products"],
   ["Theme","Chemistry and the environment","Air, water, plastic"],
@@ -1038,6 +1076,52 @@ Object.assign(BACK, { s5: { core: {
      + `<rect x="138" y="96" width="80" height="20" rx="4" fill="${CG}" stroke="${K}" stroke-width="1.6"/><rect x="134" y="88" width="88" height="8" rx="3" fill="${T}" stroke="${K}" stroke-width="1.4"/>` + kf(178,106,7) + ka(156,50,9,C,"O",6) + `<path d="M196 42c5 6 7 10 7 13a7 7 0 0 1-14 0c0-3 2-7 7-13z" fill="${T}" stroke="${K}" stroke-width="1.2"/>` + `<path d="M150 66l12 14M204 66l-12 14" stroke="${C}" stroke-width="2.6"/>`, "Without paint, oxygen and water rust the iron; paint keeps them out")
 }}});
 
+/* ---------------- Stop 6 pictures ---------------- */
+const person = (x, y, c, r) => `<circle cx="${x}" cy="${y-(r||7)*1.1}" r="${(r||7)*0.75}" fill="${SKIN}" stroke="${K}" stroke-width="1.2"/><path d="M${x-(r||7)} ${y+(r||7)*0.9}q0-${(r||7)*1.4} ${r||7} -${(r||7)*1.4}t${r||7} ${(r||7)*1.4}z" fill="${c}" stroke="${K}" stroke-width="1.2"/>`;
+Object.assign(ILLS, {
+  m6tools: () => sv(`<rect x="14" y="30" width="62" height="16" rx="3" fill="${GOLD}" stroke="${K}" stroke-width="2"/>` + Array.from({length:7},(_,i)=>`<path d="M${20+i*9} 30v${i%2?5:8}" stroke="${K}" stroke-width="1.4"/>`).join("") + TX(45,62,"length",{s:9.5,w:700})
+     + `<rect x="92" y="32" width="56" height="22" rx="5" fill="${A}" stroke="${K}" stroke-width="2"/><path d="M98 32v-6h44v6" fill="none" stroke="${K}" stroke-width="2"/>` + TX(120,48,"kg",{s:11,w:800}) + TX(120,70,"weight",{s:9.5,w:700})
+     + `<circle cx="196" cy="40" r="17" fill="${W}" stroke="${K}" stroke-width="2"/><path d="M196 40v-10M196 40l7 5" stroke="${K}" stroke-width="2" stroke-linecap="round"/>` + TX(196,70,"time",{s:9.5,w:700})
+     + `<circle cx="120" cy="108" r="22" fill="${W}" stroke="${K}" stroke-width="2"/><path d="M136 124l12 12" stroke="${K}" stroke-width="5" stroke-linecap="round"/>` + ka(120,108,5,C) + TX(170,104,"?",{s:22,w:800,f:C}) + TX(66,112,"too tiny!",{s:10,w:800,f:C}), "A ruler, a scale and a clock, and a magnifier over a molecule too tiny to measure"),
+  m6dozen: () => sv(`<rect x="12" y="34" width="96" height="56" rx="8" fill="#e8c9a0" stroke="${K}" stroke-width="2"/>` + [0,1].map(j=>[0,1,2,3,4,5].map(i=>`<ellipse cx="${24+i*15}" cy="${50+j*24}" rx="6" ry="8" fill="#fff6e0" stroke="${K}" stroke-width="1.2"/>`).join("")).join("") + TX(60,108,"a dozen = 12",{s:11,w:800})
+     + `<circle cx="176" cy="62" r="34" fill="${L}" stroke="${K}" stroke-width="2.4"/>` + kf(176,74,14) + TX(176,58,"1 mol",{s:14,w:800}) + TX(176,116,"= 6.02 × 10²³",{s:12,w:800}), "A tray of a dozen eggs beside a happy one-mole badge equal to 6.02 times ten to the 23"),
+  m6huge: () => sv(`<circle cx="70" cy="76" r="44" fill="#7fc8ff" stroke="${K}" stroke-width="2.2"/><path d="M42 58q12-8 20 4t18-4q10 10 0 22t-24 6q-12-12-14-28z" fill="#7bd389" stroke="${K}" stroke-width="1.4"/>` + kf(70,88,16)
+     + [[134,44],[156,44],[178,44],[200,44],[145,70],[167,70],[189,70]].map(([x,y],i)=>person(x,y+10,[C,T,GOLD,A][i%4],7)).join("") + TX(170,112,"counting together…",{s:10,w:700}) + TX(170,130,"2.4 million years!",{s:12,w:800,f:C}), "The Earth and its people counting particles for 2.4 million years"),
+  m6rice: () => sv(`<path d="M66 40h60l8 76H58z" fill="#f2e6c9" stroke="${K}" stroke-width="2.2"/><path d="M66 40q30-14 60 0" fill="none" stroke="${K}" stroke-width="2"/>` + TX(96,82,"RICE",{s:12,w:800}) + kf(96,100,10)
+     + `<rect x="40" y="116" width="112" height="16" rx="5" fill="${A}" stroke="${K}" stroke-width="2"/>` + TX(96,128,"1 kg",{s:11,w:800}) + [[176,52],[188,60],[200,50],[184,74],[198,70]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="5" ry="2.6" fill="${W}" stroke="${K}" stroke-width="1" transform="rotate(30 ${x} ${y})"/>`).join("") + TX(190,100,"no counting",{s:10,w:800}) + TX(190,114,"needed!",{s:10,w:800}), "A rice sack weighed as 1 kilogram instead of counting grains"),
+  m6room: () => sv(`<rect x="12" y="34" width="70" height="70" rx="6" fill="${W}" stroke="${K}" stroke-width="2.2"/>` + [[24,52],[40,48],[58,52],[72,50],[30,72],[48,70],[64,74],[26,94],[44,92],[62,94]].map(([x,y],i)=>person(x,y,[C,T,GOLD,A][i%4],6)).join("") + TX(47,122,"crowded",{s:10,w:800,f:C})
+     + `<rect x="98" y="20" width="130" height="98" rx="6" fill="${W}" stroke="${K}" stroke-width="2.2"/>` + [[112,48],[150,40],[196,46],[124,82],[166,76],[210,82],[136,110],[182,108],[216,108],[150,62]].map(([x,y],i)=>person(x,y,[C,T,GOLD,A][i%4],6)).join("") + TX(163,136,"spread out",{s:10,w:800,f:D}), "Ten people crowded in a small room and the same ten spread out in a big hall"),
+  m6syrup: () => sv(`<path d="M30 54h44l-5 64H35z" fill="${C}" fill-opacity=".85" stroke="${K}" stroke-width="2"/>` + kf(52,92,9) + TX(52,134,"strong",{s:10,w:800})
+     + `<path d="M120 30h96l-8 96h-80z" fill="${C}" fill-opacity=".22" stroke="${K}" stroke-width="2.2"/><path d="M216 50h8q10 0 10 14v20q0 14-10 14h-6" fill="none" stroke="${K}" stroke-width="2.2"/>` + kf(168,82,12) + TX(168,140,"weak",{s:10,w:800}) + `<path d="M86 32q20-20 40 0" fill="none" stroke="${K}" stroke-width="1.6" stroke-dasharray="4 3"/>` + TX(104,18,"1 spoon each",{s:9.5,w:700}), "One spoon of syrup tastes strong in a small glass and weak in a big jug"),
+  m6spoon: () => sv(`<ellipse cx="96" cy="76" rx="44" ry="26" fill="${CG}" stroke="${K}" stroke-width="2.2"/><ellipse cx="96" cy="72" rx="34" ry="17" fill="${T}" fill-opacity=".7"/><path d="M138 82l70 30" stroke="${K}" stroke-width="10" stroke-linecap="round"/><path d="M138 82l70 30" stroke="${CG}" stroke-width="6" stroke-linecap="round"/>` + kf(96,74,12) + TX(96,124,"18 g ≈ 18 mL",{s:12,w:800}) + TX(186,48,"1 mol",{s:14,w:800,f:D}), "A big spoonful of water: one mole is about 18 grams"),
+  m6meter: () => sv(`<rect x="74" y="20" width="92" height="116" rx="16" fill="${N}" ${ST}/><rect x="84" y="32" width="72" height="44" rx="6" fill="#d8f7e9" stroke="${K}" stroke-width="1.6"/>` + TX(120,54,"5.4",{s:18,w:800}) + TX(120,70,"mmol/L",{s:9.5,w:800}) + `<circle cx="120" cy="100" r="11" fill="${T}" stroke="${K}" stroke-width="1.6"/><path d="M114 126h12" stroke="${W}" stroke-width="3"/>` + `<path d="M176 92c5 6 7 10 7 13a7 7 0 0 1-14 0c0-3 2-7 7-13z" fill="${C}" stroke="${K}" stroke-width="1.4"/>` + TX(36,80,"sample",{s:9,w:400}), "A glucose meter screen showing a reading in millimoles per litre"),
+  /* deeper */
+  m6molar: () => { const u = 0.5, rows = [["water, H₂O",[["H",2,W],["O",16,C]],18],["salt, NaCl",[["Na",23,GOLD],["Cl",35.5,"#b8f2a0"]],58.5],["glucose",[["C",72,CG],["H",12,W],["O",96,C]],180]];
+     return sv(rows.map(([n,parts,tot],i)=>{ let x = 84; const y = 34+i*32; return TX(78,y+4,n,{a:"end",s:10,w:700}) + parts.map(([e,m,f])=>{ const w = Math.max(2, m*u), o = `<rect x="${x.toFixed(1)}" y="${y-9}" width="${w.toFixed(1)}" height="18" fill="${f}" stroke="${K}" stroke-width="1.1"/>` + (w>16?TX(x+w/2,y+4,e,{s:8.5,w:800}):""); x += w; return o; }).join("") + TX(x+4,y+4,tot+" g/mol",{a:"start",s:9.5,w:800}); }).join("") + TX(120,140,"molar mass = add up the atom masses",{s:10.5}), "Molar masses built from atom masses: water 18, salt 58.5, glucose 180 grams per mole", 150); },
+  m6saline: () => sv(`<path d="M70 24h60v86q0 16-30 16t-30-16z" fill="${W}" fill-opacity=".9" stroke="${K}" stroke-width="2.2"/><rect x="92" y="14" width="16" height="12" rx="3" fill="${CG}" stroke="${K}" stroke-width="1.6"/><path d="M100 126v14" stroke="${K}" stroke-width="2.6"/>` + TX(100,56,"0.9%",{s:15,w:800,f:D}) + TX(100,72,"NaCl",{s:10,w:700}) + kf(100,94,10)
+     + `<rect x="150" y="38" width="76" height="30" rx="8" fill="${GOLD}" stroke="${K}" stroke-width="1.6"/>` + TX(188,58,"9 g salt",{s:11,w:800}) + `<rect x="150" y="80" width="76" height="30" rx="8" fill="${A}" stroke="${K}" stroke-width="1.6"/>` + TX(188,100,"in 1000 mL",{s:11,w:800}) + `<path d="M140 60h8M140 92h8" stroke="${K}" stroke-width="1.4"/>`, "A saline drip bag: 0.9 percent means 9 grams of salt in 1000 millilitres", 150)
+});
+Object.assign(ILL, { s6: {core:["m6tools","m6dozen","m6huge","m6rice","m6room","m6syrup"], deeper:["m6molar","m6saline"], side:["m6spoon","m6meter"]} });
+Object.assign(BACK, { s6: { core: {
+  0: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + TX(120,24,"Every quantity has its unit",{s:11,w:800})
+     + [["length","ruler","metre, m",GOLD],["mass","scale","kilogram, kg",A],["particles","mole","mole, mol",L]].map(([q,t,u,c],i)=>{const y=50+i*34; return `<rect x="14" y="${y-14}" width="212" height="28" rx="8" fill="${c}" fill-opacity="${i===2?1:.45}" stroke="${K}" stroke-width="${i===2?2:1.2}"/>` + TX(24,y+4,q,{a:"start",s:11,w:800}) + TX(110,y+4,"→ "+t,{a:"start",s:10.5,w:400}) + TX(218,y+4,u,{a:"end",s:10.5,w:800});}).join("")
+     + TX(120,158,"one molecule is too tiny to weigh",{s:9.5,w:400}), "Length uses metres, mass uses kilograms, and numbers of particles use moles", 172),
+  1: () => bsv(pan(8,8,224,154,"1 mol = 6.02 × 10²³ particles","Avogadro's number") + TX(120,42,"602 000 000 000",{s:13,w:800}) + TX(120,62,"000 000 000 000",{s:13,w:800}) + TX(120,82,"particles",{s:11,w:700})
+     + [["dozen","12"],["ream","500"],["mole","6.02×10²³"]].map(([a,b],i)=>`<rect x="${18+i*72}" y="96" width="64" height="30" rx="8" fill="${i===2?L:W}" stroke="${K}" stroke-width="1.6"/>` + TX(50+i*72,108,a,{s:9,w:700}) + TX(50+i*72,121,b,{s:9.5,w:800})).join(""), "One mole is 602 thousand billion billion particles, a counting number like a dozen or a ream"),
+  2: () => bsv(pan(8,8,224,154,"About 2.4 million years","to count 1 mole together") + `<rect x="18" y="30" width="62" height="34" rx="8" fill="${A}" stroke="${K}" stroke-width="1.6"/>` + TX(49,44,"8 billion",{s:10,w:800}) + TX(49,57,"people",{s:9,w:400}) + TX(92,52,"×",{s:14,w:800})
+     + `<rect x="104" y="30" width="62" height="34" rx="8" fill="${GOLD}" stroke="${K}" stroke-width="1.6"/>` + TX(135,44,"1 particle",{s:10,w:800}) + TX(135,57,"each second",{s:9,w:400})
+     + `<path d="M24 98h192" stroke="${K}" stroke-width="2"/>` + [0,1,2,3,4].map(i=>`<path d="M${24+i*48} 92v12" stroke="${K}" stroke-width="1.6"/>`).join("") + TX(24,90,"start",{a:"start",s:8.5,w:400}) + `<circle cx="216" cy="98" r="8" fill="${L}" stroke="${K}" stroke-width="1.6"/>` + TX(212,120,"1 mol counted",{a:"end",s:9,w:800}), "8 billion people each counting one particle per second would need about 2.4 million years for one mole"),
+  3: () => bsv(pan(8,8,224,154,"1 mole has a fixed mass","its molar mass, in grams") + [[46,"C","12 g",CG],[120,"H₂O","18 g",C],[194,"NaCl","58.5 g",GOLD]].map(([x,f,m,c])=>`<rect x="${x-32}" y="90" width="64" height="16" rx="5" fill="${A}" stroke="${K}" stroke-width="1.6"/>` + TX(x,102,m,{s:10,w:800}) + ka(x,62,18,c,f,f.length>2?8:10) + TX(x,32,"1 mol",{s:9,w:700})).join(""), "One mole of carbon weighs 12 grams, water 18 grams, salt 58.5 grams"),
+  4: () => bsv(pan(8,8,224,154,"concentration = amount ÷ volume","e.g. mol/L") + `<rect x="22" y="30" width="56" height="56" rx="6" fill="${A}" fill-opacity=".4" stroke="${K}" stroke-width="2"/>` + [[34,44],[60,42],[40,70],[64,68]].map(([x,y])=>ka(x,y,6,GOLD)).join("") + TX(50,104,"4 in 1 L",{s:10,w:800}) + TX(50,118,"= 4 per L",{s:9.5,w:400})
+     + `<rect x="104" y="30" width="118" height="56" rx="6" fill="${A}" fill-opacity=".25" stroke="${K}" stroke-width="2"/>` + [[118,44],[160,70],[188,40],[210,66]].map(([x,y])=>ka(x,y,6,GOLD)).join("") + [1,2,3].map(i=>`<path d="M${104+i*29.5} 34v48" stroke="${K}" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>`).join("") + TX(163,104,"4 in 4 L",{s:10,w:800}) + TX(163,118,"= 1 per L",{s:9.5,w:400}), "Four particles in one litre is four per litre; the same four in four litres is one per litre"),
+  5: () => bsv(pan(8,8,224,154,"Amount stays, concentration drops","that is diluting") + `<path d="M24 40h52l-5 56H29z" fill="${C}" fill-opacity=".6" stroke="${K}" stroke-width="2"/>` + [[40,64],[56,58],[46,80],[62,78]].map(([x,y])=>ka(x,y,5,GOLD)).join("") + arw(84,66,98,58,112,66,K) + TX(98,48,"+ water",{s:9,w:800,f:D})
+     + `<path d="M122 26h98l-8 82h-82z" fill="${C}" fill-opacity=".18" stroke="${K}" stroke-width="2"/>` + [[140,44],[196,52],[156,86],[188,94]].map(([x,y])=>ka(x,y,5,GOLD)).join("") + TX(50,114,"4 particles",{s:9.5,w:700}) + TX(170,124,"still 4 particles",{s:9.5,w:700}), "Adding water keeps the same four particles but spreads them out, so the concentration drops")
+}, side: {
+  0: () => bsv(pan(8,8,224,154,"1 mol of water = 18 g","about 18 mL, 6.02 × 10²³ molecules") + `<ellipse cx="80" cy="70" rx="40" ry="24" fill="${CG}" stroke="${K}" stroke-width="2"/><ellipse cx="80" cy="66" rx="30" ry="15" fill="${T}" fill-opacity=".7"/><path d="M118 78l50 20" stroke="${K}" stroke-width="8" stroke-linecap="round"/>` + [[66,62],[84,58],[96,68],[74,72]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="${C}"/>`).join("") + mH2O(190,52,11) + TX(190,82,"× 6.02 × 10²³",{s:9.5,w:800}), "One mole of water is a spoonful of about 18 millilitres holding 6.02 times ten to the 23 molecules"),
+  1: () => bsv(pan(8,8,224,154,"mmol/L = millimoles per litre","milli = 1/1000") + `<rect x="22" y="34" width="70" height="34" rx="8" fill="${L}" stroke="${K}" stroke-width="1.6"/>` + TX(57,56,"1 mol",{s:12,w:800}) + TX(102,56,"=",{s:14,w:800}) + `<rect x="114" y="34" width="104" height="34" rx="8" fill="${W}" stroke="${K}" stroke-width="1.6"/>` + TX(166,56,"1000 mmol",{s:12,w:800})
+     + `<path d="M96 84h48v40q0 8-24 8t-24-8z" fill="${C}" fill-opacity=".5" stroke="${K}" stroke-width="2"/>` + [[108,104],[120,96],[132,108]].map(([x,y])=>`<polygon points="${hexP(x,y,5)}" fill="${GOLD}" stroke="${K}" stroke-width="1"/>`).join("") + TX(170,108,"glucose in",{a:"start",s:9.5,w:700}) + TX(170,121,"1 L of blood",{a:"start",s:9.5,w:700}), "One mole equals 1000 millimoles; mmol per litre counts glucose in each litre of blood")
+}}});
+
 /* ---------------- State ---------------- */
 const LS = "cay_v1";
 const AVATAR_SRC = "assets/avatar.png";
@@ -1204,6 +1288,7 @@ const BADGES = {
   s4:{ name:"Bond Buddy", c:"#ff9fb4", icon:()=>`<circle cx="38" cy="52" r="11" fill="#5eead4" stroke="#231f20" stroke-width="2.2"/><circle cx="62" cy="52" r="11" fill="#fc7a7a" stroke="#231f20" stroke-width="2.2"/><path d="M47 52h6" stroke="#231f20" stroke-width="3" stroke-linecap="round"/>` },
   s4b:{ name:"Carbon Crafter", c:"#c9b8ff", icon:()=>`<polygon points="${hexP(50,52,16)}" fill="#ffffff" stroke="#231f20" stroke-width="2.6"/><circle cx="50" cy="52" r="5" fill="#cfd8e3" stroke="#231f20" stroke-width="1.6"/>` },
   s5:{ name:"Recipe Reader", c:"#a0e7ff", icon:()=>`<rect x="33" y="34" width="34" height="36" rx="4" fill="#ffffff" stroke="#231f20" stroke-width="2.4"/><path d="M39 45h14M39 52h22M39 59h10" stroke="#231f20" stroke-width="2" stroke-linecap="round"/><path d="M52 59h10m-3-3l3 3l-3 3" fill="none" stroke="#fc7a7a" stroke-width="2" stroke-linecap="round"/>` },
+  s6:{ name:"Particle Counter", c:"#ffb86b", icon:()=>`<text x="50" y="50" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="15" fill="#231f20">mol</text>${[[38,60],[46,62],[54,60],[62,62],[42,66],[58,66]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#5eead4" stroke="#231f20" stroke-width="1"/>`).join("")}` },
 };
 function badgeSVG(id, earned, size){
   const b = BADGES[id] || {name:"Badge", c:"#5eead4", icon:()=>""};
@@ -1333,7 +1418,7 @@ function cardsLayer(L, s, key, intro, tip){
 function actsLayer(L, s){
   L.innerHTML = s.acts.map((a,i) => `<div class="act" id="act${i}"></div>`).join("") + nextBtn(s.id, "deeper", "Next: Go deeper");
   s.acts.forEach((a,i) => { const el = document.getElementById("act"+i);
-    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); if (a.type === "balance") balanceAct(el, s, a, i); });
+    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); if (a.type === "balance") balanceAct(el, s, a, i); if (a.type === "conc") concAct(el, s, a, i); });
 }
 function award(n){ S.points += n; }
 function actDone(s, i){ prog(s.id).actsDone[i] = 1; commit(); }
@@ -1369,6 +1454,35 @@ function balanceAct(el, s, a, idx){
     };
   };
   reset(); draw();
+}
+
+
+function concAct(el, s, a, idx){
+  let ri = 0, V = 1, missed = false, msg = "";
+  const fmt = x => (Math.round(x*100)/100).toString();
+  const dots = (n, V) => { let seed = n*97 + 13; const rnd = () => (seed = (seed*16807) % 2147483647) / 2147483647;
+    const w = 28*V; return Array.from({length:n}, () => { const x = 14 + rnd()*(w-16), y = 30 + rnd()*72; return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="#ffd166" stroke="#231f20" stroke-width="1.3"/><ellipse cx="${(x-2).toFixed(1)}" cy="${(y).toFixed(1)}" rx=".9" ry="1.1" fill="#231f20"/><ellipse cx="${(x+2).toFixed(1)}" cy="${(y).toFixed(1)}" rx=".9" ry="1.1" fill="#231f20"/>`; }).join(""); };
+  const draw = () => {
+    const r = a.rounds[ri], c = r.n / V;
+    const svg = `<svg viewBox="0 0 300 116" width="100%" role="img" aria-label="${r.n} sugar particles in ${V} cups of water"><rect x="6" y="20" width="${28*V}" height="90" rx="8" fill="#5eead4" fill-opacity=".45" stroke="#231f20" stroke-width="2.2"/>${Array.from({length:V-1},(_,i)=>`<path d="M${6+28*(i+1)} 24v82" stroke="#231f20" stroke-width="1" stroke-dasharray="3 4" opacity=".5"/>`).join("")}${dots(r.n, V)}<text x="6" y="14" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="11" fill="currentColor">${V} cup${V>1?"s":""} of water</text></svg>`;
+    el.innerHTML = `<span class="eyebrow">Activity · ${ri + 1} of ${a.rounds.length}</span><h3>${esc(a.title)}</h3>
+      <p class="muted" style="font-size:.8em">You have <b>${r.n} sugar particles</b>. Change the amount of water until the concentration is <b>${fmt(r.target)} particles per cup</b>.</p>
+      <div class="concbox">${svg}</div>
+      <div class="concrow"><div class="pm"><button type="button" class="btn small" id="cMinus" aria-label="Less water">−</button><span class="n">${V}</span><button type="button" class="btn small" id="cPlus" aria-label="More water">+</button></div>
+        <div class="concval">Concentration = ${r.n} ÷ ${V} = <b>${fmt(c)}</b> per cup<br><span class="muted">${c > r.target ? "Crowded: very sweet" : c < r.target ? "Spread out: weak taste" : "Just right!"}</span></div></div>
+      <div class="actions"><button type="button" class="btn lime" id="cChk">Check</button></div>
+      <div aria-live="polite">${msg}</div>`;
+    el.querySelector("#cMinus").onclick = () => { V = Math.max(1, V - 1); msg = ""; draw(); };
+    el.querySelector("#cPlus").onclick = () => { V = Math.min(10, V + 1); msg = ""; draw(); };
+    el.querySelector("#cChk").onclick = () => {
+      if (Math.abs(r.n / V - r.target) > 1e-9){ missed = true; msg = r.n / V > r.target ? `<div class="fb no"><strong>✗ Too crowded.</strong> Add more water to make the "room" bigger.</div>` : `<div class="fb no"><strong>✗ Too spread out.</strong> Use less water so the particles are closer.</div>`; draw(); return; }
+      award(missed ? 10 : 20); missed = false; const last = ri === a.rounds.length - 1;
+      msg = `<div class="fb ok"><strong>✓ Just right!</strong> ${r.n} particles in ${V} cups = ${fmt(r.target)} per cup.</div><div class="actions" style="margin-top:10px"><button type="button" class="btn small lime" id="cNext">${last ? "Finish" : "Next round"}</button></div>`;
+      draw();
+      el.querySelector("#cNext").onclick = () => { if (last){ actDone(s, idx); el.querySelector("#cNext").remove(); el.insertAdjacentHTML("beforeend", `<div class="fb ok" style="margin-top:8px"><strong>✓ Concentration master!</strong> ${esc(pick(CHEERS))}</div>`); return; } ri++; V = 1; msg = ""; draw(); };
+    };
+  };
+  draw();
 }
 
 function sortAct(el, s, a, idx){
