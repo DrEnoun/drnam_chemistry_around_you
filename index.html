@@ -75,6 +75,12 @@ p{margin:0}
 .wb b{font-family:var(--f-title);font-size:1.15em}
 .minibar{display:block;height:8px;border-radius:99px;background:#e6edf5;border:1.5px solid var(--ink);overflow:hidden}
 .minibar i{display:block;height:100%;background:var(--teal)}
+/* Completed stamp on stop cards */
+.stop{position:relative}
+.stop .stamp{position:absolute;bottom:6px;right:10px;transform:rotate(14deg);filter:drop-shadow(3px 3px 0 var(--ink));animation:stampin .55s cubic-bezier(.2,.8,.3,1.4) both;pointer-events:none}
+.stop.done{background:#f4ffe0;padding-right:86px}
+@keyframes stampin{0%{transform:scale(2.2) rotate(-20deg);opacity:0}70%{transform:scale(.92) rotate(18deg);opacity:1}100%{transform:rotate(14deg)}}
+@media (prefers-reduced-motion: reduce){ .stop .stamp{animation:none} }
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -1041,8 +1047,8 @@ function renderMap(){
   <div class="stops">${STOPS.map(s => { const r = stopRec(s.id); const p = prog(s.id);
     const started = Object.keys(p.seen).length || Object.keys(p.actsDone).length;
     const sp = stopPct(s); const st = r.completed ? "✓ Completed · badge earned" : sp > 0 ? `In progress · ${sp}%` : "Start here";
-    return `<button type="button" class="stop ${nextStop && nextStop.id === s.id ? "glow" : ""}" data-id="${s.id}">
-      <span class="num">${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.topic)}</p><span class="state">${st}</span>${sp > 0 && !r.completed ? `<span class="minibar"><i style="width:${sp}%"></i></span>` : ""}</button>`; }).join("")}
+    return `<button type="button" class="stop ${nextStop && nextStop.id === s.id ? "glow" : ""} ${r.completed ? "done" : ""}" data-id="${s.id}">
+      <span class="num">${s.num}</span><h3>${esc(s.title)}</h3><p>${esc(s.topic)}</p><span class="state">${st}</span>${r.completed ? `<span class="stamp" aria-hidden="true"><svg viewBox="0 0 80 80" width="70" height="70"><circle cx="40" cy="40" r="35" fill="#d4ff3a" stroke="#231f20" stroke-width="3"/><circle cx="40" cy="40" r="28" fill="none" stroke="#231f20" stroke-width="1.6" stroke-dasharray="3 3"/><text x="40" y="38" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="16" fill="#231f20">DONE!</text><ellipse cx="34" cy="48" rx="1.8" ry="2.2" fill="#231f20"/><ellipse cx="46" cy="48" rx="1.8" ry="2.2" fill="#231f20"/><path d="M36.5 52q3.5 3.4 7 0" fill="none" stroke="#231f20" stroke-width="1.8" stroke-linecap="round"/><ellipse cx="29" cy="52" rx="3" ry="1.8" fill="#ff9fb4"/><ellipse cx="51" cy="52" rx="3" ry="1.8" fill="#ff9fb4"/><path d="M14 18l3 5l5 1l-4 3l1 5l-5-3l-4 3l1-5l-4-3l5-1z" fill="#ffffff" stroke="#231f20" stroke-width="1.4"/></svg></span>` : ""}${sp > 0 && !r.completed ? `<span class="minibar"><i style="width:${sp}%"></i></span>` : ""}</button>`; }).join("")}
   </div>
   ${badgeShelf()}
   <section class="block"><div class="eyebrow">Coming next</div><h3>More stops, themes and a trip to space</h3>
