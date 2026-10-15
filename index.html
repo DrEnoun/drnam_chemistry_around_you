@@ -242,7 +242,7 @@ svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
 /* Drag and drop */
 .item{touch-action:none;user-select:none;-webkit-user-select:none}
 .item.dragging{opacity:.35}
-.ghost{position:fixed;z-index:50;pointer-events:none;margin:0;transform:rotate(-4deg) scale(1.08);box-shadow:8px 10px 0 var(--shadow)}
+.drag-ghost{position:fixed;z-index:50;pointer-events:none;margin:0;transform:rotate(-4deg) scale(1.08);box-shadow:8px 10px 0 var(--shadow)}
 .bin.over{border-style:solid;border-color:var(--lime);background:color-mix(in srgb,var(--lime) 14%,transparent);transform:scale(1.02)}
 .bin.pop{animation:pop .45s ease}
 .bin.shake{animation:shake .4s ease;border-color:var(--coral)}
@@ -735,7 +735,7 @@ function sortAct(el, s, a, idx){
         let ghost = null; b.setPointerCapture(e.pointerId);
         const move = ev => {
           if (!ghost && Math.hypot(ev.clientX - sx, ev.clientY - sy) < 6) return;
-          if (!ghost){ ghost = b.cloneNode(true); ghost.classList.add("ghost"); ghost.style.width = r.width + "px"; document.body.appendChild(ghost); b.classList.add("dragging"); }
+          if (!ghost){ ghost = b.cloneNode(true); ghost.classList.add("drag-ghost"); ghost.style.width = r.width + "px"; document.body.appendChild(ghost); b.classList.add("dragging"); }
           ghost.style.left = (ev.clientX - r.width/2) + "px"; ghost.style.top = (ev.clientY - r.height/2) + "px";
           const over = binAt(ev.clientX, ev.clientY); bins.forEach(x => x.classList.toggle("over", x === over));
         };
