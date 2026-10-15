@@ -239,7 +239,7 @@ body::before{content:"";position:fixed;inset:0;background:var(--ground);z-index:
 
 /* Illustrations and visual cards */
 svg.ill{display:block;width:100%;height:auto;border-radius:12px;flex:none}
-.flip,.flip .in{min-height:520px}
+.flip,.flip .in{min-height:550px}
 .front svg.ill{margin-bottom:4px;width:100%;max-width:300px;align-self:center}
 .back svg.back-ill{margin-block:2px 4px;width:100%;max-width:290px;align-self:center}
 .vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
@@ -388,12 +388,74 @@ const STOPS = [
     {q:"Oxygen has 8 electrons. How are they arranged?", o:["8","2.6","2.8","4.4"], a:1, h:"The front row holds only 2.", w:"2 in the first shell and 6 in the second: 2.6."},
     {q:"Valence electrons are found in…", o:["The nucleus","The first shell","The outermost shell"], a:2, h:"The back row of the cinema.", w:"Valence electrons are in the outermost shell."},
     {q:"Fireworks have different colours because…", o:["Of different paper wrappers","Electrons drop back and give out light of each element's colour","Protons burn","The sky reflects the light"], a:1, h:"Heat lifts electrons up; what happens when they come back down?", w:"Electrons falling back give out light, and each element has its own colour."}
+  ]},
+{ id:"s3", num:"Stop 3", title:"Why do atoms gain or lose electrons?", topic:"Ions and the octet rule",
+  hook:"Why do sports drinks say \"electrolytes\" on the bottle?",
+  tip:"Atoms are happiest with a full back row of electrons. Some give electrons away and some take them, just to feel complete.",
+  core:[
+    {t:"The happy full row", a:"A finished puzzle: every piece in place, nothing missing, nothing extra.", s:"Atoms with a full outer shell are stable and hardly react. These are the noble gases, such as helium, neon and argon. That is why helium in party balloons never burns."},
+    {t:"The octet rule", a:"A cinema back row with 8 seats. Atoms feel complete when all 8 seats are filled.", s:"Most atoms react so that their outer shell ends up with 8 electrons, like a noble gas. \"Octet\" means a group of 8. Hydrogen and helium are the exception: 2 is enough for them."},
+    {t:"Losing electrons: + ions", a:"Sodium has one lonely electron in its back row. Giving it away is easier than finding 7 more.", s:"When an atom loses electrons, it has more protons (+) than electrons (−), so it becomes a positive ion. Sodium (Na) loses 1 electron and becomes Na⁺."},
+    {t:"Gaining electrons: − ions", a:"Chlorine's back row has 7 of its 8 seats filled. It just needs one more friend.", s:"When an atom gains electrons, it has more electrons than protons, so it becomes a negative ion. Chlorine (Cl) gains 1 electron and becomes Cl⁻, called chloride."},
+    {t:"Naming ions", a:"Negative ions get a nickname ending: chlorine becomes chloride.", s:"Positive metal ions keep their name: the sodium ion, Na⁺. Negative ions end in \"-ide\": chloride (Cl⁻), oxide (O²⁻) and fluoride (F⁻). That is why toothpaste says \"fluoride\"."},
+    {t:"Why drinks say \"electrolytes\"", a:"Your body is like a phone that runs on tiny charged particles.", s:"Electrolytes are ions dissolved in body fluids, such as Na⁺, K⁺ and Cl⁻. They carry the electrical signals for your nerves and muscles. Sweating loses some, so sports drinks put them back."}
+  ],
+  acts:[
+    {type:"sort", title:"Sort It: give, take or stay?", bins:["Gives electrons","Takes electrons","Stays happy"],
+     items:[["Sodium, Na","Gives electrons","1 lonely outer electron: easier to give it away. It becomes Na⁺."],["Potassium, K","Gives electrons","Same column as sodium: gives 1 electron and becomes K⁺."],["Magnesium, Mg","Gives electrons","2 outer electrons to give away. It becomes Mg²⁺."],["Calcium, Ca","Gives electrons","Gives 2 electrons and becomes Ca²⁺."],["Chlorine, Cl","Takes electrons","7 outer electrons: takes 1 more and becomes Cl⁻."],["Oxygen, O","Takes electrons","6 outer electrons: takes 2 more and becomes O²⁻."],["Fluorine, F","Takes electrons","7 outer electrons: takes 1 and becomes F⁻."],["Helium, He","Stays happy","Its shell is already full, so it does not react."],["Neon, Ne","Stays happy","A noble gas with a full outer shell."],["Argon, Ar","Stays happy","A noble gas: full shell, no need to change."]]},
+    {type:"match", title:"Memory Match: ion and its name", pairs:[["Na⁺","Sodium ion"],["K⁺","Potassium ion"],["Ca²⁺","Calcium ion"],["Cl⁻","Chloride"],["O²⁻","Oxide"],["F⁻","Fluoride"]]}
+  ],
+  deeper:[
+    {t:"The charge follows the column", a:"The periodic table tells you each ion's charge.", s:"Group 1 metals (Li, Na, K) form +1 ions and Group 2 metals (Mg, Ca) form +2. On the right, Group 16 (O, S) form −2 and Group 17 (F, Cl) form −1. Noble gases form no ions."},
+    {t:"Copying a noble gas", a:"After the change, each ion has the same electron pattern as a noble gas.", s:"Na (2.8.1) loses 1 electron to become Na⁺ (2.8), the same pattern as neon. Cl (2.8.7) gains 1 to become Cl⁻ (2.8.8), the same as argon."}
+  ],
+  side:[
+    {t:"Oral rehydration salts", a:"Pharmacy link: a small sachet that refills your body's ions.", s:"During diarrhoea the body loses water and ions. Oral rehydration salts mix sodium, potassium, chloride and glucose in a careful balance, so the gut can soak the water back up. For your health, ask a pharmacist or doctor."},
+    {t:"Fluoride in toothpaste", a:"A tiny ion that makes your teeth tougher.", s:"Fluoride ions (F⁻) join the mineral of tooth enamel and make it harder for the acids from sweets and fizzy drinks to dissolve it."}
+  ],
+  check:[
+    {q:"Why do noble gases like neon hardly react?", o:["They are very heavy","Their outer shell is already full","They have no electrons","They are always liquid"], a:1, h:"Think of the finished puzzle.", w:"Their outer shell is full, so they are already stable."},
+    {q:"Sodium (2.8.1) loses 1 electron. What does it become?", o:["Na⁻","Na⁺","Na²⁺","Neon"], a:1, h:"Losing a negative electron leaves more positive protons.", w:"It becomes Na⁺: one more proton than electrons."},
+    {q:"Chlorine gains 1 electron. Its ion is called…", o:["Chlorine ion","Chloride","Chlorate","Chlorine gas"], a:1, h:"Negative ions get the \"-ide\" ending.", w:"Cl⁻ is called chloride."},
+    {q:"Which ion does magnesium (Group 2) form?", o:["Mg⁺","Mg²⁺","Mg⁻","Mg²⁻"], a:1, h:"Group 2 metals have 2 outer electrons to give away.", w:"Mg loses 2 electrons and becomes Mg²⁺."},
+    {q:"Sports drinks contain electrolytes because…", o:["They make the drink sweeter","Ions help nerves and muscles work, and sweat removes some","They add colour","They make water boil faster"], a:1, h:"Remember the body running on tiny charged particles.", w:"Electrolytes are ions your nerves and muscles need, and sweat removes some."}
+  ]},
+
+{ id:"s4", num:"Stop 4", title:"How do atoms hold hands?", topic:"Chemical bonds: ionic and covalent",
+  hook:"Why does tap water flow as one unbroken stream instead of breaking into drops?",
+  tip:"A bond is atoms holding hands. Some hand over a gift, some share an umbrella. Either way, everyone ends up with a full back row.",
+  core:[
+    {t:"What is a chemical bond?", a:"Atoms holding hands so tightly that they move together as one team.", s:"A chemical bond is a strong attraction that holds atoms together. Atoms bond so that each one gets a full outer shell. The two main types are ionic and covalent."},
+    {t:"Ionic bond: giving a gift", a:"Sodium hands its one electron to chlorine like a gift. Now one is + and one is −, and opposites stick like magnets.", s:"An ionic bond forms when a metal gives electrons to a non-metal. The + and − ions then attract each other strongly. Table salt (NaCl) is held together by ionic bonds."},
+    {t:"Covalent bond: sharing an umbrella", a:"Two friends in the rain share one umbrella, so both stay dry.", s:"A covalent bond forms when two non-metal atoms share a pair of electrons. Each atom counts the shared pair as its own, so both get a full shell. Water and sugar have covalent bonds."},
+    {t:"Double bonds", a:"Holding hands with both hands for a stronger grip.", s:"Some atoms share two pairs of electrons: a double bond. The two atoms in oxygen gas (O₂) share two pairs. In carbon dioxide (CO₂), carbon makes a double bond with each oxygen."},
+    {t:"Polar water", a:"Oxygen is a blanket hog. It pulls the shared electrons closer and leaves the hydrogens a little cold.", s:"In water, oxygen pulls the shared electrons more strongly. The oxygen end becomes slightly negative (δ−) and the hydrogen ends slightly positive (δ+). We call this a polar molecule."},
+    {t:"Hydrogen bonds", a:"Water molecules hold hands with their neighbours, so the stream stays together like a line of friends.", s:"The δ+ hydrogen of one water molecule is attracted to the δ− oxygen of the next. These hydrogen bonds pull water molecules together, so a thin stream from the tap stays unbroken and drops stay round."}
+  ],
+  acts:[
+    {type:"sort", title:"Sort It: ionic or covalent?", bins:["Ionic (gift)","Covalent (sharing)"],
+     items:[["Table salt, NaCl","Ionic (gift)","Metal sodium gives an electron to non-metal chlorine."],["Water, H₂O","Covalent (sharing)","Only non-metals: H and O share electrons."],["Carbon dioxide, CO₂","Covalent (sharing)","C and O are both non-metals, so they share."],["Magnesium oxide, MgO","Ionic (gift)","Metal magnesium gives 2 electrons to oxygen."],["Cooking gas (methane), CH₄","Covalent (sharing)","C and H share electrons."],["Potassium chloride, KCl","Ionic (gift)","Metal potassium gives an electron to chlorine."],["Oxygen gas, O₂","Covalent (sharing)","Two identical non-metal atoms share."],["Quicklime, CaO","Ionic (gift)","Metal calcium gives electrons to oxygen."],["Ammonia, NH₃","Covalent (sharing)","N and H share electrons."]]},
+    {type:"match", title:"Memory Match: formula and name", pairs:[["H₂O","Water"],["CO₂","Carbon dioxide"],["CH₄","Methane"],["NH₃","Ammonia"],["NaCl","Table salt"],["O₂","Oxygen gas"]]}
+  ],
+  deeper:[
+    {t:"Lewis dot pictures", a:"Draw only the outer electrons, as dots. Shared pairs sit between the atoms.", s:"In H₂O, oxygen shares one pair with each hydrogen and keeps two lone pairs. Count the dots around oxygen: 8. Around each hydrogen: 2. Everyone has a full shell. You will draw many of these in PHD115."},
+    {t:"Ionic vs covalent: melting points", a:"Ionic crystals are hard to pull apart. Small covalent molecules let go of each other easily.", s:"Salt (ionic) melts at 801 °C. Substances made of separate covalent molecules melt much lower: sugar at about 186 °C, candle wax at about 60 °C and ice at 0 °C."}
+  ],
+  side:[
+    {t:"Insects that walk on water", a:"Pond skaters stand on a pond as if it were a trampoline.", s:"Hydrogen bonds pull the surface water molecules tightly together, making a thin \"skin\" called surface tension. Light insects can stand on it without sinking."},
+    {t:"How soap cleans oil", a:"Soap is a two-faced molecule: one end loves water, the other end loves oil.", s:"The oil-loving tails of soap grab the grease, while the water-loving heads face outwards. Together they wrap the oil in tiny balls that rinse away with water."}
+  ],
+  check:[
+    {q:"A chemical bond is…", o:["A glue we add to atoms","A strong attraction holding atoms together","A type of atom","Heat energy"], a:1, h:"Atoms holding hands.", w:"A bond is the attraction that holds atoms together."},
+    {q:"In an ionic bond, electrons are…", o:["Shared equally","Given from a metal to a non-metal","Destroyed","Turned into protons"], a:1, h:"Think of handing over a gift.", w:"A metal gives electrons to a non-metal, making + and − ions."},
+    {q:"Which substance has covalent bonds?", o:["Table salt, NaCl","Water, H₂O","Magnesium oxide, MgO","Potassium chloride, KCl"], a:1, h:"Look for a substance made only of non-metals.", w:"Water is made only of non-metals that share electrons."},
+    {q:"Oxygen gas (O₂) has a double bond. This means…", o:["Two atoms share two pairs of electrons","Two molecules join together","The atoms become ions","Oxygen has two nuclei"], a:0, h:"Holding hands with both hands.", w:"A double bond is two shared pairs of electrons."},
+    {q:"A thin stream of tap water stays unbroken mainly because of…", o:["Ionic bonds","Hydrogen bonds between water molecules","Gravity alone","Air pressure"], a:1, h:"Water molecules holding hands with their neighbours.", w:"Hydrogen bonds pull neighbouring water molecules together."}
   ]}
+
 ];
 
 const LATER = [
-  ["Stop 3","Ions and the octet rule","Why do atoms gain or lose electrons?"],
-  ["Stop 4","Bonding","How do atoms hold hands?"],
   ["Stop 4B","Carbon, the LEGO master","Why is carbon in almost everything?"],
   ["Stop 5","Formulas and equations","How do we write a chemical recipe?"],
   ["Stop 6","The mole and concentration","How do chemists count tiny things?"],
@@ -646,6 +708,117 @@ const BACK = {
 };
 const backArt = (sid, key, i) => { const f = BACK[sid] && BACK[sid][key] && BACK[sid][key][i]; return f ? f() : ""; };
 const art = (sid, key, i) => { const n = ILL[sid] && ILL[sid][key] && ILL[sid][key][i]; return n && ILLS[n] ? ILLS[n]() : ""; };
+/* ---------------- Stop 3 and Stop 4 pictures ---------------- */
+const shA = (cx, cy, sym, arr, rs, fill, hl, nr) => rs.slice(0, arr.length).map((r) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${K}" stroke-width="1.2" stroke-dasharray="3 3"/>`).join("")
+  + arr.map((n, i) => Array.from({length:n}, (_, k) => { const g = k/n*Math.PI*2 - Math.PI/2; const last = i === arr.length-1; return `<circle cx="${(cx+rs[i]*Math.cos(g)).toFixed(1)}" cy="${(cy+rs[i]*Math.sin(g)).toFixed(1)}" r="3.3" fill="${last && hl ? hl : T}" stroke="${K}" stroke-width="1"/>`; }).join("")).join("")
+  + ka(cx, cy, nr || 9, fill, sym, 6.5);
+const bubble = (x, y, w, txt, tail) => `<rect x="${x}" y="${y}" width="${w}" height="22" rx="11" fill="${W}" stroke="${K}" stroke-width="1.8"/><path d="M${tail} ${y+21}l-4 8l10-8z" fill="${W}" stroke="${K}" stroke-width="1.6" stroke-linejoin="round"/><path d="M${tail-1} ${y+20.5}h9" stroke="${W}" stroke-width="2.4"/>` + TX(x+w/2, y+15, txt, {s:10, w:800});
+const watr = (cx, cy, r, rot) => `<g transform="rotate(${rot||0} ${cx} ${cy})"><circle cx="${cx-r*1.05}" cy="${cy+r*0.8}" r="${r*0.62}" fill="${W}" stroke="${K}" stroke-width="1.3"/><circle cx="${cx+r*1.05}" cy="${cy+r*0.8}" r="${r*0.62}" fill="${W}" stroke="${K}" stroke-width="1.3"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="${C}" stroke="${K}" stroke-width="1.4"/></g>` + kf(cx, cy+1, r*0.8);
+
+Object.assign(ILLS, {
+  /* Stop 3 fronts */
+  s3puzzle: () => sv([[0,0,T],[1,0,L],[2,0,C],[0,1,A],[1,1,GOLD],[2,1,T]].map(([i,j,c]) => `<rect x="${60+i*40}" y="${22+j*40}" width="40" height="40" rx="6" fill="${c}" stroke="${K}" stroke-width="2.2"/>`).join("")
+     + [[100,42],[140,42],[100,82],[140,82]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="6" fill="${W}" stroke="${K}" stroke-width="1.6"/>`).join("") + kf(120,62,22) + TX(120,124,"complete = calm and happy",{s:11}), "A finished puzzle with a happy face"),
+  s3cinema8: () => sv(`<rect x="22" y="22" width="196" height="12" rx="4" fill="${W}" ${ST}/>` + TX(120,52,"the back row",{s:10,w:400}) + Array.from({length:8},(_,i)=>`<rect x="${26+i*24}" y="66" width="20" height="26" rx="5" fill="${W}" stroke="${K}" stroke-width="2"/>` + ka(36+i*24, 70, 8, L)).join("") + TX(120,120,"8 seats, all filled ✓",{s:12,w:800}), "A row of 8 cinema seats, each filled by a happy electron"),
+  s3giveaway: () => sv(ka(70,82,30,GOLD,"Na",13) + `<path d="M98 86q16 4 26-6" fill="none" stroke="${K}" stroke-width="3" stroke-linecap="round"/>` + ka(140,74,10,L) + TX(140,98,"e⁻",{s:11,w:800}) + bubble(150,28,80,"Take it!",168) + TX(120,136,"giving away 1 is easier",{s:11}), "A sodium atom happily handing away its one electron"),
+  s3takeone: () => sv(ka(84,82,30,"#b8f2a0","Cl",13) + Array.from({length:8},(_,k)=>{const g=k/8*Math.PI*2-Math.PI/2, x=84+46*Math.cos(g), y=82+40*Math.sin(g); return k===2 ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="none" stroke="${K}" stroke-width="1.6" stroke-dasharray="3 2"/>` : `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="${L}" stroke="${K}" stroke-width="1.3"/>`;}).join("") + bubble(140,24,94,"1 more, please!",156) + TX(120,140,"7 of 8 seats filled",{s:11}), "A chlorine atom with 7 outer electrons and one empty seat, asking for one more"),
+  s3nickname: () => sv(`<rect x="40" y="18" width="160" height="104" rx="12" fill="${C}" ${ST}/><rect x="48" y="50" width="144" height="62" rx="6" fill="${W}" stroke="${K}" stroke-width="2"/>` + TX(120,36,"HELLO, my name is",{s:12,w:800,f:W})
+     + TX(120,72,"chlorine",{s:14,w:700}) + `<path d="M88 68h64" stroke="${C}" stroke-width="3"/>` + TX(120,100,"chlor",{a:"end",s:16,w:800}) + `<rect x="121" y="85" width="34" height="20" rx="4" fill="${L}"/>` + TX(122,100,"ide",{a:"start",s:16,w:800}) + kf(176,96,10), "A name tag: chlorine crossed out and renamed chloride"),
+  s3drink: () => sv(`<path d="M96 30h48v12l8 14v66a8 8 0 0 1-8 8H96a8 8 0 0 1-8-8V56l8-14z" fill="${A}" ${ST}/><rect x="100" y="20" width="40" height="12" rx="3" fill="${C}" ${ST}/><path d="M124 66l-10 18h10l-6 18l16-24h-10l6-12z" fill="${L}" stroke="${K}" stroke-width="1.6"/>` + kf(120,112,10)
+     + [[52,52,"Na⁺"],[188,60,"K⁺"],[60,108,"Cl⁻"],[184,112,"Na⁺"]].map(([x,y,s])=>ka(x,y,15,GOLD,s,8)).join(""), "A sports drink bottle with a lightning bolt surrounded by happy ions"),
+  s3ors: () => sv(`<rect x="44" y="30" width="72" height="92" rx="8" fill="${W}" ${ST}/><path d="M44 46h72" stroke="${K}" stroke-width="2" stroke-dasharray="4 3"/>` + TX(80,74,"ORS",{s:18,w:800}) + kf(80,94,12)
+     + `<path d="M140 52h56l-6 70h-44z" fill="${A}" fill-opacity=".5" ${ST}/><path d="M144 74h48l-4 46h-40z" fill="${T}" fill-opacity=".7"/>` + kf(168,98,12) + arw(118,70,128,62,138,70,K), "An oral rehydration salts sachet poured into a glass of water"),
+  s3tooth: () => sv(`<path d="M86 30c14-8 22 2 34 2s20-10 34-2c12 8 8 30 2 46c-4 12-4 38-12 44c-8 6-12-22-24-22s-16 28-24 22c-8-6-8-32-12-44c-6-16-10-38 2-46z" fill="${W}" ${ST}/>` + kf(120,62,16)
+     + `<path d="M176 40l22 8v22c0 16-10 26-22 32c-12-6-22-16-22-32V48z" fill="${T}" stroke="${K}" stroke-width="2.2"/>` + TX(176,78,"F⁻",{s:14,w:800}), "A happy tooth with a fluoride shield"),
+  /* Stop 3 deeper */
+  s3charges: () => { const cols = [["Group 1",["Li","Na","K"],"+1",C],["Group 2",["Be","Mg","Ca"],"+2",C],["Group 16",["O","S"],"−2",T],["Group 17",["F","Cl"],"−1",T],["Group 18",["He","Ne","Ar"],"none",W]];
+     return sv(cols.map(([g,els,ch,c],i)=>{ const x = 14 + i*45 + (i>1?8:0); return TX(x+20,20,g,{s:8.5,w:700}) + els.map((e,j)=>`<rect x="${x+4}" y="${28+j*26}" width="32" height="22" rx="5" fill="${c}" stroke="${K}" stroke-width="1.4"/>`+TX(x+20,43+j*26,e,{s:11,w:800})).join("") + `<circle cx="${x+20}" cy="124" r="15" fill="${L}" stroke="${K}" stroke-width="2"/>` + TX(x+20,129,ch,{s:ch.length>2?8.5:12,w:800}); }).join("") + TX(110,72,"…",{s:16,w:800}), "Ion charges by group: Group 1 forms +1, Group 2 +2, Group 16 −2, Group 17 −1, Group 18 none", 150); },
+  s3noblecopy: () => { const box = (x, y, top, bot, c, w2) => `<rect x="${x}" y="${y}" width="${w2||54}" height="40" rx="8" fill="${c}" stroke="${K}" stroke-width="1.8"/>` + TX(x+(w2||54)/2, y+17, top, {s:12, w:800}) + TX(x+(w2||54)/2, y+32, bot, {s:9.5, w:400});
+     const row = (y, a1, a2, a3, mid, c) => box(8,y,a1[0],a1[1],W) + arw(64,y+20,74,y+20,86,y+20,K) + TX(76,y+10,mid,{s:8.5,w:800}) + box(90,y,a2[0],a2[1],c) + TX(156,y+26,"=",{s:16,w:800}) + box(170,y,a3[0],a3[1],L,62);
+     return sv(row(18,["Na","2.8.1"],["Na⁺","2.8"],["Neon","2.8"],"−1 e⁻",GOLD) + row(84,["Cl","2.8.7"],["Cl⁻","2.8.8"],["Argon","2.8.8"],"+1 e⁻","#b8f2a0") + TX(120,142,"ions copy the nearest noble gas",{s:10,w:700}), "Sodium loses one electron to match neon; chlorine gains one to match argon", 150); },
+  /* Stop 4 fronts */
+  s4gift: () => sv(ka(54,84,26,GOLD,"Na",12) + ka(186,84,26,"#b8f2a0","Cl",12) + `<rect x="104" y="58" width="32" height="28" rx="4" fill="${C}" ${ST}/><path d="M120 58v28M104 70h32" stroke="${L}" stroke-width="4"/><path d="M112 50q8 8 8 8q0 0 8-8" fill="none" stroke="${L}" stroke-width="3" stroke-linecap="round"/>` + TX(120,104,"e⁻",{s:12,w:800}) + `<path d="M80 80q10-4 22-6M160 80q-10-4-22-6" stroke="${K}" stroke-width="2.6" fill="none" stroke-linecap="round"/>` + TX(120,136,"a gift of one electron",{s:11}), "Sodium hands chlorine a gift box holding one electron"),
+  s4umbrella: () => sv([[30,30],[44,58],[200,34],[214,64],[24,90],[218,100]].map(([x,y])=>`<path d="M${x} ${y}l-4 10" stroke="${D}" stroke-width="2.2" stroke-linecap="round"/>`).join("")
+     + `<path d="M58 66a62 44 0 0 1 124 0z" fill="${C}" ${ST}/><path d="M120 66v40q0 10 8 10" fill="none" stroke="${K}" stroke-width="3" stroke-linecap="round"/>` + ka(92,98,18,W,"H",10) + ka(148,98,18,W,"H",10) + TX(120,140,"sharing keeps both happy",{s:11}), "Two hydrogen atoms sharing one umbrella in the rain"),
+  s4double: () => sv(ka(74,76,28,C,"O",13) + ka(166,76,28,C,"O",13) + `<path d="M100 66q20-12 40 0M100 86q20 12 40 0" fill="none" stroke="${K}" stroke-width="3.2" stroke-linecap="round"/>` + TX(120,136,"two hands = double bond",{s:11}), "Two oxygen atoms holding hands with both hands"),
+  s4blanket: () => sv(ka(76,74,30,C,"O",14) + `<path d="M38 98q42-12 94 0l6 26H34z" fill="${GOLD}" stroke="${K}" stroke-width="2.2"/>` + ka(170,60,16,W,"H",10) + ka(196,104,16,W,"H",10) + `<path d="M188 44l6-4M204 88l6-4M214 96l6-2" stroke="${D}" stroke-width="2" stroke-linecap="round"/>` + TX(204,40,"brr",{s:9,w:800,f:D}) + TX(120,138,"oxygen hogs the blanket",{s:11}), "Oxygen pulls the blanket to itself while two hydrogens shiver"),
+  s4line: () => sv(`<path d="M24 22h44v14H46v8h-8v-8H24z" fill="${N}" ${ST}/><path d="M42 44v94" stroke="${T}" stroke-width="10" stroke-linecap="round"/><circle cx="42" cy="88" r="14" fill="none" stroke="${K}" stroke-width="2"/><path d="M54 80L104 40M54 96L104 128" stroke="${K}" stroke-width="1.4" stroke-dasharray="3 3"/>`
+     + `<circle cx="164" cy="84" r="60" fill="${W}" stroke="${K}" stroke-width="2.2"/>` + [[140,48],[178,64],[146,96],[186,108],[160,132]].map(([x,y],i)=>watr(x,y,9,i%2?40:-30)).join("")
+     + [[150,58,170,62],[176,76,154,90],[154,106,180,104],[182,118,166,126]].map(([a,b,c,d])=>`<path d="M${a} ${b}L${c} ${d}" stroke="${D}" stroke-width="2" stroke-dasharray="3 2"/>`).join(""), "A tap stream, zoomed in to show water molecules holding hands"),
+  s4skater: () => sv(`<rect x="12" y="96" width="216" height="44" rx="8" fill="${T}" fill-opacity=".55"/><path d="M12 96h216" stroke="${K}" stroke-width="2"/>` + [64,100,140,176].map(x=>`<path d="M${x-10} 96q10 8 20 0" fill="none" stroke="${K}" stroke-width="1.6"/>`).join("")
+     + `<ellipse cx="120" cy="70" rx="26" ry="12" fill="${N}" ${ST}/>` + [[96,64,66,96],[96,74,96,96],[144,64,174,96],[144,74,144,96],[104,60,68,40],[136,60,172,40]].map(([a,b,c,d])=>`<path d="M${a} ${b}L${c} ${d}" stroke="${K}" stroke-width="2.4" stroke-linecap="round"/>`).join("") + `<circle cx="148" cy="64" r="11" fill="${T}" stroke="${K}" stroke-width="2"/>` + kf(148,64,10), "A cute pond skater standing on the water's surface"),
+  s4soap: () => sv(`<path d="M86 72q14-14 28 0t28 0t28 0t28 0" fill="none" stroke="${GOLD}" stroke-width="7" stroke-linecap="round"/>` + ka(62,72,22,T) + TX(62,112,"loves water",{s:10,w:800}) + TX(180,112,"loves oil",{s:10,w:800}) + `<path d="M62 30c5 6 7 10 7 13a7 7 0 0 1-14 0c0-3 2-7 7-13z" fill="${A}" stroke="${K}" stroke-width="1.4"/><ellipse cx="200" cy="38" rx="12" ry="8" fill="${GOLD}" stroke="${K}" stroke-width="1.4"/>` + TX(120,138,"a two-faced soap molecule",{s:11}), "A soap molecule with a water-loving head and an oil-loving tail"),
+  /* Stop 4 deeper */
+  s4lewis: () => { const dot = (x,y)=>`<circle cx="${x}" cy="${y}" r="3.2" fill="${K}"/>`;
+     return sv(`<circle cx="120" cy="72" r="40" fill="none" stroke="${C}" stroke-width="2" stroke-dasharray="5 4"/><circle cx="60" cy="72" r="26" fill="none" stroke="${D}" stroke-width="2" stroke-dasharray="5 4"/><circle cx="180" cy="72" r="26" fill="none" stroke="${D}" stroke-width="2" stroke-dasharray="5 4"/>`
+     + TX(120,80,"O",{s:24,w:800}) + TX(52,80,"H",{s:22,w:800}) + TX(188,80,"H",{s:22,w:800})
+     + dot(84,66)+dot(84,78)+dot(156,66)+dot(156,78) + dot(114,46)+dot(126,46)+dot(114,98)+dot(126,98)
+     + TX(120,26,"8 around O ✓",{s:10,w:800,f:C}) + TX(46,118,"2 around H ✓",{s:10,w:800,f:D}) + TX(194,118,"2 around H ✓",{s:10,w:800,f:D}) + TX(120,140,"shared pairs sit between atoms",{s:10,w:400}), "Lewis dot picture of water: oxygen has 8 dots around it, each hydrogen has 2", 150); },
+  s4melt: () => { const rows = [["Salt (ionic)",801,C],["Sugar",186,T],["Candle wax",60,T],["Ice",0,T]]; const X = v => 90 + v/840*120;
+     return sv(rows.map(([n,v,c],i)=>{ const y = 30+i*26; return TX(84,y+5,n,{a:"end",s:10.5}) + `<rect x="90" y="${y-8}" width="${Math.max(3,X(v)-90).toFixed(1)}" height="16" rx="4" fill="${c}" stroke="${K}" stroke-width="1.4"/>` + (X(v)>180 ? TX(X(v)-6,y+5,v+" °C",{a:"end",s:10,w:800}) : TX(X(v)+6,y+5,v+" °C",{a:"start",s:10,w:400})); }).join("") + `<path d="M90 16v104" stroke="${K}" stroke-width="1.4"/>` + TX(120,140,"Melting point (°C) · coral = ionic",{s:10.5}), "Bar chart of melting points: salt 801, sugar 186, candle wax 60, ice 0 degrees Celsius", 150); }
+});
+Object.assign(ILL, {
+  s3: {core:["s3puzzle","s3cinema8","s3giveaway","s3takeone","s3nickname","s3drink"], deeper:["s3charges","s3noblecopy"], side:["s3ors","s3tooth"]},
+  s4: {core:["hands","s4gift","s4umbrella","s4double","s4blanket","s4line"], deeper:["s4lewis","s4melt"], side:["s4skater","s4soap"]}
+});
+
+Object.assign(BACK, {
+  s3: { core: {
+    0: () => bsv(pan(8,8,72,154,"Helium","2 ✓") + pan(84,8,72,154,"Neon","2.8 ✓") + pan(160,8,72,154,"Argon","2.8.8 ✓")
+          + shA(44,70,"He",[2],[16],W,L,8) + shA(120,70,"Ne",[2,8],[13,25],W,L,8) + shA(196,70,"Ar",[2,8,8],[11,21,31],W,L,8), "Helium, neon and argon each have a full outer shell"),
+    1: () => bsv(pan(8,8,108,154,"Most atoms: 8","an octet") + pan(124,8,108,154,"H and He: 2","small but full")
+          + Array.from({length:4},(_,k)=>{const g=k*Math.PI/2; return [-0.22,0.22].map(d=>ka(+(62+34*Math.cos(g+d)).toFixed(1), +(70+34*Math.sin(g+d)).toFixed(1), 6.5, L)).join("");}).join("") + `<circle cx="62" cy="70" r="34" fill="none" stroke="${K}" stroke-width="1.3" stroke-dasharray="3 3"/>` + ka(62,70,13,W,"Ne",8)
+          + `<circle cx="178" cy="70" r="26" fill="none" stroke="${K}" stroke-width="1.3" stroke-dasharray="3 3"/>` + ka(178,44,6.5,L) + ka(178,96,6.5,L) + ka(178,70,13,W,"He",8), "Neon with 8 outer electrons, and helium full with just 2"),
+    2: () => bsv(pan(8,8,224,154,"11 + and 10 − = Na⁺","losing 1 electron gives a + ion")
+          + shA(60,70,"Na",[2,8,1],[12,22,33],GOLD,C,8) + arw(98,40,112,30,128,34,C) + ka(136,32,6.5,C) + TX(118,24,"e⁻ leaves",{s:9,w:800,f:C})
+          + shA(184,70,"Na⁺",[2,8],[12,22],GOLD,null,9) + TX(60,124,"Na 2.8.1",{s:10,w:800}) + TX(184,124,"Na⁺ 2.8",{s:10,w:800}) + arw(112,74,124,74,138,74,K), "Sodium 2.8.1 loses one electron to become Na plus, 2.8"),
+    3: () => bsv(pan(8,8,224,154,"17 + and 18 − = Cl⁻","gaining 1 electron gives a − ion")
+          + shA(58,70,"Cl",[2,8,7],[12,22,32],"#b8f2a0",L,8) + ka(110,30,6.5,D) + arw(118,36,128,44,140,52,D) + TX(102,20,"e⁻ joins",{s:9,w:800,f:D})
+          + shA(184,70,"Cl⁻",[2,8,8],[12,22,32],"#b8f2a0",L,9) + TX(58,124,"Cl 2.8.7",{s:10,w:800}) + TX(184,124,"Cl⁻ 2.8.8",{s:10,w:800}), "Chlorine 2.8.7 gains one electron to become chloride, 2.8.8"),
+    4: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>` + TX(120,24,"Negative ions end in -ide",{s:11,w:800})
+          + [["Cl⁻","chlorine","chloride","#b8f2a0"],["O²⁻","oxygen","oxide",C],["F⁻","fluorine","fluoride",A]].map(([s,a,b,c],i)=>{const y=50+i*32; return ka(30,y,12,c,s,7) + TX(52,y+4,a,{a:"start",s:10.5,w:400}) + arw(110,y,122,y,134,y,K) + TX(142,y+4,b,{a:"start",s:11,w:800});}).join("")
+          + `<path d="M14 142h212" stroke="${K}" stroke-width="1" stroke-dasharray="4 4"/>` + ka(30,156,10,GOLD,"Na⁺",6) + TX(48,160,"metal ions keep their name: sodium ion",{a:"start",s:9.5,w:400}), "Chlorine becomes chloride, oxygen becomes oxide, fluorine becomes fluoride; sodium ion keeps its name", 172),
+    5: () => bsv(pan(8,8,224,154,"Ions carry nerve signals","sweat takes some away")
+          + `<rect x="20" y="44" width="200" height="36" rx="18" fill="${P}" fill-opacity=".45" stroke="${K}" stroke-width="2"/>` + [[44,"Na⁺",GOLD],[84,"K⁺",GOLD],[124,"Cl⁻","#b8f2a0"],[164,"Na⁺",GOLD]].map(([x,s,c])=>ka(x,62,12,c,s,7)).join("")
+          + `<path d="M196 50l-8 12h8l-6 12l14-16h-8l6-8z" fill="${L}" stroke="${K}" stroke-width="1.4"/>` + TX(120,36,"a nerve",{s:9.5,w:700})
+          + `<path d="M60 106c5 6 7 10 7 13a7 7 0 0 1-14 0c0-3 2-7 7-13z" fill="${T}" stroke="${K}" stroke-width="1.4"/>` + arw(72,116,90,108,104,112,K) + ka(116,112,8,GOLD,"Na⁺",5) + ka(140,112,8,"#b8f2a0","Cl⁻",5), "Sodium, potassium and chloride ions carry signals along a nerve; sweat carries some away")
+  }, side: {
+    0: () => bsv(pan(8,8,224,154,"Water and ions back in balance","the gut can soak water up again")
+          + `<path d="M28 34h64l-8 84H36z" fill="${A}" fill-opacity=".45" stroke="${K}" stroke-width="2"/>` + [[44,60,"Na⁺",GOLD],[72,56,"K⁺",GOLD],[48,92,"Cl⁻","#b8f2a0"]].map(([x,y,s,c])=>ka(x,y,10,c,s,6)).join("") + `<path d="M64 84l8-5l8 5v9l-8 5l-8-5z" fill="${W}" stroke="${K}" stroke-width="1.4"/>` + TX(72,93,"glu",{s:6.5,w:700})
+          + arw(100,76,118,70,136,76,K) + `<path d="M150 46q40-10 60 20q10 30-30 46q-30 10-34-20q-2-26 4-46z" fill="${P}" fill-opacity=".6" stroke="${K}" stroke-width="2"/>` + kf(180,80,14) + TX(180,126,"your gut",{s:9.5,w:700}), "Sodium, potassium, chloride and glucose in water help the gut absorb water"),
+    1: () => bsv(pan(8,8,224,154,"Fluoride guards the enamel","acid bounces off")
+          + `<rect x="24" y="96" width="192" height="30" rx="6" fill="${W}" stroke="${K}" stroke-width="2"/>` + TX(120,116,"tooth enamel",{s:9.5,w:700}) + Array.from({length:8},(_,i)=>ka(36+i*24,90,7,A,"F⁻",5)).join("")
+          + [[64,34],[130,28],[190,40]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="9" fill="${C}" stroke="${K}" stroke-width="1.4"/>` + TX(x,y+3,"H⁺",{s:7,w:800}) + arw(x+2,y+14,x+8,y+30,x+16,y+22,C)).join("") + TX(32,62,"acid",{a:"start",s:9.5,w:800,f:C}), "A row of fluoride ions on tooth enamel blocking acid")
+  }},
+  s4: { core: {
+    0: () => bsv(pan(8,8,108,154,"Ionic","give, then attract") + pan(124,8,108,154,"Covalent","share a pair")
+          + ka(40,70,16,GOLD,"Na⁺",8) + ka(84,70,18,"#b8f2a0","Cl⁻",8) + `<path d="M58 62h6M58 78h6" stroke="${C}" stroke-width="2"/>`
+          + `<circle cx="164" cy="70" r="20" fill="${W}" stroke="${K}" stroke-width="1.8" fill-opacity=".9"/><circle cx="192" cy="70" r="20" fill="${W}" stroke="${K}" stroke-width="1.8" fill-opacity=".6"/>` + TX(156,74,"H",{s:12,w:800}) + TX(200,74,"H",{s:12,w:800}) + `<circle cx="178" cy="64" r="3.4" fill="${K}"/><circle cx="178" cy="76" r="3.4" fill="${K}"/>`, "Ionic bond: sodium and chloride ions attract. Covalent bond: two hydrogens share a pair"),
+    1: () => bsv(pan(8,8,224,154,"+ and − attract like magnets","table salt, NaCl")
+          + shA(46,52,"Na",[1],[22],GOLD,C,9) + arw(70,52,96,40,118,50,C) + TX(96,32,"e⁻",{s:10,w:800,f:C}) + shA(146,52,"Cl",[8],[22],"#b8f2a0",L,9)
+          + ka(80,110,15,GOLD,"Na⁺",8) + ka(138,110,15,"#b8f2a0","Cl⁻",8) + `<path d="M98 104h22M98 116h22" stroke="${K}" stroke-width="2" stroke-dasharray="3 3"/>` + `<path d="M184 96h28v28h-28z" fill="${W}" stroke="${K}" stroke-width="1.6"/>` + [0,1].map(i=>[0,1].map(j=>`<circle cx="${191+i*14}" cy="${103+j*14}" r="5" fill="${(i+j)%2?"#b8f2a0":GOLD}" stroke="${K}" stroke-width="1"/>`).join("")).join(""), "Sodium gives its outer electron to chlorine; the Na plus and Cl minus ions attract into salt"),
+    2: () => bsv(pan(8,8,224,154,"The shared pair counts for both","so both shells are full")
+          + `<circle cx="96" cy="70" r="40" fill="${A}" fill-opacity=".35" stroke="${K}" stroke-width="1.8" stroke-dasharray="4 3"/><circle cx="144" cy="70" r="40" fill="${A}" fill-opacity=".35" stroke="${K}" stroke-width="1.8" stroke-dasharray="4 3"/>`
+          + ka(80,70,15,W,"H",9) + ka(160,70,15,W,"H",9) + `<circle cx="120" cy="62" r="5" fill="${L}" stroke="${K}" stroke-width="1.4"/><circle cx="120" cy="80" r="5" fill="${L}" stroke="${K}" stroke-width="1.4"/>` + TX(120,24,"shared pair",{s:9.5,w:800}) + `<path d="M120 28v26" stroke="${K}" stroke-width="1"/>`, "Two hydrogen atoms overlap and share one pair of electrons"),
+    3: () => bsv(`<rect x="4" y="4" width="232" height="164" rx="12" fill="${W}" stroke="${K}" stroke-width="2.5"/>`
+          + ka(80,46,17,C,"O",10) + ka(160,46,17,C,"O",10) + `<path d="M98 41h44M98 51h44" stroke="${K}" stroke-width="3"/>` + TX(120,82,"O₂  ·  O=O",{s:11,w:800})
+          + ka(48,118,15,C,"O",9) + ka(120,118,15,"#cfd8e3","C",9) + ka(192,118,15,C,"O",9) + `<path d="M64 113h40M64 123h40M136 113h40M136 123h40" stroke="${K}" stroke-width="3"/>` + TX(120,156,"CO₂  ·  O=C=O",{s:11,w:800}) + TX(226,20,"= means 2 shared pairs",{a:"end",s:9,w:700,f:D}), "O2 with a double bond, and CO2 with two double bonds", 172),
+    4: () => bsv(pan(8,8,224,154,"Oxygen pulls the electrons","δ− oxygen, δ+ hydrogens")
+          + `<ellipse cx="120" cy="66" rx="58" ry="40" fill="${C}" fill-opacity=".18"/><ellipse cx="120" cy="56" rx="30" ry="24" fill="${C}" fill-opacity=".25"/>` + watr(120,58,20,0) + TX(120,30,"δ−",{s:14,w:800,f:C}) + TX(78,108,"δ+",{s:13,w:800,f:D}) + TX(162,108,"δ+",{s:13,w:800,f:D}), "A polar water molecule: slightly negative oxygen and slightly positive hydrogens"),
+    5: () => bsv(pan(8,8,224,154,"Hydrogen bonds","water molecules hold hands")
+          + [[44,60,20],[108,92,-25],[172,56,20]].map(([x,y,r])=>watr(x,y,12,r)).join("")
+          + `<path d="M58 78L96 88M122 86L160 68" stroke="${D}" stroke-width="2.6" stroke-dasharray="4 3"/>` + TX(120,126,"- - - = hydrogen bond",{s:10,w:800,f:D}), "Three water molecules linked by dashed hydrogen bonds")
+  }, side: {
+    0: () => bsv(pan(8,8,224,154,"Surface tension","a skin of linked molecules")
+          + [36,76,116,156,196].map((x,i)=>watr(x,48,9,i%2?30:-30)).join("") + [56,96,136,176].map(x=>`<path d="M${x-6} 52h12" stroke="${D}" stroke-width="2.4" stroke-dasharray="3 2"/>`).join("")
+          + [56,96,136,176].map((x,i)=>watr(x,96,8,i%2?-20:20)).join("") + [36,76,116,156,196].map(x=>`<path d="M${x} 62L${x+10} 84" stroke="${D}" stroke-width="1.6" stroke-dasharray="3 2"/>`).join(""), "Surface water molecules linked side by side by hydrogen bonds"),
+    1: () => bsv(pan(8,8,224,154,"Oil trapped in a soap ball","then rinsed away")
+          + `<circle cx="120" cy="70" r="24" fill="${GOLD}" stroke="${K}" stroke-width="2"/>` + kf(120,70,14)
+          + Array.from({length:10},(_,k)=>{const g=k/10*Math.PI*2, x1=120+24*Math.cos(g), y1=70+24*Math.sin(g), x2=120+48*Math.cos(g), y2=70+48*Math.sin(g); return `<path d="M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="${K}" stroke-width="2"/><circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="7" fill="${T}" stroke="${K}" stroke-width="1.4"/>`;}).join("")
+          + TX(200,30,"water",{s:9.5,w:700,f:D}), "A ball of oil surrounded by soap molecules, tails in the oil and heads facing the water")
+  }}
+});
+
 
 /* ---------------- State ---------------- */
 const LS = "cay_v1";
