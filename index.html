@@ -113,6 +113,9 @@ p{margin:0}
 @media (prefers-reduced-motion:reduce){.bub{animation:none}}
 .labcard{background:var(--ground);border:2px solid var(--line);border-radius:14px;padding:10px;color:var(--text)}.labwho{display:flex;flex-direction:column;gap:2px;font-size:.88em}
 .labrow{display:grid;grid-template-columns:1fr auto;gap:0 8px;align-items:baseline;width:100%;text-align:left;font:inherit;font-size:.82em;background:var(--panel);color:var(--text);border:2px solid var(--line);border-radius:12px;padding:8px 10px 4px;margin-top:8px;cursor:pointer}.labrow svg{grid-column:1/-1}.labrow.hit{border-color:var(--lime);box-shadow:inset 0 0 0 2px var(--lime)}.labrow:disabled{cursor:default}
+.ordwrap{display:flex;gap:12px;align-items:flex-start;color:var(--text)}.ordglass{display:flex;flex-direction:column;align-items:center;font-size:.75em;flex:none}
+.ordlist{margin:0;padding-left:1.3em;font-size:.82em;display:flex;flex-direction:column;gap:6px}.ordlist li span{display:block;opacity:.85;font-size:.92em}
+.ordpool{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chip.shake{animation:shake .4s ease;border-color:var(--coral)}
 /* Reset progress */
 .reset-slot{display:flex;justify-content:flex-end;font-size:.78em}
 .reset-ask{display:grid;gap:8px;width:100%;background:var(--panel);border:2px solid var(--coral);border-radius:16px;padding:12px 14px}
@@ -692,12 +695,50 @@ const STOPS = [
     {q:"A blood test shows very high glucose. This may suggest…", o:["Anaemia","Gout","Diabetes","A cold"], a:2, h:"Too much sugar in the blood.", w:"High blood glucose may point to diabetes."},
     {q:"Your friend has a common cold. Will antibiotics help?", o:["Yes, always","No, a cold is caused by a virus","Only if taken with milk","Yes, if the cold is strong"], a:1, h:"Antibiotics kill bacteria.", w:"A cold is a virus. Antibiotics only work on bacteria."},
     {q:"Why must you not take two cold medicines that both contain paracetamol?", o:["They cancel each other","It can add up to an overdose that harms the liver","They make you sleepy","They stop working"], a:1, h:"The dose makes the poison.", w:"The paracetamol adds up and can harm the liver."}
+  ]},
+{ id:"e1", num:"Theme", title:"How does chemistry shape our planet?", topic:"Chemistry and the environment: air, water and plastic",
+  hook:"Why does the sky turn grey and smell smoky during haze season?",
+  tip:"Pollution is simply chemicals in the wrong place, in the wrong amount. Chemistry explains the problem, and it also builds the solutions.",
+  core:[
+    {t:"Air is a mixture", a:"Air is like a plate of nasi campur: mostly rice, with small spoonfuls of other dishes.", s:"The \"rice\" is nitrogen (78%). Next is oxygen (21%), then argon (about 1%). Carbon dioxide is only about 0.04%, yet that tiny spoonful is enough to change the whole planet's temperature."},
+    {t:"The greenhouse effect", a:"Park a car in the sun with the windows closed. Sunlight gets in, but the heat cannot get out.", s:"Gases like carbon dioxide (CO₂) and methane (CH₄) trap heat around Earth like a blanket. Some warming keeps Earth liveable. But burning coal, oil and gas adds extra CO₂, so the blanket gets thicker and the planet warms: global warming."},
+    {t:"Haze: tiny particles in the air", a:"PM2.5 particles are about 30 times thinner than one strand of hair.", s:"Haze comes from open burning and peat fires. Its PM2.5 particles slip deep into the lungs, even into the blood. Malaysia's Air Pollutant Index (API) warns us: above 100 is unhealthy, so stay indoors or wear a well-fitted mask."},
+    {t:"Acid rain", a:"Rain is meant to be only slightly acidic. Pollution turns it into weak vinegar.", s:"Factories and vehicles release sulfur dioxide (SO₂) and nitrogen oxides (NOₓ). These gases dissolve in rain to form acids, so the rain's pH drops below 5.6. Acid rain eats away stone buildings, harms leaves and makes lakes too acidic for fish."},
+    {t:"Water pollution: too much food", a:"Throw too much fish food into an aquarium and the water soon turns green and smelly.", s:"Fertiliser and sewage that wash into rivers feed algae. The algae grow out of control (an algal bloom). When they die, bacteria break them down and use up the oxygen in the water, so fish suffocate. Oil, detergents and heavy metals pollute water too."},
+    {t:"Why plastic stays for so long", a:"Plastic chains are like super-long bead necklaces that nature's tiny scissors cannot cut.", s:"Plastics are polymers: very long carbon chains. Microbes have no enzymes to break most of them, so a bottle can last hundreds of years. Sunlight and waves only crack it into microplastics, which are now found in fish, sea salt and even drinking water."},
+    {t:"Green chemistry: smarter solutions", a:"Cooking in a way that leaves fewer dirty dishes to wash.", s:"Green chemistry designs products that make less waste from the start: bioplastics (PLA) from corn or cassava starch, catalytic converters that clean car exhaust, and recycling that turns old plastic back into raw material."}
+  ],
+  acts:[
+    {type:"order", title:"Clean Water Factory", intro:"River water travels through a treatment plant before it reaches your tap. Tap the steps in the right order.", steps:[
+      ["Screening","A metal screen catches big rubbish like leaves, branches and plastic."],
+      ["Coagulation","Alum is added. Tiny dirt particles stick together into bigger clumps."],
+      ["Sedimentation","The heavy clumps slowly sink to the bottom of a big tank."],
+      ["Filtration","The water passes through layers of sand and gravel that trap tiny bits."],
+      ["Chlorination","A little chlorine kills germs and keeps the water safe all the way through the pipes."]]},
+    {type:"sort", title:"Sort It: which recycling bin?", bins:["Blue: paper","Orange: plastic and cans","Brown: glass"],
+     items:[["Newspaper","Blue: paper","Paper goes in the blue bin. Keep it dry."],["Cardboard box","Blue: paper","Flatten it first so it takes less space."],["Plastic drink bottle","Orange: plastic and cans","Rinse it, then it goes in the orange bin."],["Aluminium drink can","Orange: plastic and cans","Aluminium can be recycled again and again."],["Glass jam jar","Brown: glass","Glass goes in the brown bin."],["Glass sauce bottle","Brown: glass","Rinse it first. Glass can be melted and remade."],["Plastic shampoo bottle","Orange: plastic and cans","Rinsed plastic bottles go in orange."],["Paper egg tray","Blue: paper","Paper egg trays are made from recycled paper."]]},
+    {type:"match", title:"Memory Match: pollutant and its problem", pairs:[["CO₂","Global warming"],["SO₂","Acid rain"],["PM2.5","Haze"],["CFCs","Ozone hole"],["Fertiliser runoff","Algal bloom"],["Microplastics","Found in seafood"]]}
+  ],
+  deeper:[
+    {t:"The ozone layer: Earth's sunscreen", a:"High in the sky, a thin layer of ozone (O₃) blocks harmful UV rays.", s:"Old fridges and aerosol sprays used CFCs, which drift up and break ozone apart, making an \"ozone hole\". In 1987 the world agreed to ban CFCs (the Montreal Protocol). The ozone layer is slowly healing and should recover by around the 2060s: proof that chemistry and teamwork can fix a global problem."},
+    {t:"The carbon cycle", a:"Carbon is like money moving between bank accounts: air, plants, oceans and the ground.", s:"Plants take CO₂ from the air in photosynthesis. Animals and decay put it back. Oceans absorb some. Fossil fuels are carbon stored underground for millions of years. Burning them moves that carbon into the air far faster than plants and oceans can take it back."},
+    {t:"How alum cleans water", a:"Like a magnet that pulls scattered pins into one clump.", s:"Tiny clay particles in muddy water carry negative charges, so they push each other apart and never settle. Alum releases Al³⁺ ions with strong positive charges. These cancel the negative charges, the particles stick into clumps (floc), and the clumps sink."}
+  ],
+  side:[
+    {t:"The sea is turning more acidic", a:"The ocean is quietly drinking our extra CO₂.", s:"About a quarter of the CO₂ we release dissolves in the sea and forms carbonic acid. Ocean pH has fallen from about 8.2 to 8.1 since the 1800s. That sounds tiny, but the pH scale goes in ×10 steps. It makes it harder for corals and shellfish to build their shells."},
+    {t:"The catalyst under every car", a:"A small box in the exhaust pipe that cleans the smoke.", s:"A catalytic converter holds tiny amounts of platinum and other metals. Without being used up, they turn poisonous carbon monoxide (CO) into CO₂, and nitrogen oxides (NOₓ) back into harmless nitrogen gas (N₂). It is the \"chair\" catalyst from Stop 7, working on the road."}
+  ],
+  check:[
+    {q:"Which gas makes up most of the air?", o:["Oxygen","Carbon dioxide","Nitrogen","Argon"], a:2, h:"It is the \"rice\" on the plate.", w:"Nitrogen is about 78% of the air."},
+    {q:"Which gas is mainly responsible for the extra greenhouse effect from burning fuels?", o:["Nitrogen","Carbon dioxide","Oxygen","Helium"], a:1, h:"Burning coal, oil and gas releases it.", w:"Burning fossil fuels releases extra carbon dioxide (CO₂)."},
+    {q:"Acid rain is mainly caused by…", o:["CO₂ from breathing","SO₂ and NOₓ from factories and vehicles","Too much fertiliser","Plastic in the sea"], a:1, h:"Two gases from burning fuels.", w:"SO₂ and NOₓ dissolve in rain to form acids."},
+    {q:"Why does an algal bloom kill fish?", o:["Algae eat the fish","Dead algae are broken down by bacteria that use up the oxygen","Algae make the water hot","Algae turn the water into acid rain"], a:1, h:"What do fish need to breathe?", w:"Bacteria breaking down dead algae use up the oxygen, so fish suffocate."},
+    {q:"Why does most plastic last hundreds of years?", o:["It is made of metal","Its long polymer chains cannot be broken by microbes","It keeps absorbing water","It is radioactive"], a:1, h:"Remember the super-long bead necklace.", w:"Microbes have no enzymes to cut most plastic polymer chains."}
   ]}
 
 ];
 
 const LATER = [
-  ["Theme","Chemistry and the environment","Air, water, plastic"],
   ["Special","Chemistry Beyond the Atmosphere","Star stuff and rocket fuel"]
 ];
 const TOTAL_STOPS = 9;
@@ -1322,6 +1363,60 @@ Object.assign(BACK, { h1: { core: {
   1: () => bsv(pan(8,8,224,154,"Look for a MAL registration number","ask a pharmacist if you take other medicines") + [["tradition",GOLD],["find active compound",A],["safe dose?",P],["registered product",L]].map(([t,c],i)=>`<rect x="30" y="${20+i*26}" width="180" height="20" rx="7" fill="${c}" fill-opacity=".7" stroke="${K}" stroke-width="1.3"/>` + TX(120,34+i*26,t,{s:9.5,w:800})).join(""), "From tradition to active compound, safe dose, and a registered product")
 }}});
 
+/* ---------------- Theme: environment pictures ---------------- */
+const earth = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#5fb3f0" stroke="${K}" stroke-width="2"/><path d="M${x-r*0.7} ${y-r*0.3}q${r*0.3}-${r*0.5} ${r*0.7}-${r*0.2}q${r*0.2} ${r*0.4}-${r*0.2} ${r*0.6}q-${r*0.4} 0-${r*0.5}-${r*0.4}zM${x+r*0.2} ${y+r*0.3}q${r*0.4}-${r*0.2} ${r*0.6} ${r*0.1}q0 ${r*0.4}-${r*0.4} ${r*0.5}q-${r*0.3}-${r*0.2}-${r*0.2}-${r*0.6}z" fill="#7fd04a" stroke="${K}" stroke-width="1.2"/>` + kf(x, y+r*0.05, r*0.6);
+const cloud = (x, y, s, c) => `<path d="M${x-30*s} ${y+10*s}q-12 0-12-11q0-11 13-11q2-14 18-14q12 0 17 9q4-4 10-4q14 0 14 14q12 1 12 9q0 8-12 8z" transform="translate(${x} ${y}) scale(${s}) translate(${-x} ${-y})" fill="${c||W}" stroke="${K}" stroke-width="${2/s}"/>`;
+const fish = (x, y, s, c, sad) => `<path d="M${x-16*s} ${y}q${12*s}-${12*s} ${26*s} 0q-${14*s} ${12*s}-${26*s} 0z" fill="${c||"#ffb38a"}" stroke="${K}" stroke-width="1.4"/><path d="M${x+10*s} ${y}l${8*s}-${7*s}v${14*s}z" fill="${c||"#ffb38a"}" stroke="${K}" stroke-width="1.4"/><circle cx="${x-8*s}" cy="${y-1.5*s}" r="${1.4*s}" fill="${K}"/>` + (sad ? `<path d="M${x-12*s} ${y+4*s}q2 -2 4 0" fill="none" stroke="${K}" stroke-width="1"/>` : "");
+const bottle = (x, y, s, c) => `<path d="M${x-6*s} ${y-34*s}h${12*s}v${8*s}q${10*s} ${6*s} ${10*s} ${16*s}v${36*s}q0 ${6*s}-${6*s} ${6*s}h-${20*s}q-${6*s} 0-${6*s}-${6*s}v-${36*s}q0-${10*s} ${10*s}-${16*s}z" fill="${c||"#bfe9ff"}" fill-opacity=".85" stroke="${K}" stroke-width="2"/><rect x="${x-7*s}" y="${y-40*s}" width="${14*s}" height="${7*s}" rx="2" fill="${A}" stroke="${K}" stroke-width="1.6"/>` + kf(x, y+4*s, 9*s);
+const factory = (x, y, s) => `<path d="M${x} ${y}v-${24*s}l${16*s} ${10*s}v-${10*s}l${16*s} ${10*s}v-${24*s}h${10*s}v${38*s}z" fill="${CG}" stroke="${K}" stroke-width="1.8" stroke-linejoin="round"/>`;
+Object.assign(ILLS, {
+  e1air: () => sv(`<circle cx="80" cy="74" r="50" fill="${W}" stroke="${K}" stroke-width="2.4"/><path d="M80 74L80.0 30.0A44 44 0 1 1 36.8 65.8z" fill="#fff6e0" stroke="${K}" stroke-width="1.4"/><path d="M80 74L36.8 65.8A44 44 0 0 1 77.2 30.1z" fill="#ffb38a" stroke="${K}" stroke-width="1.4"/><path d="M80 74L77.2 30.1A44 44 0 0 1 80.0 30.0z" fill="${A}" stroke="${K}" stroke-width="1.4"/>`
+     + kf(96,92,12) + TX(160,48,"N₂ 78%",{a:"start",s:12,w:800}) + TX(160,66,"(the rice)",{a:"start",s:9,w:400}) + TX(160,90,"O₂ 21%",{a:"start",s:12,w:800,f:"#c0502a"}) + TX(160,110,"Ar ~1%",{a:"start",s:10,w:700}) + TX(160,126,"CO₂ 0.04%",{a:"start",s:10,w:700}) + TX(80,142,"air = nasi campur",{s:10,w:700}), "A plate of air: mostly nitrogen like rice, then oxygen, argon and a tiny bit of carbon dioxide"),
+  e1green: () => sv(`<circle cx="30" cy="28" r="14" fill="${GOLD}" stroke="${K}" stroke-width="2"/>` + kf(30,29,9) + earth(140,96,34) + `<path d="M72 74q68-62 136 0" fill="none" stroke="#9aa5b4" stroke-width="10" stroke-linecap="round" opacity=".7"/>` + mCO2(110,50,6) + mCO2(170,50,6) + arw(46,38,70,52,104,72,"#e8a020") + arw(150,64,160,50,176,40,"#e8503a") + `<path d="M176 40q10 4 14 18" fill="none" stroke="#e8503a" stroke-width="2.4" stroke-dasharray="4 3"/>` + TX(212,24,"heat",{s:9.5,w:800,f:"#c0182e"}) + TX(212,36,"trapped",{s:9.5,w:800,f:"#c0182e"}), "Sunlight reaches a smiling Earth, and a blanket of CO₂ traps the heat"),
+  e1haze: () => sv(`<rect x="0" y="0" width="240" height="150" rx="14" fill="#a9a29a" opacity=".55"/>` + [[14,70,30],[48,50,26],[78,80,22],[104,40,30],[138,66,24],[166,54,30],[200,76,28]].map(([x,y,w])=>`<rect x="${x}" y="${y}" width="${w}" height="${150-y-30}" fill="#7d8592" stroke="${K}" stroke-width="1.4"/>`).join("") + Array.from({length:40},(_,i)=>`<circle cx="${(i*53)%236+2}" cy="${(i*37)%110+6}" r="${1.5+i%3}" fill="#5a524a" opacity=".55"/>`).join("") + `<rect x="0" y="120" width="240" height="30" fill="${W}" opacity=".9"/>` + kf(153,96,10) + `` + TX(120,140,"haze: smoke full of PM2.5",{s:11,w:800}), "A grey hazy city skyline full of tiny smoke particles"),
+  e1acid: () => sv(factory(18,120,1.1) + `<rect x="38" y="62" width="8" height="30" fill="${CG}" stroke="${K}" stroke-width="1.4"/>` + `<path d="M42 58q-6-10 6-18q12-6 26-6" fill="none" stroke="#7d8592" stroke-width="5" stroke-linecap="round" opacity=".7"/>` + TX(64,30,"SO₂ NOₓ",{s:9,w:800})
+     + cloud(160,44,1.25,"#cfd8e3") + kf(156,40,12) + [[132,78],[152,92],[172,80],[192,96],[146,112],[184,116]].map(([x,y])=>`<path d="M${x} ${y-8}q-5 8 0 10q5-2 0-10z" fill="#9be15d" stroke="${K}" stroke-width="1.2"/>`).join("") + TX(162,140,"acid rain, pH 4",{s:11,w:800}), "A factory sends gases into a sad cloud that rains green acid drops"),
+  e1algae: () => sv(`<path d="M0 50q60-14 120 0t120 0v60H0z" fill="#7fae5a" stroke="${K}" stroke-width="2"/>` + Array.from({length:22},(_,i)=>`<circle cx="${(i*41)%230+6}" cy="${54+(i*13)%14}" r="${3+i%4}" fill="#4e9e3a" stroke="${K}" stroke-width=".8"/>`).join("") + fish(80,92,1.3,"#ffb38a",1) + fish(160,98,1.1,"#a0e7ff",1)
+     + `<rect x="170" y="10" width="40" height="30" rx="5" fill="${W}" stroke="${K}" stroke-width="1.6"/>` + TX(190,29,"fertiliser",{s:7.5,w:800}) + arw(186,42,180,48,176,54,K) + TX(120,138,"algal bloom: no oxygen left",{s:11,w:800}), "A green river covered in algae with two sad fish"),
+  e1plastic: () => sv(bottle(56,86,1.4) + TX(56,144,"450 years",{s:11,w:800}) + beads(108,44,6,20,7,"#bfe9ff") + beads(108,72,6,20,7,"#ffd6de") + beads(108,100,6,20,7,"#fff07a") + TX(170,128,"long polymer chains",{s:10,w:700}) + `<path d="M196 34l14 14M210 34l-14 14" stroke="#c0182e" stroke-width="2.4"/>` + TX(204,24,"✂",{s:12,w:800}), "A smiling plastic bottle that lasts 450 years, made of long bead-chain polymers"),
+  e1greenchem: () => sv(`<path d="M44 130V58" stroke="#3a8a2a" stroke-width="3"/>` + leaf(44,112,0.8,-50) + leaf(44,96,0.8,50) + `<ellipse cx="44" cy="54" rx="10" ry="20" fill="${GOLD}" stroke="${K}" stroke-width="1.6"/>` + kf(44,56,8) + TX(44,146,"corn starch",{s:9.5,w:700})
+     + arw(70,80,90,70,110,80,K) + `<path d="M126 52h44l-6 72h-32z" fill="${W}" stroke="${K}" stroke-width="2"/>` + leaf(148,92,0.5,0,"#7fd04a") + kf(148,106,8) + TX(148,146,"PLA cup",{s:9.5,w:700}) + arw(178,80,192,70,206,80,K) + TX(214,96,"compost",{s:9,w:800}) + `<path d="M196 112h36l-4 18h-28z" fill="#8a6a4a" stroke="${K}" stroke-width="1.6"/>`, "Corn starch becomes a PLA cup that can be composted"),
+  /* deeper */
+  e1ozone: () => sv(earth(120,108,30) + `<path d="M64 108a56 56 0 0 1 112 0" fill="none" stroke="${A}" stroke-width="9" opacity=".8"/>` + TX(186,92,"ozone",{a:"start",s:10,w:800}) + TX(186,104,"layer",{a:"start",s:10,w:800}) + [[60,14,86,58],[120,10,120,46],[184,14,158,58]].map(([a,b,c,d])=>arw(a,b,(a+c)/2,(b+d)/2,c,d,"#8a5ad0")).join("") + `<path d="M86 58l-12-8M158 58l12-8" stroke="#8a5ad0" stroke-width="2.4" stroke-dasharray="3 3"/>` + TX(26,40,"UV",{s:11,w:800,f:"#8a5ad0"}), "UV rays bounce off an ozone shield above a smiling Earth"),
+  e1cycle: () => sv([[120,24,"air",W],[180,76,"plants","#b8f2a0"],[120,128,"ocean","#a0e7ff"],[60,76,"ground","#d9c5a5"]].map(([x,y,t,c])=>`<rect x="${x-26}" y="${y-12}" width="52" height="24" rx="10" fill="${c}" stroke="${K}" stroke-width="1.6"/>` + TX(x,y+4,t,{s:9.5,w:800})).join("")
+     + arw(148,32,170,40,178,62,D) + arw(170,92,160,116,146,124,D) + arw(94,124,74,114,66,90,D) + arw(68,62,76,38,94,30,"#c0182e") + mCO2(120,76,6), "Carbon moving around a loop: air, plants, ocean and ground"),
+  e1alum: () => sv(`<rect x="20" y="20" width="200" height="104" rx="10" fill="#c9a77a" fill-opacity=".45" stroke="${K}" stroke-width="2"/>` + [[46,46],[80,40],[60,80],[100,70]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="9" fill="#a07850" stroke="${K}" stroke-width="1.2"/>` + TX(x,y+3.5,"−",{s:11,w:800,f:W})).join("") + `<path d="M120 22v100" stroke="${K}" stroke-dasharray="4 4"/>`
+     + [[160,98],[176,106],[168,92],[184,96],[152,108]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7" fill="#a07850" stroke="${K}" stroke-width="1.2"/>`).join("") + ka(168,102,7,GOLD,"Al³⁺",4.5) + arw(168,36,174,56,168,76,K) + TX(70,140,"push apart",{s:10,w:700}) + TX(170,140,"clump and sink",{s:10,w:700}), "Negative clay bits push apart, then alum makes them clump and sink"),
+  /* side */
+  e1ocean: () => sv(`<rect x="0" y="40" width="240" height="110" rx="14" fill="#5fb3f0" opacity=".55"/>` + mCO2(60,24,7) + mCO2(160,20,7) + arw(60,34,62,40,60,50,K) + arw(160,30,162,38,160,48,K) + `<path d="M70 132q30-44 60 0z" fill="#ffd6de" stroke="${K}" stroke-width="2"/><path d="M80 130l20-30l20 30M100 100v32" stroke="${K}" stroke-width="1"/>` + kf(100,120,9) + `<path d="M160 132q-6-30 10-40q-4 16 8 22q4-18 14-14q-6 14 4 32z" fill="#ff9fb4" stroke="${K}" stroke-width="1.6"/>` + TX(196,64,"pH 8.2 → 8.1",{s:10,w:800}), "CO₂ sinking into the sea where a worried shell and coral live"),
+  e1car: () => sv(`<path d="M20 100v-18q0-8 8-8h20l14-20h56l16 20h14q8 0 8 8v18z" fill="${C}" stroke="${K}" stroke-width="2.2"/>` + `<circle cx="52" cy="104" r="12" fill="${K}"/><circle cx="130" cy="104" r="12" fill="${K}"/>` + kf(90,84,10) + `<path d="M156 96h22" stroke="${K}" stroke-width="5"/><rect x="176" y="86" width="36" height="20" rx="6" fill="${CG}" stroke="${K}" stroke-width="2"/>` + kf(194,96,7) + `<path d="M214 92q10-4 18 2M214 100q10 4 18-2" fill="none" stroke="${A}" stroke-width="2.4"/>` + TX(194,130,"catalytic converter",{s:9.5,w:800}), "A smiling car with a little catalytic converter box cleaning its exhaust")
+});
+Object.assign(ILL, { e1: {core:["e1air","e1green","e1haze","e1acid","e1algae","e1plastic","e1greenchem"], deeper:["e1ozone","e1cycle","e1alum"], side:["e1ocean","e1car"]} });
+Object.assign(BACK, { e1: { core: {
+  0: () => bsv(pan(8,8,224,154,"100 squares of air","CO₂ is too small for even one square") + Array.from({length:100},(_,i)=>{const c=i<78?"#fff6e0":i<99?"#ffb38a":A; return `<rect x="${24+(i%20)*8.6}" y="${20+Math.floor(i/20)*15}" width="7.4" height="13" rx="2" fill="${c}" stroke="${K}" stroke-width=".6"/>`;}).join("")
+     + [["#fff6e0","N₂ 78"],["#ffb38a","O₂ 21"],[A,"Ar 1"]].map(([c,t],i)=>`<rect x="${38+i*60}" y="100" width="10" height="10" rx="2" fill="${c}" stroke="${K}" stroke-width="1"/>` + TX(52+i*60,109,t,{a:"start",s:9,w:800})).join(""), "A 100-square grid: 78 squares nitrogen, 21 oxygen, 1 argon"),
+  1: () => bsv(pan(8,8,224,154,"CO₂: about 280 ppm → about 420 ppm","before factories → today") + `<rect x="18" y="96" width="204" height="18" rx="4" fill="#7fd04a" stroke="${K}" stroke-width="1.4"/>` + TX(120,109,"Earth",{s:9,w:800}) + `<path d="M18 40h204" stroke="#9aa5b4" stroke-width="8" opacity=".7"/>` + TX(120,30,"CO₂ blanket",{s:9,w:800})
+     + arw(40,20,50,60,60,94,"#e8a020") + TX(54,70,"sunlight",{a:"start",s:8,w:700}) + arw(110,94,116,70,120,46,"#e8503a") + arw(120,46,132,64,138,92,"#e8503a") + TX(146,78,"heat",{a:"start",s:8,w:700}) + TX(146,88,"bounces back",{a:"start",s:8,w:700}) + arw(210,94,212,60,214,22,"#e8503a"), "Sunlight passes in; some heat escapes, but much is bounced back down by the CO₂ blanket"),
+  2: () => bsv(pan(8,8,224,154,"Malaysia's API: above 100 is unhealthy","PM2.5 is about 30× thinner than a hair") + [["0–50","good","#7fd04a"],["51–100","moderate","#f2e22c"],["101–200","unhealthy","#f99a2a"],["201–300","very unhealthy","#e8503a"],["300+","hazardous","#8a3a8a"]].map(([r,t,c],i)=>`<rect x="18" y="${18+i*16}" width="96" height="14" rx="4" fill="${c}" stroke="${K}" stroke-width="1"/>` + TX(24,28+i*16,r,{a:"start",s:8,w:800,f:i>2?W:K}) + TX(120,28+i*16,t,{a:"start",s:8,w:700})).join("")
+     + `<rect x="186" y="16" width="16" height="84" rx="8" fill="#6b4a2a" opacity=".85"/>` + TX(194,112,"hair",{s:8,w:700}) + `<circle cx="214" cy="60" r="1.6" fill="${K}"/>` + TX(218,74,"PM2.5",{s:7.5,w:800}), "Air Pollutant Index bands from good to hazardous, and a hair beside a tiny PM2.5 dot"),
+  3: () => bsv(pan(8,8,224,154,"Clean rain is about pH 5.6","acid rain can drop to pH 4") + TX(120,26,"SO₂ + H₂O → acid",{s:11,w:800}) + phStrip(18,52,204,20) + Array.from({length:15},(_,i)=>TX(18+i*204/15+204/30, 84, String(i), {s:7.5,w:700})).join("")
+     + [["acid rain",4],["clean rain",5.6],["pure water",7]].map(([l,p],i)=>{const x=(18+p*204/14).toFixed(1); return `<path d="M${x} ${i%2?92:38}v${i%2?8:12}" stroke="${K}" stroke-width="1.4"/>` + TX(x, i%2?110:36, l, {s:8.5,w:800});}).join(""), "SO₂ and water make acid; clean rain is pH 5.6, acid rain about pH 4, pure water pH 7"),
+  4: () => bsv(pan(8,8,224,154,"Too much food = no oxygen","one chain of events") + [["fertiliser",22,22],["algae boom",92,22],["algae die",162,22],["bacteria use O₂",36,78],["fish die",136,78]].map(([t,x,y],i)=>`<rect x="${x}" y="${y}" width="${i===3?84:60}" height="30" rx="8" fill="${[W,"#b8f2a0","#c9b8ff","#ffe08a","#ffd6de"][i]}" stroke="${K}" stroke-width="1.5"/>` + TX(x+(i===3?42:30),y+19,t,{s:9,w:800})).join("") + arw(82,37,86,37,90,37,K) + arw(152,37,156,37,160,37,K) + arw(192,54,150,66,90,76,K) + arw(122,93,128,93,134,93,K), "Fertiliser, algae boom, algae die, bacteria use up oxygen, fish die"),
+  5: () => bsv(pan(8,8,224,154,"How long until it breaks down?","estimates (US NOAA)") + [["paper towel","2–4 weeks",4],["newspaper","6 weeks",8],["drink can","200 years",120],["plastic bottle","450 years",160],["fishing line","600 years",190]].map(([t,v,w],i)=>{const y=24+i*20; return TX(18,y+10,t,{a:"start",s:8.5,w:800}) + `<rect x="86" y="${y}" width="${Math.max(4,w*0.45)}" height="13" rx="3" fill="${i>1?"#fc7a7a":"#7fd04a"}" stroke="${K}" stroke-width="1"/>` + TX(Math.max(4,w*0.45)+92,y+10,v,{a:"start",s:8,w:700});}).join(""), "Paper towel breaks down in weeks, but a plastic bottle takes about 450 years"),
+  6: () => bsv(pan(8,8,224,154,"Bioplastics can go back to nature","PLA needs an industrial compost site") + [[120,30,"corn","#ffe08a"],[190,74,"PLA cup",W],[120,118,"compost","#d9c5a5"],[50,74,"new plant","#b8f2a0"]].map(([x,y,t,c])=>`<rect x="${x-30}" y="${y-12}" width="60" height="24" rx="10" fill="${c}" stroke="${K}" stroke-width="1.5"/>` + TX(x,y+4,t,{s:9,w:800})).join("") + arw(150,34,176,40,186,60,D) + arw(186,88,176,108,152,116,D) + arw(88,116,64,108,54,88,D) + arw(54,60,64,40,90,32,D), "Corn becomes a PLA cup, which is composted and feeds a new plant")
+}, deeper: {
+  0: () => bsv(pan(8,8,224,154,"Montreal Protocol, 1987","ozone should heal by around the 2060s") + TX(120,26,"O₂ + O ⇌ O₃ (blocks UV)",{s:10,w:800}) + ka(52,62,12,"#c9f0c0","Cl",8) + TX(74,66,"+",{s:13,w:800}) + [[100,62],[114,54],[114,70]].map(([x,y])=>ka(x,y,7,C,"O",5)).join("") + arw(130,62,142,56,154,62,K) + ka(176,62,10,"#c9f0c0","ClO",6) + ka(206,62,8,C,"O₂",5) + TX(120,98,"one Cl from a CFC can break",{s:9,w:700}) + TX(120,111,"thousands of ozone molecules",{s:9,w:700}), "A chlorine atom from CFCs breaks ozone apart; the 1987 ban is helping it heal"),
+  1: () => bsv(pan(8,8,224,154,"Burning moves old carbon fast","red arrow = fossil fuels") + `<rect x="90" y="18" width="60" height="22" rx="8" fill="${W}" stroke="${K}" stroke-width="1.5"/>` + TX(120,33,"air CO₂",{s:9,w:800}) + `<rect x="18" y="58" width="60" height="22" rx="8" fill="#b8f2a0" stroke="${K}" stroke-width="1.5"/>` + TX(48,73,"plants",{s:9,w:800}) + `<rect x="162" y="58" width="60" height="22" rx="8" fill="#a0e7ff" stroke="${K}" stroke-width="1.5"/>` + TX(192,73,"ocean",{s:9,w:800}) + `<rect x="80" y="98" width="80" height="22" rx="8" fill="#6b5a4a" stroke="${K}" stroke-width="1.5"/>` + TX(120,113,"fossil fuels",{s:9,w:800,f:W})
+     + arw(90,34,60,40,50,56,D) + TX(48,92,"photosynthesis",{s:7.5,w:700}) + arw(150,34,180,40,190,56,D) + TX(192,92,"dissolves",{s:7.5,w:700}) + `<path d="M120 96V44" stroke="#c0182e" stroke-width="4"/><path d="M120 42l-6 10h12z" fill="#c0182e"/>`, "Plants and oceans take in CO₂; burning fossil fuels sends old carbon up fast"),
+  2: () => bsv(pan(8,8,224,154,"Al³⁺ cancels the negative charges","small bits clump into floc") + [[40,40],[74,34],[52,72],[90,66]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="9" fill="#a07850" stroke="${K}" stroke-width="1.2"/>` + TX(x,y+3.5,"−",{s:11,w:800,f:W})).join("") + `<path d="M58 44l6-4M64 64l12 2" stroke="#c0182e" stroke-width="1.6"/>` + TX(64,104,"repel",{s:9,w:700})
+     + arw(112,60,124,54,136,60,K) + [[170,52],[186,46],[198,60],[180,66],[164,68]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="8" fill="#a07850" stroke="${K}" stroke-width="1.2"/>`).join("") + ka(182,58,7,GOLD,"Al³⁺",4.5) + TX(182,104,"floc sinks",{s:9,w:700}), "Negatively charged clay bits repel; Al³⁺ joins them into a floc that sinks")
+}, side: {
+  0: () => bsv(pan(8,8,224,154,"pH 8.2 → 8.1 = about 26% more H⁺","shells become harder to build") + TX(120,28,"CO₂ + H₂O → H₂CO₃",{s:11,w:800}) + `<path d="M40 104q40-62 80 0z" fill="#ffd6de" stroke="${K}" stroke-width="2"/><path d="M54 102l26-36l26 36M80 66v38" stroke="${K}" stroke-width="1"/>` + kf(80,92,9) + [[132,64],[148,80],[136,96]].map(([x,y])=>hIon(x,y,8)).join("") + `<path d="M108 72l10-4M108 92l10 2" stroke="#c0182e" stroke-width="2"/>` + TX(196,74,"more acid,",{s:9,w:700}) + TX(196,87,"weaker shells",{s:9,w:700}), "CO₂ and water make carbonic acid; extra H⁺ ions attack a shell"),
+  1: () => bsv(pan(8,8,224,154,"Platinum: the chair catalyst","not used up, works for years") + `<rect x="80" y="20" width="80" height="96" rx="12" fill="${CG}" stroke="${K}" stroke-width="2"/>` + Array.from({length:20},(_,i)=>`<rect x="${90+(i%4)*15}" y="${30+Math.floor(i/4)*16}" width="12" height="12" fill="${W}" stroke="${K}" stroke-width=".8"/>`).join("")
+     + TX(40,46,"CO",{s:11,w:800,f:"#c0182e"}) + TX(40,86,"NOₓ",{s:11,w:800,f:"#c0182e"}) + arw(54,42,64,40,76,42,K) + arw(54,82,64,80,76,82,K) + arw(164,42,174,40,184,42,K) + arw(164,82,174,80,184,82,K) + TX(206,46,"CO₂",{s:11,w:800,f:"#1f8a4c"}) + TX(206,86,"N₂",{s:11,w:800,f:"#1f8a4c"}), "Inside the converter, CO becomes CO₂ and NOₓ becomes harmless N₂")
+}}});
+
+
 
 
 /* ---------------- State ---------------- */
@@ -1492,7 +1587,8 @@ const BADGES = {
   s5:{ name:"Recipe Reader", c:"#a0e7ff", icon:()=>`<rect x="33" y="34" width="34" height="36" rx="4" fill="#ffffff" stroke="#231f20" stroke-width="2.4"/><path d="M39 45h14M39 52h22M39 59h10" stroke="#231f20" stroke-width="2" stroke-linecap="round"/><path d="M52 59h10m-3-3l3 3l-3 3" fill="none" stroke="#fc7a7a" stroke-width="2" stroke-linecap="round"/>` },
   s6:{ name:"Particle Counter", c:"#ffb86b", icon:()=>`<text x="50" y="50" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="15" fill="#231f20">mol</text>${[[38,60],[46,62],[54,60],[62,62],[42,66],[58,66]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#5eead4" stroke="#231f20" stroke-width="1"/>`).join("")}` },
   s7:{ name:"Everyday Chemist", c:"#9be15d", icon:()=>`${["#e8203a","#f99a2a","#f2e22c","#7fd04a","#2a8fc4","#6640b0"].map((c,i)=>`<rect x="${32+i*6}" y="58" width="6" height="12" fill="${c}"/>`).join("")}<rect x="32" y="58" width="36" height="12" rx="2" fill="none" stroke="#231f20" stroke-width="1.6"/><path d="M50 30q-10 12-10 18a10 10 0 0 0 20 0q0-6-10-18z" fill="#5eead4" stroke="#231f20" stroke-width="2"/><text x="50" y="51" text-anchor="middle" font-family="League Spartan, Arial, sans-serif" font-weight="800" font-size="8" fill="#231f20">pH</text>` },
-  h1:{ name:"Body Chemist", c:"#ff8a8a", icon:()=>`<path d="M50 74q-22-14-22-28a11 11 0 0 1 22-4a11 11 0 0 1 22 4q0 14-22 28z" fill="#e8505b" stroke="#231f20" stroke-width="2.4"/><path d="M36 50h8l4-7l5 13l4-6h7" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linejoin="round"/>` }
+  h1:{ name:"Body Chemist", c:"#ff8a8a", icon:()=>`<path d="M50 74q-22-14-22-28a11 11 0 0 1 22-4a11 11 0 0 1 22 4q0 14-22 28z" fill="#e8505b" stroke="#231f20" stroke-width="2.4"/><path d="M36 50h8l4-7l5 13l4-6h7" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linejoin="round"/>` },
+  e1:{ name:"Earth Guardian", c:"#7fd04a", icon:()=>`<circle cx="50" cy="52" r="18" fill="#5fb3f0" stroke="#231f20" stroke-width="2.4"/><path d="M38 46q6-8 12-2q-2 8-10 8zM52 58q8-4 10 2q-4 8-10 6z" fill="#7fd04a" stroke="#231f20" stroke-width="1.2"/><path d="M58 30q14-6 18 6q-12 6-18-6z" fill="#7fd04a" stroke="#231f20" stroke-width="1.6"/>` }
 };
 function badgeSVG(id, earned, size){
   const b = BADGES[id] || {name:"Badge", c:"#5eead4", icon:()=>""};
@@ -1622,7 +1718,7 @@ function cardsLayer(L, s, key, intro, tip){
 function actsLayer(L, s){
   L.innerHTML = s.acts.map((a,i) => `<div class="act" id="act${i}"></div>`).join("") + nextBtn(s.id, "deeper", "Next: Go deeper");
   s.acts.forEach((a,i) => { const el = document.getElementById("act"+i);
-    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); if (a.type === "balance") balanceAct(el, s, a, i); if (a.type === "conc") concAct(el, s, a, i); if (a.type === "speed") speedAct(el, s, a, i); if (a.type === "lab") labAct(el, s, a, i); });
+    if (a.type === "sort") sortAct(el, s, a, i); if (a.type === "match") matchAct(el, s, a, i); if (a.type === "atom") atomAct(el, s, a, i); if (a.type === "balance") balanceAct(el, s, a, i); if (a.type === "conc") concAct(el, s, a, i); if (a.type === "speed") speedAct(el, s, a, i); if (a.type === "lab") labAct(el, s, a, i); if (a.type === "order") orderAct(el, s, a, i); });
 }
 function award(n){ S.points += n; }
 function actDone(s, i){ prog(s.id).actsDone[i] = 1; commit(); }
@@ -1757,6 +1853,35 @@ function labAct(el, s, a, idx){
   draw();
 }
 
+function orderAct(el, s, a, idx){
+  let done = 0, missed = false, msg = "", shake = null;
+  const pool = shuffle(a.steps.map((x, i) => i));
+  const glass = n => { const t = n / a.steps.length, mud = `rgba(${Math.round(150 - t*60)},${Math.round(110 + t*90)},${Math.round(60 + t*180)},${(0.95 - t*0.55).toFixed(2)})`;
+    const bits = Math.round((1 - t) * 14);
+    return `<svg viewBox="0 0 120 120" width="110" aria-label="Water clarity: step ${n} of ${a.steps.length}" role="img"><path d="M24 14h72l-8 96H32z" fill="#ffffff" fill-opacity=".15" stroke="currentColor" stroke-width="2.4"/><path d="M27 34h66l-6 74H33z" fill="${mud}"/>`
+      + Array.from({length: bits}, (_, i) => `<circle cx="${36 + (i*37) % 50}" cy="${44 + (i*23) % 58}" r="${2 + i % 3}" fill="#6b4a2a" opacity=".8"/>`).join("")
+      + `<ellipse cx="52" cy="70" rx="2" ry="2.5" fill="#231f20"/><ellipse cx="68" cy="70" rx="2" ry="2.5" fill="#231f20"/>`
+      + (t === 1 ? `<path d="M54 78q6 6 12 0" fill="none" stroke="#231f20" stroke-width="2"/>` : `<path d="M54 81q6 -5 12 0" fill="none" stroke="#231f20" stroke-width="2"/>`) + `</svg>`; };
+  const draw = () => {
+    const fin = done === a.steps.length;
+    el.innerHTML = `<span class="eyebrow">Activity</span><h3>${esc(a.title)}</h3><p class="muted" style="font-size:.8em">${esc(a.intro)}</p>
+      <div class="ordwrap"><div class="ordglass">${glass(done)}<span class="muted">${fin ? "Clean and safe!" : `Step ${done + 1} of ${a.steps.length}`}</span></div>
+      <ol class="ordlist">${a.steps.slice(0, done).map(([t, d]) => `<li><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ol></div>
+      ${fin ? "" : `<div class="ordpool">${pool.filter(i => i >= done).map(i => `<button type="button" class="chip${shake === i ? " shake" : ""}" data-i="${i}">${esc(a.steps[i][0])}</button>`).join("")}</div>`}
+      <div aria-live="polite">${msg}</div>`;
+    shake = null;
+    el.querySelectorAll(".ordpool .chip").forEach(b => b.onclick = () => {
+      const i = +b.dataset.i;
+      if (i !== done){ missed = true; shake = i; msg = `<div class="fb no"><strong>✗ Not yet.</strong> ${esc(a.steps[i][0])} comes later. ${esc(pick(TRYS))}</div>`; draw(); return; }
+      award(missed ? 5 : 10); missed = false; done++;
+      if (done === a.steps.length){ actDone(s, idx); msg = `<div class="fb ok"><strong>✓ Clean water!</strong> From muddy river to safe tap water in five steps. ${esc(pick(CHEERS))}</div>`; }
+      else msg = `<div class="fb ok"><strong>✓ Correct.</strong></div>`;
+      draw();
+    });
+  };
+  draw();
+}
+
 function sortAct(el, s, a, idx){
   let left = shuffle(a.items), placed = {}, sel = null, missed = {}, msg = "", lastBin = null, shake = null;
   a.bins.forEach(b => placed[b] = []);
@@ -1765,7 +1890,7 @@ function sortAct(el, s, a, idx){
     if (bin === it[1]){ if (!missed[it[0]]) award(10); placed[bin].push(it[0]); left.splice(k,1); sel = null; lastBin = bin;
       const fin = !left.length; if (fin) actDone(s, idx);
       msg = `<div class="fb ok"><strong>✓ Correct.</strong> ${esc(it[2])}${fin ? " " + esc(pick(CHEERS)) : ""}</div>`; }
-    else { missed[it[0]] = 1; sel = null; shake = bin; msg = `<div class="fb no"><strong>✗ Try again.</strong> ${esc(it[0])} is not a ${esc(bin.toLowerCase())}. ${esc(pick(TRYS))}</div>`; }
+    else { missed[it[0]] = 1; sel = null; shake = bin; msg = `<div class="fb no"><strong>✗ Try again.</strong> ${esc(it[0])} does not go in “${esc(bin)}”. ${esc(pick(TRYS))}</div>`; }
     draw();
   };
   const draw = () => {
